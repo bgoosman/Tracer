@@ -43,21 +43,19 @@ void ofApp::update(){
     p0->applyForce(acceleration);
     p0->update();
     
-    if (ofGetLastFrameTime() >= 1.0 / 20) {
-        points.push_back(p0->location);
-        colors.push_back(ofColor::white);
-        weights.push_back(2);
-        if (points.size() >= maxPoints) {
-            points.pop_front();
-            colors.pop_front();
-            weights.pop_front();
-        }
-        
-        fatLine.clear();
-        fatLine.add({points.begin(), points.end()},
-                    {colors.begin(), colors.end()},
-                    {weights.begin(), weights.end()});
+    points.push_back(p0->location);
+    colors.push_back(ofColor::white);
+    weights.push_back(1);
+    if (points.size() >= maxPoints) {
+        points.pop_front();
+        colors.pop_front();
+        weights.pop_front();
     }
+    
+    fatLine.clear();
+    fatLine.add({points.begin(), points.end()},
+                {colors.begin(), colors.end()},
+                {weights.begin(), weights.end()});
     
     std::stringstream strm;
     strm << "fps: " << ofGetFrameRate();
