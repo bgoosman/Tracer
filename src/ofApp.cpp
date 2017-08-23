@@ -19,6 +19,10 @@ public:
         acceleration *= 0;
     }
     
+    void setLocation(ofPoint location) {
+        this->location = location;
+    }
+    
     ofPoint location;
     ofPoint velocity;
     ofPoint acceleration;
@@ -27,47 +31,79 @@ public:
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    ofBackground(0);
-    ofPoint location(ofGetWindowWidth() / 2, ofGetWindowHeight() / 2);
+    ofSetFullscreen(true);
+    strokeWidth = 3.0;
+    windowPadding = 25;
+    ofSetFrameRate(100.0f);
+    ofSetCurveResolution(100);
+    ofPoint windowCenter(ofGetWindowWidth() / 2, ofGetWindowHeight() / 2);
+    ofPoint location = windowCenter;
     ofPoint velocity(0, 0);
-    float mass = 5;
-    p0 = new Particle(location, velocity, mass);
-    fatLine.setFeather(2);
+    p0 = new Particle(location, velocity, 5);
+    
+    defaultRenderer = ofGetCurrentRenderer();
+    shivaVGRenderer = ofPtr<ofxShivaVGRenderer>(new ofxShivaVGRenderer);
+    ofSetCurrentRenderer(shivaVGRenderer);
+    shivaVGRenderer->setLineJoinStyle(VG_JOIN_ROUND);
+    shivaVGRenderer->setLineCapStyle(VG_CAP_ROUND);
+    curvedPath.setFilled(false);
+    curvedPath.setStrokeColor(ofColor::white);
+    curvedPath.setStrokeWidth(strokeWidth);
+    curvedPath.moveTo(windowCenter);
+    
+    time = ofGetElapsedTimeMillis();
+    
+    perlinShiftX = ofRandom(ofGetWindowWidth());
+    perlinShiftY = ofRandom(ofGetWindowHeight());
+    stageWidth = ofGetWidth();
+    stageHeight = ofGetHeight();
+    maxPoints = 100;
 }
 
 //--------------------------------------------------------------
-void ofApp::update(){
-    ofPoint target(ofGetMouseX(), ofGetMouseY());
-    ofPoint acceleration = target - p0->location;
-    acceleration.normalize();
-    p0->applyForce(acceleration);
-    p0->update();
+void ofApp::update() {
+    float speed = 0.001;
+    float windowWidth = ofGetWidth();
+    float windowHeight = ofGetHeight();
+    float xMax = windowWidth*2;
+    float yMax = windowHeight*2;
+    float x = xMax * ofNoise(time * speed + perlinShiftX);
+    float y = yMax * ofNoise(time * speed + perlinShiftY);
+    x = ofMap(x, 0, xMax, 0, stageWidth, true);
+    y = ofMap(y, 0, yMax, 0, stageHeight, true);
+    p0->location = ofPoint(x, y);
     
-    points.push_back(p0->location);
-    colors.push_back(ofColor::white);
-    weights.push_back(1);
-    if (points.size() >= maxPoints) {
-        points.pop_front();
-        colors.pop_front();
-        weights.pop_front();
+    float currentTime = ofGetElapsedTimeMillis();
+    if (currentTime - time >= 0) {
+        time = currentTime;
+        
+        points.push_back(p0->location);
+        if (points.size() >= maxPoints) {
+            points.pop_front();
+        }
+        
+        if (points.size() >= 2) {
+            curvedPath.clear();
+            curvedPath.moveTo(points[0]);
+            std::for_each(points.begin()+1, points.end(), [&](ofPoint point) {curvedPath.curveTo(point);});
+        }
     }
-    
-    fatLine.clear();
-    fatLine.add({points.begin(), points.end()},
-                {colors.begin(), colors.end()},
-                {weights.begin(), weights.end()});
-    
-    std::stringstream strm;
-    strm << "fps: " << ofGetFrameRate();
-    ofSetWindowTitle(strm.str());
 }
 
 //--------------------------------------------------------------
-void ofApp::draw(){
-    ofDrawEllipse(p0->location.x, p0->location.y, 5, 5);
+void ofApp::draw() {
+    ofBackground(50);
+    ofDrawEllipse(p0->location.x, p0->location.y, strokeWidth, strokeWidth);
+    ofPoint tail = points[points.size()-1];
+    ofDrawEllipse(tail.x, tail.y, strokeWidth, strokeWidth);
     if (points.size() >= 2) {
-        fatLine.draw();
+        shivaVGRenderer->draw(curvedPath);
     }
+    
+    ofSetColor(255, 255, 255);
+    stringstream m;
+    m << "FPS: " << (int)ofGetFrameRate();
+    ofSetWindowTitle(m.str());
 }
 
 //--------------------------------------------------------------
@@ -77,7 +113,11 @@ void ofApp::keyPressed(int key){
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
-
+    if (key == 107 /* k */) {
+        curvedPath.setCurveResolution(curvedPath.getCurveResolution() + 1);
+    } else if (key == 106 /* j */) {
+        curvedPath.setCurveResolution(curvedPath.getCurveResolution() - 1);
+    }
 }
 
 //--------------------------------------------------------------
@@ -92,6 +132,16 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
+    if (ofGetCurrentRenderer() == defaultRenderer)
+    {
+        ofSetCurrentRenderer(shivaVGRenderer);
+        std::cout << "shiva" << std::endl;
+    }
+    else
+    {
+        ofSetCurrentRenderer(defaultRenderer);
+        std::cout << "default" << std::endl;
+    }
 
 }
 

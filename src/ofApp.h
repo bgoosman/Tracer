@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
-#include "ofxFatLine.h"
+#include "ofxShivaVGRenderer.h"
 
 class Particle;
 
@@ -27,11 +27,21 @@ public:
 private:
     Particle* p0;
     ofPolyline path;
-    ofxFatLine fatLine;
-    double maxPoints = 50;
+    double maxPoints;
     std::deque<ofVec3f> points;
     std::deque<ofFloatColor> colors;
     std::deque<double> weights;
     int i = 0;
+    
+    ofPtr<ofBaseRenderer> defaultRenderer;
+    ofPtr<ofxShivaVGRenderer> shivaVGRenderer;
+    ofPath curvedPath;
+    float time;
+    float perlinShiftX;
+    float perlinShiftY;
+    float strokeWidth;
+    float windowPadding;
+    float stageWidth;
+    float stageHeight;
     
 };
