@@ -4,6 +4,7 @@
 #include "ofxShivaVGRenderer.h"
 
 class Particle;
+class Tracer;
 
 class ofApp : public ofBaseApp {
     
@@ -28,20 +29,19 @@ private:
     Particle* p0;
     ofPolyline path;
     double maxPoints;
-    std::deque<ofVec3f> points;
     std::deque<ofFloatColor> colors;
     std::deque<double> weights;
-    int i = 0;
-    
+    std::vector<Tracer*> tracers;
+    int tracerCount;
+   
     ofPtr<ofBaseRenderer> defaultRenderer;
     ofPtr<ofxShivaVGRenderer> shivaVGRenderer;
     ofPath curvedPath;
+    ofPoint stageSize;
+    ofPoint stageCenter;
     float time;
     float perlinShiftX;
     float perlinShiftY;
     float strokeWidth;
     float windowPadding;
-    float stageWidth;
-    float stageHeight;
-    
 };
