@@ -2,7 +2,7 @@
 
 class Particle {
 public:
-    Particle(ofPoint location, ofPoint velocity, float mass) {
+    Particle(ofPoint location, ofVec3f velocity = ofVec3f::zero(), float mass = 0) {
         this->location = location;
         this->velocity = velocity;
         this->mass = mass;
@@ -24,81 +24,142 @@ public:
     }
     
     ofPoint location;
-    ofPoint velocity;
-    ofPoint acceleration;
+    ofVec3f velocity;
+    ofVec3f acceleration;
     float mass;
+};
+
+class Tracer {
+public:
+    Tracer(ofPoint startLocation,
+           ofPoint stageSize,
+           ofPoint velocity,
+           ofPoint timeShift,
+           ofColor color,
+           float strokeWidth,
+           size_t maxPoints)
+        : head(startLocation),
+          stageSize(stageSize),
+          velocity(velocity),
+          timeShift(timeShift),
+          color(color),
+          strokeWidth(strokeWidth),
+          maxPoints(maxPoints)
+    {
+        curvedPath.setFilled(false);
+        curvedPath.setStrokeColor(color);
+        curvedPath.setStrokeWidth(strokeWidth);
+    }
+    
+    void update(float time) {
+        float xMax = stageSize[0]*2;
+        float yMax = stageSize[1]*2;
+        float zMax = 1.0f;
+        float x = xMax * ofNoise(time * velocity[0] + timeShift[0]);
+        float y = yMax * ofNoise(time * velocity[1] + timeShift[1]);
+        float z = zMax * ofNoise(time * velocity[2] + timeShift[2]);
+        x = ofMap(x, 0, xMax, 0, stageSize[0], true);
+        y = ofMap(y, 0, yMax, 0, stageSize[1], true);
+        z = ofMap(z, 0, zMax, 0, 1, true);
+        head = ofPoint(x, y, z);
+        color.setBrightness(ofMap(head.z, 0, 1, 0, ofColor::limit(), true));
+        curvedPath.setColor(color);
+        
+        particles.push_back(new Particle(head, ofVec3f::zero(), 0));
+        if (particles.size() >= maxPoints) {
+            Particle* p = particles[0];
+            particles.pop_front();
+            delete p;
+        }
+        
+        if (particles.size() >= 2) {
+            curvedPath.clear();
+            curvedPath.moveTo(particles[0]->location);
+            std::for_each(particles.begin()+1, particles.end(), [&](Particle* particle) {curvedPath.curveTo(particle->location);});
+        }
+    }
+    
+    void draw(std::shared_ptr<ofBaseRenderer> renderer) {
+        Particle* tail = getTail();
+        if (tail != nullptr) {
+            ofDrawEllipse(tail->location.x, tail->location.y, strokeWidth, strokeWidth);
+        }
+        
+        Particle* head = getHead();
+        if (head != nullptr) {
+            ofDrawEllipse(head->location.x, head->location.y, strokeWidth, strokeWidth);
+        }
+
+        if (particles.size() >= 2) {
+            renderer->draw(curvedPath);
+        }
+    }
+    
+    Particle* getHead() {
+        return (particles.size() > 0) ? particles[particles.size()-1] : nullptr;
+    }
+    
+    Particle* getTail() {
+        return (particles.size() > 0) ? particles[0] : nullptr;
+    }
+private:
+    ofPoint head;
+    ofPoint stageSize;
+    ofPoint velocity;
+    ofPoint timeShift;
+    ofPath curvedPath;
+    ofColor color;
+    size_t maxPoints;
+    float strokeWidth;
+    std::deque<Particle*> particles;
 };
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    ofSetFullscreen(true);
-    strokeWidth = 3.0;
-    windowPadding = 25;
-    ofSetFrameRate(100.0f);
+    ofSetFrameRate(60.0f);
     ofSetCurveResolution(100);
-    ofPoint windowCenter(ofGetWindowWidth() / 2, ofGetWindowHeight() / 2);
-    ofPoint location = windowCenter;
-    ofPoint velocity(0, 0);
-    p0 = new Particle(location, velocity, 5);
+    
+    maxPoints = 100;
+    stageSize = ofPoint(ofGetWidth(), ofGetHeight());
+    stageCenter = ofPoint(ofGetWindowWidth() / 2, ofGetWindowHeight() / 2);
+    strokeWidth = 3.0;
+    time = ofGetElapsedTimeMillis();
+    tracerCount = 5;
+    windowPadding = 25;
     
     defaultRenderer = ofGetCurrentRenderer();
     shivaVGRenderer = ofPtr<ofxShivaVGRenderer>(new ofxShivaVGRenderer);
-    ofSetCurrentRenderer(shivaVGRenderer);
     shivaVGRenderer->setLineJoinStyle(VG_JOIN_ROUND);
     shivaVGRenderer->setLineCapStyle(VG_CAP_ROUND);
-    curvedPath.setFilled(false);
-    curvedPath.setStrokeColor(ofColor::white);
-    curvedPath.setStrokeWidth(strokeWidth);
-    curvedPath.moveTo(windowCenter);
+    ofSetCurrentRenderer(shivaVGRenderer);
     
-    time = ofGetElapsedTimeMillis();
-    
-    perlinShiftX = ofRandom(ofGetWindowWidth());
-    perlinShiftY = ofRandom(ofGetWindowHeight());
-    stageWidth = ofGetWidth();
-    stageHeight = ofGetHeight();
-    maxPoints = 100;
+    p0 = new Particle(stageCenter, ofPoint::zero(), 5);
+    for (int i = 0; i < tracerCount; i++) {
+        ofPoint velocity(0.001, 0.001, 0.001);
+        ofPoint timeShift(ofRandom(stageSize[0]), ofRandom(stageSize[1]));
+        ofColor color(ofRandom(255), ofRandom(255), ofRandom(255));
+        Tracer* t = new Tracer(stageCenter, stageSize, velocity, timeShift, color, strokeWidth, maxPoints);
+        tracers.push_back(t);
+    }
 }
 
 //--------------------------------------------------------------
 void ofApp::update() {
-    float speed = 0.001;
-    float windowWidth = ofGetWidth();
-    float windowHeight = ofGetHeight();
-    float xMax = windowWidth*2;
-    float yMax = windowHeight*2;
-    float x = xMax * ofNoise(time * speed + perlinShiftX);
-    float y = yMax * ofNoise(time * speed + perlinShiftY);
-    x = ofMap(x, 0, xMax, 0, stageWidth, true);
-    y = ofMap(y, 0, yMax, 0, stageHeight, true);
-    p0->location = ofPoint(x, y);
-    
     float currentTime = ofGetElapsedTimeMillis();
     if (currentTime - time >= 0) {
+        std::for_each(tracers.begin(), tracers.end(), [currentTime](Tracer* t) {
+            t->update(currentTime);
+        });
         time = currentTime;
-        
-        points.push_back(p0->location);
-        if (points.size() >= maxPoints) {
-            points.pop_front();
-        }
-        
-        if (points.size() >= 2) {
-            curvedPath.clear();
-            curvedPath.moveTo(points[0]);
-            std::for_each(points.begin()+1, points.end(), [&](ofPoint point) {curvedPath.curveTo(point);});
-        }
     }
 }
 
 //--------------------------------------------------------------
 void ofApp::draw() {
     ofBackground(50);
-    ofDrawEllipse(p0->location.x, p0->location.y, strokeWidth, strokeWidth);
-    ofPoint tail = points[points.size()-1];
-    ofDrawEllipse(tail.x, tail.y, strokeWidth, strokeWidth);
-    if (points.size() >= 2) {
-        shivaVGRenderer->draw(curvedPath);
-    }
+    std::for_each(tracers.begin(), tracers.end(), [](Tracer* t) {
+        t->draw(ofGetCurrentRenderer());
+    });
     
     ofSetColor(255, 255, 255);
     stringstream m;
