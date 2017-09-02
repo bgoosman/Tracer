@@ -28,7 +28,7 @@ public:
 private:
     Particle* p0;
     ofPolyline path;
-    double maxPoints;
+    size_t maxPoints;
     std::deque<ofFloatColor> colors;
     std::deque<double> weights;
     std::vector<Tracer*> tracers;
