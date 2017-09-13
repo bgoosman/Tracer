@@ -661,6 +661,512 @@
 				<key>sourceTree</key>
 				<string>SOURCE_ROOT</string>
 			</dict>
+			<key>4A1F5B1908FA91168825B38E</key>
+			<dict>
+				<key>explicitFileType</key>
+				<string>sourcecode.c.h</string>
+				<key>fileEncoding</key>
+				<string>30</string>
+				<key>isa</key>
+				<string>PBXFileReference</string>
+				<key>name</key>
+				<string>ofxMidiFighterTwister.h</string>
+				<key>path</key>
+				<string>../../../addons/ofxMidiFighterTwister/src/ofxMidiFighterTwister.h</string>
+				<key>sourceTree</key>
+				<string>SOURCE_ROOT</string>
+			</dict>
+			<key>0C287C11E084135BA344B4EE</key>
+			<dict>
+				<key>children</key>
+				<array>
+					<string>FC090738E05B8FA44B5F10FE</string>
+					<string>4A1F5B1908FA91168825B38E</string>
+				</array>
+				<key>isa</key>
+				<string>PBXGroup</string>
+				<key>name</key>
+				<string>src</string>
+				<key>sourceTree</key>
+				<string>&lt;group&gt;</string>
+			</dict>
+			<key>ABC5123E2929C5438D237753</key>
+			<dict>
+				<key>children</key>
+				<array>
+					<string>0C287C11E084135BA344B4EE</string>
+				</array>
+				<key>isa</key>
+				<string>PBXGroup</string>
+				<key>name</key>
+				<string>ofxMidiFighterTwister</string>
+				<key>sourceTree</key>
+				<string>&lt;group&gt;</string>
+			</dict>
+			<key>EC0A61ABB5A2ABAC37BB87B1</key>
+			<dict>
+				<key>fileRef</key>
+				<string>FC090738E05B8FA44B5F10FE</string>
+				<key>isa</key>
+				<string>PBXBuildFile</string>
+			</dict>
+			<key>FC090738E05B8FA44B5F10FE</key>
+			<dict>
+				<key>explicitFileType</key>
+				<string>sourcecode.cpp.cpp</string>
+				<key>fileEncoding</key>
+				<string>30</string>
+				<key>isa</key>
+				<string>PBXFileReference</string>
+				<key>name</key>
+				<string>ofxMidiFighterTwister.cpp</string>
+				<key>path</key>
+				<string>../../../addons/ofxMidiFighterTwister/src/ofxMidiFighterTwister.cpp</string>
+				<key>sourceTree</key>
+				<string>SOURCE_ROOT</string>
+			</dict>
+			<key>36D7EC7EF50E326EAC88A0AD</key>
+			<dict>
+				<key>children</key>
+				<array>
+					<string>81AC32CCCB56FAABA3E1BDE0</string>
+				</array>
+				<key>isa</key>
+				<string>PBXGroup</string>
+				<key>name</key>
+				<string>frameworks</string>
+				<key>sourceTree</key>
+				<string>&lt;group&gt;</string>
+			</dict>
+			<key>631702104AFC104323A9EB79</key>
+			<dict>
+				<key>fileRef</key>
+				<string>81AC32CCCB56FAABA3E1BDE0</string>
+				<key>isa</key>
+				<string>PBXBuildFile</string>
+			</dict>
+			<key>81AC32CCCB56FAABA3E1BDE0</key>
+			<dict>
+				<key>lastKnownFileType</key>
+				<string>wrapper.framework</string>
+				<key>isa</key>
+				<string>PBXFileReference</string>
+				<key>name</key>
+				<string>CoreMIDI.framework</string>
+				<key>path</key>
+				<string>/System/Library/Frameworks/CoreMIDI.framework</string>
+				<key>sourceTree</key>
+				<string>&lt;group&gt;</string>
+			</dict>
+			<key>A8793707281FD436C34316A5</key>
+			<dict>
+				<key>explicitFileType</key>
+				<string>sourcecode.c.h</string>
+				<key>fileEncoding</key>
+				<string>30</string>
+				<key>isa</key>
+				<string>PBXFileReference</string>
+				<key>name</key>
+				<string>RtMidi.h</string>
+				<key>path</key>
+				<string>../../../addons/ofxMidi/libs/rtmidi/RtMidi.h</string>
+				<key>sourceTree</key>
+				<string>SOURCE_ROOT</string>
+			</dict>
+			<key>945CEFADFB0DF400A92A507C</key>
+			<dict>
+				<key>children</key>
+				<array>
+					<string>ABDEF0ACF05BF28F5C74E008</string>
+					<string>A8793707281FD436C34316A5</string>
+				</array>
+				<key>isa</key>
+				<string>PBXGroup</string>
+				<key>name</key>
+				<string>rtmidi</string>
+				<key>sourceTree</key>
+				<string>&lt;group&gt;</string>
+			</dict>
+			<key>5A08CCDC8D19E7162DE57128</key>
+			<dict>
+				<key>children</key>
+				<array>
+					<string>945CEFADFB0DF400A92A507C</string>
+				</array>
+				<key>isa</key>
+				<string>PBXGroup</string>
+				<key>name</key>
+				<string>libs</string>
+				<key>sourceTree</key>
+				<string>&lt;group&gt;</string>
+			</dict>
+			<key>63D0FD8734D5760B8080C901</key>
+			<dict>
+				<key>fileRef</key>
+				<string>ABDEF0ACF05BF28F5C74E008</string>
+				<key>isa</key>
+				<string>PBXBuildFile</string>
+			</dict>
+			<key>ABDEF0ACF05BF28F5C74E008</key>
+			<dict>
+				<key>explicitFileType</key>
+				<string>sourcecode.cpp.cpp</string>
+				<key>fileEncoding</key>
+				<string>30</string>
+				<key>isa</key>
+				<string>PBXFileReference</string>
+				<key>name</key>
+				<string>RtMidi.cpp</string>
+				<key>path</key>
+				<string>../../../addons/ofxMidi/libs/rtmidi/RtMidi.cpp</string>
+				<key>sourceTree</key>
+				<string>SOURCE_ROOT</string>
+			</dict>
+			<key>E16BB73D19DD0713FDCC7986</key>
+			<dict>
+				<key>explicitFileType</key>
+				<string>sourcecode.c.h</string>
+				<key>fileEncoding</key>
+				<string>30</string>
+				<key>isa</key>
+				<string>PBXFileReference</string>
+				<key>name</key>
+				<string>ofxMidiTypes.h</string>
+				<key>path</key>
+				<string>../../../addons/ofxMidi/src/ofxMidiTypes.h</string>
+				<key>sourceTree</key>
+				<string>SOURCE_ROOT</string>
+			</dict>
+			<key>81436E53CC4A77E326F659C3</key>
+			<dict>
+				<key>explicitFileType</key>
+				<string>sourcecode.c.h</string>
+				<key>fileEncoding</key>
+				<string>30</string>
+				<key>isa</key>
+				<string>PBXFileReference</string>
+				<key>name</key>
+				<string>ofxMidiOut.h</string>
+				<key>path</key>
+				<string>../../../addons/ofxMidi/src/ofxMidiOut.h</string>
+				<key>sourceTree</key>
+				<string>SOURCE_ROOT</string>
+			</dict>
+			<key>83D9F930112E0944444124EE</key>
+			<dict>
+				<key>fileRef</key>
+				<string>04F77E5C73A62E2E77C78EC6</string>
+				<key>isa</key>
+				<string>PBXBuildFile</string>
+			</dict>
+			<key>04F77E5C73A62E2E77C78EC6</key>
+			<dict>
+				<key>explicitFileType</key>
+				<string>sourcecode.cpp.cpp</string>
+				<key>fileEncoding</key>
+				<string>30</string>
+				<key>isa</key>
+				<string>PBXFileReference</string>
+				<key>name</key>
+				<string>ofxMidiOut.cpp</string>
+				<key>path</key>
+				<string>../../../addons/ofxMidi/src/ofxMidiOut.cpp</string>
+				<key>sourceTree</key>
+				<string>SOURCE_ROOT</string>
+			</dict>
+			<key>BD0E7AC8BE205034D5B377A6</key>
+			<dict>
+				<key>explicitFileType</key>
+				<string>sourcecode.c.h</string>
+				<key>fileEncoding</key>
+				<string>30</string>
+				<key>isa</key>
+				<string>PBXFileReference</string>
+				<key>name</key>
+				<string>ofxMidiMessage.h</string>
+				<key>path</key>
+				<string>../../../addons/ofxMidi/src/ofxMidiMessage.h</string>
+				<key>sourceTree</key>
+				<string>SOURCE_ROOT</string>
+			</dict>
+			<key>C6FE64F74F1EA1D98C8F9847</key>
+			<dict>
+				<key>fileRef</key>
+				<string>C0E7EDA67EDF213FC0E83D17</string>
+				<key>isa</key>
+				<string>PBXBuildFile</string>
+			</dict>
+			<key>C0E7EDA67EDF213FC0E83D17</key>
+			<dict>
+				<key>explicitFileType</key>
+				<string>sourcecode.cpp.cpp</string>
+				<key>fileEncoding</key>
+				<string>30</string>
+				<key>isa</key>
+				<string>PBXFileReference</string>
+				<key>name</key>
+				<string>ofxMidiMessage.cpp</string>
+				<key>path</key>
+				<string>../../../addons/ofxMidi/src/ofxMidiMessage.cpp</string>
+				<key>sourceTree</key>
+				<string>SOURCE_ROOT</string>
+			</dict>
+			<key>B76FA489151DBAF1616DF378</key>
+			<dict>
+				<key>explicitFileType</key>
+				<string>sourcecode.c.h</string>
+				<key>fileEncoding</key>
+				<string>30</string>
+				<key>isa</key>
+				<string>PBXFileReference</string>
+				<key>name</key>
+				<string>ofxMidiIn.h</string>
+				<key>path</key>
+				<string>../../../addons/ofxMidi/src/ofxMidiIn.h</string>
+				<key>sourceTree</key>
+				<string>SOURCE_ROOT</string>
+			</dict>
+			<key>0BFC9C20FD7E3C8D5873AA97</key>
+			<dict>
+				<key>fileRef</key>
+				<string>3DD359247F3ED1550D8BB5C9</string>
+				<key>isa</key>
+				<string>PBXBuildFile</string>
+			</dict>
+			<key>3DD359247F3ED1550D8BB5C9</key>
+			<dict>
+				<key>explicitFileType</key>
+				<string>sourcecode.cpp.cpp</string>
+				<key>fileEncoding</key>
+				<string>30</string>
+				<key>isa</key>
+				<string>PBXFileReference</string>
+				<key>name</key>
+				<string>ofxMidiIn.cpp</string>
+				<key>path</key>
+				<string>../../../addons/ofxMidi/src/ofxMidiIn.cpp</string>
+				<key>sourceTree</key>
+				<string>SOURCE_ROOT</string>
+			</dict>
+			<key>938214A2795AA8FED29086DB</key>
+			<dict>
+				<key>explicitFileType</key>
+				<string>sourcecode.c.h</string>
+				<key>fileEncoding</key>
+				<string>30</string>
+				<key>isa</key>
+				<string>PBXFileReference</string>
+				<key>name</key>
+				<string>ofxMidiConstants.h</string>
+				<key>path</key>
+				<string>../../../addons/ofxMidi/src/ofxMidiConstants.h</string>
+				<key>sourceTree</key>
+				<string>SOURCE_ROOT</string>
+			</dict>
+			<key>05F6CF127D4A621113D4A62F</key>
+			<dict>
+				<key>explicitFileType</key>
+				<string>sourcecode.c.h</string>
+				<key>fileEncoding</key>
+				<string>30</string>
+				<key>isa</key>
+				<string>PBXFileReference</string>
+				<key>name</key>
+				<string>ofxMidi.h</string>
+				<key>path</key>
+				<string>../../../addons/ofxMidi/src/ofxMidi.h</string>
+				<key>sourceTree</key>
+				<string>SOURCE_ROOT</string>
+			</dict>
+			<key>63F9FE1D90234FA6DE6F509E</key>
+			<dict>
+				<key>fileRef</key>
+				<string>E238CCDE032640E0FEBFAD82</string>
+				<key>isa</key>
+				<string>PBXBuildFile</string>
+			</dict>
+			<key>E238CCDE032640E0FEBFAD82</key>
+			<dict>
+				<key>explicitFileType</key>
+				<string>sourcecode.cpp.cpp</string>
+				<key>fileEncoding</key>
+				<string>30</string>
+				<key>isa</key>
+				<string>PBXFileReference</string>
+				<key>name</key>
+				<string>ofxMidi.cpp</string>
+				<key>path</key>
+				<string>../../../addons/ofxMidi/src/ofxMidi.cpp</string>
+				<key>sourceTree</key>
+				<string>SOURCE_ROOT</string>
+			</dict>
+			<key>4310BEFDE24FF04FEBEE8086</key>
+			<dict>
+				<key>explicitFileType</key>
+				<string>sourcecode.c.h</string>
+				<key>fileEncoding</key>
+				<string>30</string>
+				<key>isa</key>
+				<string>PBXFileReference</string>
+				<key>name</key>
+				<string>ofxBaseMidi.h</string>
+				<key>path</key>
+				<string>../../../addons/ofxMidi/src/ofxBaseMidi.h</string>
+				<key>sourceTree</key>
+				<string>SOURCE_ROOT</string>
+			</dict>
+			<key>1A86B7721CAEBC6F1C572C45</key>
+			<dict>
+				<key>fileRef</key>
+				<string>94B3C3C21F92F9310CA90986</string>
+				<key>isa</key>
+				<string>PBXBuildFile</string>
+			</dict>
+			<key>94B3C3C21F92F9310CA90986</key>
+			<dict>
+				<key>explicitFileType</key>
+				<string>sourcecode.cpp.cpp</string>
+				<key>fileEncoding</key>
+				<string>30</string>
+				<key>isa</key>
+				<string>PBXFileReference</string>
+				<key>name</key>
+				<string>ofxBaseMidi.cpp</string>
+				<key>path</key>
+				<string>../../../addons/ofxMidi/src/ofxBaseMidi.cpp</string>
+				<key>sourceTree</key>
+				<string>SOURCE_ROOT</string>
+			</dict>
+			<key>470CF04F1D4D1B38D5AA1797</key>
+			<dict>
+				<key>explicitFileType</key>
+				<string>sourcecode.c.h</string>
+				<key>fileEncoding</key>
+				<string>30</string>
+				<key>isa</key>
+				<string>PBXFileReference</string>
+				<key>name</key>
+				<string>ofxRtMidiOut.h</string>
+				<key>path</key>
+				<string>../../../addons/ofxMidi/src/desktop/ofxRtMidiOut.h</string>
+				<key>sourceTree</key>
+				<string>SOURCE_ROOT</string>
+			</dict>
+			<key>3AEFE4FA8AD5C72671AD07F8</key>
+			<dict>
+				<key>fileRef</key>
+				<string>712B183BC00EBFFB1EEA5AB8</string>
+				<key>isa</key>
+				<string>PBXBuildFile</string>
+			</dict>
+			<key>712B183BC00EBFFB1EEA5AB8</key>
+			<dict>
+				<key>explicitFileType</key>
+				<string>sourcecode.cpp.cpp</string>
+				<key>fileEncoding</key>
+				<string>30</string>
+				<key>isa</key>
+				<string>PBXFileReference</string>
+				<key>name</key>
+				<string>ofxRtMidiOut.cpp</string>
+				<key>path</key>
+				<string>../../../addons/ofxMidi/src/desktop/ofxRtMidiOut.cpp</string>
+				<key>sourceTree</key>
+				<string>SOURCE_ROOT</string>
+			</dict>
+			<key>208298154B11456DCD0BE131</key>
+			<dict>
+				<key>explicitFileType</key>
+				<string>sourcecode.c.h</string>
+				<key>fileEncoding</key>
+				<string>30</string>
+				<key>isa</key>
+				<string>PBXFileReference</string>
+				<key>name</key>
+				<string>ofxRtMidiIn.h</string>
+				<key>path</key>
+				<string>../../../addons/ofxMidi/src/desktop/ofxRtMidiIn.h</string>
+				<key>sourceTree</key>
+				<string>SOURCE_ROOT</string>
+			</dict>
+			<key>99DED6A5D3EDE030B1A80348</key>
+			<dict>
+				<key>children</key>
+				<array>
+					<string>F634AA6CA2E3C60F3B87B59A</string>
+					<string>208298154B11456DCD0BE131</string>
+					<string>712B183BC00EBFFB1EEA5AB8</string>
+					<string>470CF04F1D4D1B38D5AA1797</string>
+				</array>
+				<key>isa</key>
+				<string>PBXGroup</string>
+				<key>name</key>
+				<string>desktop</string>
+				<key>sourceTree</key>
+				<string>&lt;group&gt;</string>
+			</dict>
+			<key>9CBF51184BE294FD9D73043F</key>
+			<dict>
+				<key>children</key>
+				<array>
+					<string>99DED6A5D3EDE030B1A80348</string>
+					<string>94B3C3C21F92F9310CA90986</string>
+					<string>4310BEFDE24FF04FEBEE8086</string>
+					<string>E238CCDE032640E0FEBFAD82</string>
+					<string>05F6CF127D4A621113D4A62F</string>
+					<string>938214A2795AA8FED29086DB</string>
+					<string>3DD359247F3ED1550D8BB5C9</string>
+					<string>B76FA489151DBAF1616DF378</string>
+					<string>C0E7EDA67EDF213FC0E83D17</string>
+					<string>BD0E7AC8BE205034D5B377A6</string>
+					<string>04F77E5C73A62E2E77C78EC6</string>
+					<string>81436E53CC4A77E326F659C3</string>
+					<string>E16BB73D19DD0713FDCC7986</string>
+				</array>
+				<key>isa</key>
+				<string>PBXGroup</string>
+				<key>name</key>
+				<string>src</string>
+				<key>sourceTree</key>
+				<string>&lt;group&gt;</string>
+			</dict>
+			<key>2413C01760B1811BED0F502D</key>
+			<dict>
+				<key>children</key>
+				<array>
+					<string>9CBF51184BE294FD9D73043F</string>
+					<string>5A08CCDC8D19E7162DE57128</string>
+					<string>36D7EC7EF50E326EAC88A0AD</string>
+				</array>
+				<key>isa</key>
+				<string>PBXGroup</string>
+				<key>name</key>
+				<string>ofxMidi</string>
+				<key>sourceTree</key>
+				<string>&lt;group&gt;</string>
+			</dict>
+			<key>BCC8D420CBA9217E437D2D76</key>
+			<dict>
+				<key>fileRef</key>
+				<string>F634AA6CA2E3C60F3B87B59A</string>
+				<key>isa</key>
+				<string>PBXBuildFile</string>
+			</dict>
+			<key>F634AA6CA2E3C60F3B87B59A</key>
+			<dict>
+				<key>explicitFileType</key>
+				<string>sourcecode.cpp.cpp</string>
+				<key>fileEncoding</key>
+				<string>30</string>
+				<key>isa</key>
+				<string>PBXFileReference</string>
+				<key>name</key>
+				<string>ofxRtMidiIn.cpp</string>
+				<key>path</key>
+				<string>../../../addons/ofxMidi/src/desktop/ofxRtMidiIn.cpp</string>
+				<key>sourceTree</key>
+				<string>SOURCE_ROOT</string>
+			</dict>
 			<key>96FB3DE3F0BA2F1A21C7105D</key>
 			<dict>
 				<key>explicitFileType</key>
@@ -780,6 +1286,8 @@
 				<key>children</key>
 				<array>
 					<string>8A3DD780D89619FC9FE77FBA</string>
+					<string>2413C01760B1811BED0F502D</string>
+					<string>ABC5123E2929C5438D237753</string>
 					<string>C3C57D7F2C074534D007A193</string>
 				</array>
 				<key>isa</key>
@@ -936,6 +1444,13 @@
 						<string>$(OF_CORE_HEADERS)</string>
 						<string>src</string>
 						<string>../../../addons/ofxFatLines/src</string>
+						<string>../../../addons/ofxMidi/libs</string>
+						<string>../../../addons/ofxMidi/libs/pgmidi</string>
+						<string>../../../addons/ofxMidi/libs/rtmidi</string>
+						<string>../../../addons/ofxMidi/src</string>
+						<string>../../../addons/ofxMidi/src/desktop</string>
+						<string>../../../addons/ofxMidi/src/ios</string>
+						<string>../../../addons/ofxMidiFighterTwister/src</string>
 						<string>../../../addons/ofxShivaVG/libs</string>
 						<string>../../../addons/ofxShivaVG/libs/ShivaVG</string>
 						<string>../../../addons/ofxShivaVG/libs/ShivaVG/include</string>
@@ -1001,6 +1516,13 @@
 						<string>$(OF_CORE_HEADERS)</string>
 						<string>src</string>
 						<string>../../../addons/ofxFatLines/src</string>
+						<string>../../../addons/ofxMidi/libs</string>
+						<string>../../../addons/ofxMidi/libs/pgmidi</string>
+						<string>../../../addons/ofxMidi/libs/rtmidi</string>
+						<string>../../../addons/ofxMidi/src</string>
+						<string>../../../addons/ofxMidi/src/desktop</string>
+						<string>../../../addons/ofxMidi/src/ios</string>
+						<string>../../../addons/ofxMidiFighterTwister/src</string>
 						<string>../../../addons/ofxShivaVG/libs</string>
 						<string>../../../addons/ofxShivaVG/libs/ShivaVG</string>
 						<string>../../../addons/ofxShivaVG/libs/ShivaVG/include</string>
@@ -1065,6 +1587,15 @@
 					<string>E4B69E210A3A1BDC003C02F2</string>
 					<string>B3A9A95BCDE7FF1B89486968</string>
 					<string>0A03A75CD4D4AC0E1B4F6B2B</string>
+					<string>BCC8D420CBA9217E437D2D76</string>
+					<string>3AEFE4FA8AD5C72671AD07F8</string>
+					<string>1A86B7721CAEBC6F1C572C45</string>
+					<string>63F9FE1D90234FA6DE6F509E</string>
+					<string>0BFC9C20FD7E3C8D5873AA97</string>
+					<string>C6FE64F74F1EA1D98C8F9847</string>
+					<string>83D9F930112E0944444124EE</string>
+					<string>63D0FD8734D5760B8080C901</string>
+					<string>EC0A61ABB5A2ABAC37BB87B1</string>
 					<string>69F1233945AF12BB8CB4FD98</string>
 					<string>1C4E92C17B63D8592B1B3F3C</string>
 					<string>9568F15AF1DF79837AC6DDA0</string>
@@ -1092,6 +1623,7 @@
 				<key>files</key>
 				<array>
 					<string>E4328149138ABC9F0047C5CB</string>
+					<string>631702104AFC104323A9EB79</string>
 				</array>
 				<key>isa</key>
 				<string>PBXFrameworksBuildPhase</string>
@@ -1164,6 +1696,13 @@
 						<string>$(OF_CORE_HEADERS)</string>
 						<string>src</string>
 						<string>../../../addons/ofxFatLines/src</string>
+						<string>../../../addons/ofxMidi/libs</string>
+						<string>../../../addons/ofxMidi/libs/pgmidi</string>
+						<string>../../../addons/ofxMidi/libs/rtmidi</string>
+						<string>../../../addons/ofxMidi/src</string>
+						<string>../../../addons/ofxMidi/src/desktop</string>
+						<string>../../../addons/ofxMidi/src/ios</string>
+						<string>../../../addons/ofxMidiFighterTwister/src</string>
 						<string>../../../addons/ofxShivaVG/libs</string>
 						<string>../../../addons/ofxShivaVG/libs/ShivaVG</string>
 						<string>../../../addons/ofxShivaVG/libs/ShivaVG/include</string>
@@ -1179,6 +1718,7 @@
 					<array>
 						<string>$(inherited)</string>
 						<string>$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)</string>
+						<string>/System/Library/Frameworks</string>
 					</array>
 					<key>FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1</key>
 					<string>"$(SRCROOT)/../../../libs/glut/lib/osx"</string>
@@ -1219,6 +1759,13 @@
 						<string>$(OF_CORE_HEADERS)</string>
 						<string>src</string>
 						<string>../../../addons/ofxFatLines/src</string>
+						<string>../../../addons/ofxMidi/libs</string>
+						<string>../../../addons/ofxMidi/libs/pgmidi</string>
+						<string>../../../addons/ofxMidi/libs/rtmidi</string>
+						<string>../../../addons/ofxMidi/src</string>
+						<string>../../../addons/ofxMidi/src/desktop</string>
+						<string>../../../addons/ofxMidi/src/ios</string>
+						<string>../../../addons/ofxMidiFighterTwister/src</string>
 						<string>../../../addons/ofxShivaVG/libs</string>
 						<string>../../../addons/ofxShivaVG/libs/ShivaVG</string>
 						<string>../../../addons/ofxShivaVG/libs/ShivaVG/include</string>
@@ -1234,6 +1781,7 @@
 					<array>
 						<string>$(inherited)</string>
 						<string>$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)</string>
+						<string>/System/Library/Frameworks</string>
 					</array>
 					<key>FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1</key>
 					<string>"$(SRCROOT)/../../../libs/glut/lib/osx"</string>

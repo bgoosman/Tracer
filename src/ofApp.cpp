@@ -3,6 +3,7 @@
 class TracerUpdateStrategy {
 public:
     virtual void update(Tracer* t, float time) = 0;
+    bool enabled = true;
 };
 
 class TracerDrawStrategy {
@@ -44,6 +45,10 @@ public:
     Tracer(ofPoint startLocation) : head(startLocation) {
     }
     
+    TracerUpdateStrategy* getUpdateBehavior(int index) {
+        return (index >= 0 && index < updateStrategies.size()) ? updateStrategies[index] : nullptr;
+    }
+    
     void addUpdateBehavior(TracerUpdateStrategy* strategy) {
         updateStrategies.push_back(strategy);
     }
@@ -79,9 +84,45 @@ public:
     std::vector<TracerDrawStrategy*> drawStrategies;
 };
 
+template <class T>
+class ValueMapper : public TracerUpdateStrategy {
+public:
+    ValueMapper(T* subscriber, T* subscription, ofVec2f subscriberRange, ofVec2f subscriptionRange)
+    : subscriber(subscriber), subscription(subscription), subscriberRange(subscriberRange), subscriptionRange(subscriptionRange) {}
+    
+    void update(Tracer* t, float time) {
+        *subscriber = (T)(ofMap(*subscription, subscriptionRange[0], subscriptionRange[1], subscriberRange[0], subscriberRange[1]));
+    }
+    
+private:
+    T* subscriber;
+    T* subscription;
+    ofVec2f subscriberRange;
+    ofVec2f subscriptionRange;
+};
+
+template <class T>
+class VaryPerlin : public TracerUpdateStrategy {
+public:
+    VaryPerlin(T* source, ofVec2f range) :
+        source(source),
+        range(range)
+    {
+    }
+    
+    void update(Tracer* tracer, float time) {
+        float perlin = ofNoise(time * 0.001);
+        *source = ofMap(perlin, 0, 1, range[0], range[1], true);
+        std::cout << *source << std::endl;
+    }
+    
+    T* source;
+    ofVec2f range;
+};
+
 class Multiplier : public TracerDrawStrategy {
 public:
-    Multiplier(int count, float maxShift) : count(count) {
+    Multiplier(int count, float maxShift) : count(count), maxShift(maxShift) {
         for (int i = 0; i < count; i++) {
             ofPoint randomShift;
             randomShift.x = ofRandom(-1 * maxShift, maxShift);
@@ -92,8 +133,9 @@ public:
     }
     
     void draw(Tracer* t, float time, std::shared_ptr<ofBaseRenderer> renderer) {
+        int countInt = (int)count;
         if (t->particles.size() >= 2) {
-            for (int i = 0; i < count; i++) {
+            for (int i = 0; i < countInt; i++) {
                 ofPushMatrix();
                 ofPoint shift = shifts[i];
                 ofTranslate(shift);
@@ -103,9 +145,33 @@ public:
         }
     }
     
-private:
     std::vector<ofPoint> shifts;
-    int count;
+    float count;
+    float maxShift;
+};
+
+class VibratingMultiplier : public TracerDrawStrategy {
+public:
+    VibratingMultiplier(Multiplier* super) : super(super) {}
+    
+    void draw(Tracer* t, float time, std::shared_ptr<ofBaseRenderer> renderer) {
+        std::vector<ofPoint> shifts;
+        int countInt = (int)super->count;
+        int maxShift = super->maxShift;
+        for (int i = 0; i < countInt; i++) {
+            ofPoint randomShift;
+            randomShift.x = ofRandom(-1 * maxShift, maxShift);
+            randomShift.y = ofRandom(-1 * maxShift, maxShift);
+            randomShift.z = ofRandom(-1 * maxShift, maxShift);
+            shifts.push_back(randomShift);
+        }
+        
+        super->shifts = shifts;
+        super->draw(t, time, renderer);
+    }
+    
+private:
+    Multiplier* super;
 };
 
 class PerlinBrightness : public TracerDrawStrategy {
@@ -125,20 +191,37 @@ private:
     ofPoint velocity;
 };
 
-class StrokeWidth : public TracerDrawStrategy {
+class StrokeWidthMappedToValue : public TracerDrawStrategy {
 public:
-    StrokeWidth(float strokeWidth) : strokeWidth(strokeWidth) {}
+    StrokeWidthMappedToValue(float maxStrokeWidth, float* value, ofVec2f valueRange)
+    : maxStrokeWidth(maxStrokeWidth), value(value), valueRange(valueRange) {}
+    
     void draw(Tracer* t, float time, std::shared_ptr<ofBaseRenderer> renderer) {
+        float strokeWidth = ofMap(*value, valueRange[0], valueRange[1], 0, maxStrokeWidth);
         t->path.setStrokeWidth(strokeWidth);
     }
     
 private:
+    float maxStrokeWidth;
+    float* value;
+    ofVec2f valueRange;
+};
+
+class StrokeWidth : public TracerDrawStrategy {
+public:
+    StrokeWidth(float strokeWidth) : strokeWidth(strokeWidth) {}
+    
+    void draw(Tracer* t, float time, std::shared_ptr<ofBaseRenderer> renderer) {
+        t->path.setStrokeWidth(strokeWidth);
+    }
+    
     float strokeWidth;
 };
 
 class FilledPath : public TracerDrawStrategy {
 public:
     FilledPath(bool filled) : filled(filled) {}
+    
     void draw(Tracer* t, float time, std::shared_ptr<ofBaseRenderer> renderer) {
         t->path.setFilled(filled);
     }
@@ -160,7 +243,11 @@ private:
 
 class RandomStrokeColor : public StrokeColor {
 public:
-    RandomStrokeColor() : StrokeColor(ofColor(ofRandom(255), ofRandom(255), ofRandom(255))) {}
+    RandomStrokeColor() :
+        StrokeColor(ofColor(ofRandom(255), ofRandom(255), ofRandom(255))) {}
+    
+    RandomStrokeColor(ofColor colors[], int size) :
+        StrokeColor(colors[rand() % size]) {}
 };
 
 class DrawPath : public TracerDrawStrategy {
@@ -203,7 +290,9 @@ private:
 class HeadGrowth : public TracerUpdateStrategy {
 public:
     void update(Tracer* t, float time) {
-        t->particles.push_back(new Particle(t->head, ofVec3f::zero(), 0));
+        if (enabled) {
+            t->particles.push_back(new Particle(t->head, ofVec3f::zero(), 0));
+        }
     }
 };
 
@@ -223,13 +312,13 @@ public:
     MaximumLength(size_t maxPoints): maxPoints(maxPoints) {}
     
     void update(Tracer* t, float time) {
-        if (t->particles.size() >= maxPoints) {
+        if (t->particles.size() > maxPoints) {
             Particle* p = t->particles[0];
             t->particles.pop_front();
             delete p;
         }
     }
-private:
+
     size_t maxPoints;
 };
 
@@ -247,7 +336,7 @@ public:
         float z = zMax * ofNoise(time * velocity[2] + timeShift[2]);
         x = ofMap(x, 0, xMax, 0, stageSize[0], true);
         y = ofMap(y, 0, yMax, 0, stageSize[1], true);
-        z = ofMap(z, 0, zMax, 0, stageSize[2], true);
+        z = ofMap(z, 0, zMax, -1 * stageSize[2], stageSize[2], true);
         t->head = ofPoint(x, y, z);
     }
     
@@ -259,60 +348,176 @@ private:
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    ofSetFrameRate(60.0f);
-    ofSetCurveResolution(100);
-    
-    maxPoints = 100;
-    stageSize = ofPoint(ofGetWidth(), ofGetHeight());
+    stageSize = ofPoint(ofGetWidth(), ofGetHeight(), maxZ);
     stageCenter = ofPoint(ofGetWindowWidth() / 2, ofGetWindowHeight() / 2);
-    strokeWidth = 3.0;
+    tick = 0;
     time = ofGetElapsedTimeMillis();
-    tracerCount = 20;
+    tracersToAdd = 0;
+    tracersToDelete = 0;
     windowPadding = 25;
     
+    ofSetFrameRate(60.0f);
+    ofSetCurveResolution(100);
+    setupTracers();
+    setupSoundStream();
+    setupMidiFighterTwister();
+}
+
+void ofApp::setupRenderer() {
     defaultRenderer = ofGetCurrentRenderer();
     shivaVGRenderer = ofPtr<ofxShivaVGRenderer>(new ofxShivaVGRenderer);
     shivaVGRenderer->setLineJoinStyle(VG_JOIN_ROUND);
     shivaVGRenderer->setLineCapStyle(VG_CAP_ROUND);
     ofSetCurrentRenderer(shivaVGRenderer);
-    
-    p0 = new Particle(stageCenter, ofPoint::zero(), 5);
+}
+
+Tracer* ofApp::makeTracer() {
+    int minGreen = 90;
+    int maxGreen = 225;
+    int minBlue = 90;
+    int maxBlue = 225;
+    ofColor blueColors[] = {
+        ofColor(0, ofRandom(minGreen, maxGreen), ofRandom(minBlue, maxBlue)),
+        ofColor(0, ofRandom(minGreen, maxGreen), ofRandom(minBlue, maxBlue)),
+        ofColor(0, ofRandom(minGreen, maxGreen), ofRandom(minBlue, maxBlue)),
+        ofColor(0, ofRandom(minGreen, maxGreen), ofRandom(minBlue, maxBlue)),
+        ofColor(0, ofRandom(minGreen, maxGreen), ofRandom(minBlue, maxBlue))
+    };
+    int colorsSize = 5;
+    ofPoint velocity(0.001, 0.001, 0.001);
+    ofPoint timeShift(ofRandom(stageSize[0]), ofRandom(stageSize[1]), ofRandom(stageSize[2]));
+    auto tracer = new Tracer(stageCenter);
+    tracer->addUpdateBehavior(new MaximumLength(maxPoints));
+    tracer->addUpdateBehavior(new PerlinMovement(velocity, stageSize, timeShift));
+    tracer->addUpdateBehavior(new HeadGrowth);
+    tracer->addUpdateBehavior(new CurvedPath);
+    tracer->addDrawBehavior(new EllipseTail(strokeWidth));
+    tracer->addDrawBehavior(new EllipseHead(strokeWidth));
+    tracer->addDrawBehavior(new DrawPath);
+    tracer->addDrawBehavior(new RandomStrokeColor(blueColors, 5));
+    auto strokeWidthStrategy = new StrokeWidth(strokeWidth);
+    tracer->addDrawBehavior(strokeWidthStrategy);
+//    ValueMapper<float>* zToStrokeWidth = new ValueMapper<float>(
+//        &(strokeWidthStrategy->strokeWidth),
+//        &(t->head.z),
+//        ofVec2f(1, strokeWidth),
+//        ofVec2f(-1*stageSize[2], stageSize[2])
+//    );
+//    t->addUpdateBehavior(zToStrokeWidth);
+//    t->addDrawBehavior(new StrokeColor(ofColor::white));
+//    t->addDrawBehavior(new StrokeWidthMappedToValue(strokeWidth, &(t->head.z), ofPoint(-1*stageSize[2], stageSize[2])));
+    tracer->addDrawBehavior(new FilledPath(false));
+//    t->addDrawBehavior(new PerlinBrightness(timeShift, velocity));
+    auto multiplier = new VibratingMultiplier(new Multiplier(multiplierCount, 3.0f));
+    tracer->addDrawBehavior(multiplier);
+//    t->addUpdateBehavior(new VaryPerlin<float>(&multiplier->maxShift, ofVec2f(1, 5)));
+//    t->addUpdateBehavior(new ValueMapper<float>(
+//        &multiplier->maxShift,
+//        &this->scaledVol,
+//        ofVec2f(1, 120),
+//        ofVec2f(0, 1)
+//    ));
+    return tracer;
+}
+
+void ofApp::setupTracers() {
+    maxPoints = 100;
+    maxZ = 10;
+    multiplierCount = 5;
+    strokeWidth = 1;
+    tracerCount = 1;
+    tracers.reserve(256);
     for (int i = 0; i < tracerCount; i++) {
-        ofPoint velocity(0.001, 0.001, 0.001);
-        ofPoint timeShift(ofRandom(stageSize[0]),
-                          ofRandom(stageSize[1]),
-                          100);
-        Tracer* t = new Tracer(stageCenter);
-        t->addUpdateBehavior(new PerlinMovement(velocity, stageSize, timeShift));
-        t->addUpdateBehavior(new MaximumLength(maxPoints));
-        t->addUpdateBehavior(new HeadGrowth);
-        t->addUpdateBehavior(new CurvedPath);
-        t->addDrawBehavior(new EllipseTail(strokeWidth));
-        t->addDrawBehavior(new EllipseHead(strokeWidth));
-        t->addDrawBehavior(new DrawPath());
-        t->addDrawBehavior(new RandomStrokeColor());
-        t->addDrawBehavior(new StrokeWidth(strokeWidth));
-        t->addDrawBehavior(new FilledPath(false));
-        t->addDrawBehavior(new PerlinBrightness(timeShift, velocity));
-        t->addDrawBehavior(new Multiplier(5, 80.0f));
-        tracers.push_back(t);
+        tracers.push_back(makeTracer());
     }
+}
+
+void ofApp::setupSoundStream() {
+    soundStream.printDeviceList();
+    int bufferSize = 256;
+    left.assign(bufferSize, 0.0);
+    right.assign(bufferSize, 0.0);
+    volHistory.assign(400, 0.0);
+    bufferCounter = 0;
+    drawCounter	= 0;
+    smoothedVol = 0.0;
+    scaledVol = 0.0;
+    soundStream.setup(this, 0, 1, 44100, bufferSize, 4);
+    soundStream.start();
+}
+
+void ofApp::setupMidiFighterTwister() {
+    twister.setup();
+    ofAddListener(twister.eventEncoder, this, &ofApp::onEncoderUpdate);
+    ofAddListener(twister.eventPushSwitch, this, &ofApp::onPushSwitchUpdate);
+    ofAddListener(twister.eventSideButton, this, &ofApp::onSideButtonPressed);
+}
+
+void ofApp::onEncoderUpdate(ofxMidiFighterTwister::EncoderEventArgs & a){
+    ofLogNotice() << "Encoder '" << a.ID << "' Event! val: " << a.value;
+    if (a.ID == 0) {
+        if (a.value == ofxMidiFighterTwister::MIDI_INCREASE) {
+            tracersToAdd++;
+        } else if (a.value == ofxMidiFighterTwister::MIDI_DECREASE) {
+            tracersToDelete++;
+        }
+    } else if (a.ID == 1) {
+        std::cout << a.value << std::endl;
+    }
+}
+
+void ofApp::onPushSwitchUpdate(ofxMidiFighterTwister::PushSwitchEventArgs & a){
+    ofLogNotice() << "PushSwitch '" << a.ID << "' Event! val: " << a.value;
+}
+
+void ofApp::onSideButtonPressed(ofxMidiFighterTwister::SideButtonEventArgs & a){
+    ofLogNotice() << "Side Button Pressed";
 }
 
 //--------------------------------------------------------------
 void ofApp::update() {
     float currentTime = ofGetElapsedTimeMillis();
-    if (currentTime - time >= 0) {
-        std::for_each(tracers.begin(), tracers.end(), [currentTime](Tracer* t) {
-            t->update(currentTime);
-        });
-        time = currentTime;
+    
+    int localTracersToAdd = tracersToAdd;
+    for (; localTracersToAdd > 0; localTracersToAdd--) {
+        tracers.push_back(makeTracer());
+    }
+    tracersToAdd = 0;
+    
+    int localTracersToDelete = tracersToDelete;
+    for (; tracers.size() > 0 && localTracersToDelete > 0; localTracersToDelete--) {
+        tracers.pop_back();
+    }
+    tracersToDelete = 0;
+    
+    std::for_each(tracers.begin(), tracers.end(), [currentTime](Tracer* t) {
+        t->update(currentTime);
+    });
+    
+//    if (currentTime - time >= 6*1000) {
+//        if (tick < tracers.size()) {
+//            Tracer* t = tracers[tick++];
+//            MaximumLength* behavior = (MaximumLength*) t->getUpdateBehavior(0);
+//            behavior->maxPoints = 0;
+//            HeadGrowth* headGrowth = (HeadGrowth*) t->getUpdateBehavior(2);
+//            headGrowth->enabled = false;
+//            time = currentTime;
+//            std::cout << "deleting 1" << std::endl;
+//        }
+//    }
+    
+    time = currentTime;
+    
+    scaledVol = ofMap(smoothedVol, 0.0, 0.17, 0.0, 1.0, true);
+    volHistory.push_back( scaledVol );
+    if (volHistory.size() >= 400) {
+        volHistory.erase(volHistory.begin(), volHistory.begin()+1);
     }
 }
 
 //--------------------------------------------------------------
 void ofApp::draw() {
-    ofBackground(50);
+    ofBackground(255);
     float currentTime = ofGetElapsedTimeMillis();
     std::for_each(tracers.begin(), tracers.end(), [=](Tracer* t) {
         t->draw(currentTime, ofGetCurrentRenderer());
@@ -324,17 +529,56 @@ void ofApp::draw() {
     ofSetWindowTitle(m.str());
 }
 
+void ofApp::audioIn(float * input, int bufferSize, int nChannels){
+    
+    float curVol = 0.0;
+    
+    // samples are "interleaved"
+    int numCounted = 0;
+    
+    //lets go through each sample and calculate the root mean square which is a rough way to calculate volume
+    for (int i = 0; i < bufferSize; i++){
+        left[i]		= input[i]*0.5;
+//        right[i]	= input[i*2+1]*0.5;
+        
+        curVol += left[i] * left[i];
+//        curVol += right[i] * right[i];
+        numCounted+=1;
+    }
+    
+    //this is how we get the mean of rms :)
+    curVol /= (float)numCounted;
+    
+    // this is how we get the root of rms :)
+    curVol = sqrt( curVol );
+    
+    smoothedVol *= 0.93;
+    smoothedVol += 0.07 * curVol;
+    
+    bufferCounter++;
+}
+
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-
 }
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
-    if (key == 107 /* k */) {
-        curvedPath.setCurveResolution(curvedPath.getCurveResolution() + 1);
-    } else if (key == 106 /* j */) {
-        curvedPath.setCurveResolution(curvedPath.getCurveResolution() - 1);
+    if (key == 'f') {
+        ofToggleFullscreen();
+    }
+    
+    if (key == 'x') {
+        screenGrabber.grabScreen(0, 0 , ofGetWidth(), ofGetHeight());
+        screenGrabber.save("screenshot.png");
+    }
+    
+    if (key == 's') {
+        soundStream.start();
+    }
+    
+    if (key == 'e') {
+        soundStream.stop();
     }
 }
 

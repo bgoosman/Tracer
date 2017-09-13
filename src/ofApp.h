@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "ofxShivaVGRenderer.h"
+#include "ofxMidiFighterTwister.h"
 
 class Particle;
 class Tracer;
@@ -33,15 +34,43 @@ private:
     std::deque<double> weights;
     std::vector<Tracer*> tracers;
     int tracerCount;
+    int tick;
+    int lastVal;
+    int tracersToAdd;
+    int tracersToDelete;
+    Tracer* makeTracer();
+    void setupTracers();
    
+    ofImage screenGrabber;
     ofPtr<ofBaseRenderer> defaultRenderer;
     ofPtr<ofxShivaVGRenderer> shivaVGRenderer;
+    void setupRenderer();
+    
     ofPath curvedPath;
     ofPoint stageSize;
     ofPoint stageCenter;
-    float time;
+    float maxZ;
+    int multiplierCount;
     float perlinShiftX;
     float perlinShiftY;
     float strokeWidth;
+    float time;
     float windowPadding;
+    
+    std::vector<float> left;
+    std::vector<float> right;
+    std::vector<float> volHistory;
+    int bufferCounter;
+    int drawCounter;
+    float smoothedVol;
+    float scaledVol;
+    ofSoundStream soundStream;
+    void audioIn(float * input, int bufferSize, int nChannels);
+    void setupSoundStream();
+    
+    ofxMidiFighterTwister twister;
+    void setupMidiFighterTwister();
+    void onEncoderUpdate(ofxMidiFighterTwister::EncoderEventArgs &);
+    void onPushSwitchUpdate(ofxMidiFighterTwister::PushSwitchEventArgs &);
+    void onSideButtonPressed(ofxMidiFighterTwister::SideButtonEventArgs &);
 };

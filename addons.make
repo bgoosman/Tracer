@@ -1,2 +1,4 @@
 ofxFatLines
+ofxMidi
+ofxMidiFighterTwister
 ofxShivaVG
