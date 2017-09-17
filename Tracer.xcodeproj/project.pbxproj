@@ -1,2011 +1,726 @@
-<?xml version="1.0"?>
-<plist version="1.0">
-	<dict>
-		<key>archiveVersion</key>
-		<string>1</string>
-		<key>classes</key>
-		<dict />
-		<key>objectVersion</key>
-		<string>46</string>
-		<key>objects</key>
-		<dict>
-			<key>528756D1A6760D229052A271</key>
-			<dict>
-				<key>fileRef</key>
-				<string>547A18E0AF7E07048E2ED97D</string>
-				<key>isa</key>
-				<string>PBXBuildFile</string>
-			</dict>
-			<key>547A18E0AF7E07048E2ED97D</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.c</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>shVgu.c</string>
-				<key>path</key>
-				<string>../../../addons/ofxShivaVG/libs/ShivaVG/src/shVgu.c</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>892C09360B911BEB40889C00</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>shVectors.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxShivaVG/libs/ShivaVG/src/shVectors.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>8332C9CAF1F847B43A86F345</key>
-			<dict>
-				<key>fileRef</key>
-				<string>5EA7D72DC7EC2DF57FC6194F</string>
-				<key>isa</key>
-				<string>PBXBuildFile</string>
-			</dict>
-			<key>5EA7D72DC7EC2DF57FC6194F</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.c</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>shVectors.c</string>
-				<key>path</key>
-				<string>../../../addons/ofxShivaVG/libs/ShivaVG/src/shVectors.c</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>77FCF151C0F9384474A465A3</key>
-			<dict>
-				<key>fileRef</key>
-				<string>4F967362F67D33C9273D67C2</string>
-				<key>isa</key>
-				<string>PBXBuildFile</string>
-			</dict>
-			<key>4F967362F67D33C9273D67C2</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.c</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>shPipeline.c</string>
-				<key>path</key>
-				<string>../../../addons/ofxShivaVG/libs/ShivaVG/src/shPipeline.c</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>7331179BBD3148D11CEC5493</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>shPath.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxShivaVG/libs/ShivaVG/src/shPath.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>A8CC477E84407E63FBE21942</key>
-			<dict>
-				<key>fileRef</key>
-				<string>6203EA51772E81F5895A72FB</string>
-				<key>isa</key>
-				<string>PBXBuildFile</string>
-			</dict>
-			<key>6203EA51772E81F5895A72FB</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.c</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>shPath.c</string>
-				<key>path</key>
-				<string>../../../addons/ofxShivaVG/libs/ShivaVG/src/shPath.c</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>AEFA334814D3EE4F9E6F4829</key>
-			<dict>
-				<key>fileRef</key>
-				<string>A128F7DF9E47492BCF66CE75</string>
-				<key>isa</key>
-				<string>PBXBuildFile</string>
-			</dict>
-			<key>A128F7DF9E47492BCF66CE75</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.c</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>shParams.c</string>
-				<key>path</key>
-				<string>../../../addons/ofxShivaVG/libs/ShivaVG/src/shParams.c</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>384B4CB71128CF0334DBE1D2</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>shPaint.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxShivaVG/libs/ShivaVG/src/shPaint.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>4C2B9798639946BC69B1C9A0</key>
-			<dict>
-				<key>fileRef</key>
-				<string>3F6C91B3031B6E39F34139A1</string>
-				<key>isa</key>
-				<string>PBXBuildFile</string>
-			</dict>
-			<key>3F6C91B3031B6E39F34139A1</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.c</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>shPaint.c</string>
-				<key>path</key>
-				<string>../../../addons/ofxShivaVG/libs/ShivaVG/src/shPaint.c</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>C58AD296F58D6E882E018372</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>shImage.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxShivaVG/libs/ShivaVG/src/shImage.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>CE29D5F7939844D88FD3F6D2</key>
-			<dict>
-				<key>fileRef</key>
-				<string>96AF9AB73B6206BC0E128883</string>
-				<key>isa</key>
-				<string>PBXBuildFile</string>
-			</dict>
-			<key>96AF9AB73B6206BC0E128883</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.c</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>shImage.c</string>
-				<key>path</key>
-				<string>../../../addons/ofxShivaVG/libs/ShivaVG/src/shImage.c</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>6B8A53518465F3899295605E</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>shGeometry.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxShivaVG/libs/ShivaVG/src/shGeometry.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>30F8CEA9712C8FCE39D3B1D9</key>
-			<dict>
-				<key>fileRef</key>
-				<string>F2A1EF4C771D7C5BF39F106A</string>
-				<key>isa</key>
-				<string>PBXBuildFile</string>
-			</dict>
-			<key>F2A1EF4C771D7C5BF39F106A</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.c</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>shGeometry.c</string>
-				<key>path</key>
-				<string>../../../addons/ofxShivaVG/libs/ShivaVG/src/shGeometry.c</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>760CC9EF64750BCA93736C4F</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>shExtensions.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxShivaVG/libs/ShivaVG/src/shExtensions.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>5A83FB2E1B86442B3B2FBC53</key>
-			<dict>
-				<key>fileRef</key>
-				<string>0017730065F918830FF718A1</string>
-				<key>isa</key>
-				<string>PBXBuildFile</string>
-			</dict>
-			<key>0017730065F918830FF718A1</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.c</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>shExtensions.c</string>
-				<key>path</key>
-				<string>../../../addons/ofxShivaVG/libs/ShivaVG/src/shExtensions.c</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>B75DD18D4AD62928FB4708B5</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>shDefs.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxShivaVG/libs/ShivaVG/src/shDefs.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>E6212E06119DDEC06E3C6C63</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>shContext.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxShivaVG/libs/ShivaVG/src/shContext.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>614E00FEB2A84A253E9002A5</key>
-			<dict>
-				<key>fileRef</key>
-				<string>00882C67C0C5616E9CD55898</string>
-				<key>isa</key>
-				<string>PBXBuildFile</string>
-			</dict>
-			<key>00882C67C0C5616E9CD55898</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.c</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>shContext.c</string>
-				<key>path</key>
-				<string>../../../addons/ofxShivaVG/libs/ShivaVG/src/shContext.c</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>E8008BD7922EF5419B8CB061</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>shArrays.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxShivaVG/libs/ShivaVG/src/shArrays.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>624BAD2EF0B64CEBBF94135B</key>
-			<dict>
-				<key>fileRef</key>
-				<string>D00162B34D1F26468CB6DAE0</string>
-				<key>isa</key>
-				<string>PBXBuildFile</string>
-			</dict>
-			<key>D00162B34D1F26468CB6DAE0</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.c</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>shArrays.c</string>
-				<key>path</key>
-				<string>../../../addons/ofxShivaVG/libs/ShivaVG/src/shArrays.c</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>5FF18395A75FE5A9F97E7171</key>
-			<dict>
-				<key>children</key>
-				<array>
-					<string>85A4021032286C9CBE811772</string>
-					<string>D00162B34D1F26468CB6DAE0</string>
-					<string>E8008BD7922EF5419B8CB061</string>
-					<string>00882C67C0C5616E9CD55898</string>
-					<string>E6212E06119DDEC06E3C6C63</string>
-					<string>B75DD18D4AD62928FB4708B5</string>
-					<string>0017730065F918830FF718A1</string>
-					<string>760CC9EF64750BCA93736C4F</string>
-					<string>F2A1EF4C771D7C5BF39F106A</string>
-					<string>6B8A53518465F3899295605E</string>
-					<string>96AF9AB73B6206BC0E128883</string>
-					<string>C58AD296F58D6E882E018372</string>
-					<string>3F6C91B3031B6E39F34139A1</string>
-					<string>384B4CB71128CF0334DBE1D2</string>
-					<string>A128F7DF9E47492BCF66CE75</string>
-					<string>6203EA51772E81F5895A72FB</string>
-					<string>7331179BBD3148D11CEC5493</string>
-					<string>4F967362F67D33C9273D67C2</string>
-					<string>5EA7D72DC7EC2DF57FC6194F</string>
-					<string>892C09360B911BEB40889C00</string>
-					<string>547A18E0AF7E07048E2ED97D</string>
-				</array>
-				<key>isa</key>
-				<string>PBXGroup</string>
-				<key>name</key>
-				<string>src</string>
-				<key>sourceTree</key>
-				<string>&lt;group&gt;</string>
-			</dict>
-			<key>85A4021032286C9CBE811772</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>shArrayBase.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxShivaVG/libs/ShivaVG/src/shArrayBase.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>DA2B6664105D3D2F3DF18ADC</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>vgu.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxShivaVG/libs/ShivaVG/include/vg/vgu.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>55E8551566003B4331C77827</key>
-			<dict>
-				<key>children</key>
-				<array>
-					<string>38DC30979D68E3D5CB923891</string>
-					<string>DA2B6664105D3D2F3DF18ADC</string>
-				</array>
-				<key>isa</key>
-				<string>PBXGroup</string>
-				<key>name</key>
-				<string>vg</string>
-				<key>sourceTree</key>
-				<string>&lt;group&gt;</string>
-			</dict>
-			<key>2D9AC4E3BCAF9586BAF0E9B4</key>
-			<dict>
-				<key>children</key>
-				<array>
-					<string>55E8551566003B4331C77827</string>
-				</array>
-				<key>isa</key>
-				<string>PBXGroup</string>
-				<key>name</key>
-				<string>include</string>
-				<key>sourceTree</key>
-				<string>&lt;group&gt;</string>
-			</dict>
-			<key>B94BF1DAC92BB22060F1F7ED</key>
-			<dict>
-				<key>children</key>
-				<array>
-					<string>2D9AC4E3BCAF9586BAF0E9B4</string>
-					<string>5FF18395A75FE5A9F97E7171</string>
-				</array>
-				<key>isa</key>
-				<string>PBXGroup</string>
-				<key>name</key>
-				<string>ShivaVG</string>
-				<key>sourceTree</key>
-				<string>&lt;group&gt;</string>
-			</dict>
-			<key>5EE4F98C98D10288D3937980</key>
-			<dict>
-				<key>children</key>
-				<array>
-					<string>B94BF1DAC92BB22060F1F7ED</string>
-				</array>
-				<key>isa</key>
-				<string>PBXGroup</string>
-				<key>name</key>
-				<string>libs</string>
-				<key>sourceTree</key>
-				<string>&lt;group&gt;</string>
-			</dict>
-			<key>38DC30979D68E3D5CB923891</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>openvg.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxShivaVG/libs/ShivaVG/include/vg/openvg.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>1931D59D9FBEFF3D976D5BDE</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>simpleVGPath.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxShivaVG/src/simpleVGPath.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>9568F15AF1DF79837AC6DDA0</key>
-			<dict>
-				<key>fileRef</key>
-				<string>DBB867ED25E170AF3A601FEF</string>
-				<key>isa</key>
-				<string>PBXBuildFile</string>
-			</dict>
-			<key>DBB867ED25E170AF3A601FEF</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.cpp.cpp</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>simpleVGPath.cpp</string>
-				<key>path</key>
-				<string>../../../addons/ofxShivaVG/src/simpleVGPath.cpp</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>200635693A29D896983E39FA</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>simpleVGContext.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxShivaVG/src/simpleVGContext.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>1C4E92C17B63D8592B1B3F3C</key>
-			<dict>
-				<key>fileRef</key>
-				<string>225821E3F9982E8E66F90F9C</string>
-				<key>isa</key>
-				<string>PBXBuildFile</string>
-			</dict>
-			<key>225821E3F9982E8E66F90F9C</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.cpp.cpp</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>simpleVGContext.cpp</string>
-				<key>path</key>
-				<string>../../../addons/ofxShivaVG/src/simpleVGContext.cpp</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>99C07695E461F5C73A6F20B7</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>ofxShivaVGRenderer.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxShivaVG/src/ofxShivaVGRenderer.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>BFC8D5A22EF0DA1976394128</key>
-			<dict>
-				<key>children</key>
-				<array>
-					<string>B9831B435E39EB95AED87C75</string>
-					<string>99C07695E461F5C73A6F20B7</string>
-					<string>225821E3F9982E8E66F90F9C</string>
-					<string>200635693A29D896983E39FA</string>
-					<string>DBB867ED25E170AF3A601FEF</string>
-					<string>1931D59D9FBEFF3D976D5BDE</string>
-				</array>
-				<key>isa</key>
-				<string>PBXGroup</string>
-				<key>name</key>
-				<string>src</string>
-				<key>sourceTree</key>
-				<string>&lt;group&gt;</string>
-			</dict>
-			<key>C3C57D7F2C074534D007A193</key>
-			<dict>
-				<key>children</key>
-				<array>
-					<string>BFC8D5A22EF0DA1976394128</string>
-					<string>5EE4F98C98D10288D3937980</string>
-				</array>
-				<key>isa</key>
-				<string>PBXGroup</string>
-				<key>name</key>
-				<string>ofxShivaVG</string>
-				<key>sourceTree</key>
-				<string>&lt;group&gt;</string>
-			</dict>
-			<key>69F1233945AF12BB8CB4FD98</key>
-			<dict>
-				<key>fileRef</key>
-				<string>B9831B435E39EB95AED87C75</string>
-				<key>isa</key>
-				<string>PBXBuildFile</string>
-			</dict>
-			<key>B9831B435E39EB95AED87C75</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.cpp.cpp</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>ofxShivaVGRenderer.cpp</string>
-				<key>path</key>
-				<string>../../../addons/ofxShivaVG/src/ofxShivaVGRenderer.cpp</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>4A1F5B1908FA91168825B38E</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>ofxMidiFighterTwister.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxMidiFighterTwister/src/ofxMidiFighterTwister.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>0C287C11E084135BA344B4EE</key>
-			<dict>
-				<key>children</key>
-				<array>
-					<string>FC090738E05B8FA44B5F10FE</string>
-					<string>4A1F5B1908FA91168825B38E</string>
-				</array>
-				<key>isa</key>
-				<string>PBXGroup</string>
-				<key>name</key>
-				<string>src</string>
-				<key>sourceTree</key>
-				<string>&lt;group&gt;</string>
-			</dict>
-			<key>ABC5123E2929C5438D237753</key>
-			<dict>
-				<key>children</key>
-				<array>
-					<string>0C287C11E084135BA344B4EE</string>
-				</array>
-				<key>isa</key>
-				<string>PBXGroup</string>
-				<key>name</key>
-				<string>ofxMidiFighterTwister</string>
-				<key>sourceTree</key>
-				<string>&lt;group&gt;</string>
-			</dict>
-			<key>EC0A61ABB5A2ABAC37BB87B1</key>
-			<dict>
-				<key>fileRef</key>
-				<string>FC090738E05B8FA44B5F10FE</string>
-				<key>isa</key>
-				<string>PBXBuildFile</string>
-			</dict>
-			<key>FC090738E05B8FA44B5F10FE</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.cpp.cpp</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>ofxMidiFighterTwister.cpp</string>
-				<key>path</key>
-				<string>../../../addons/ofxMidiFighterTwister/src/ofxMidiFighterTwister.cpp</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>36D7EC7EF50E326EAC88A0AD</key>
-			<dict>
-				<key>children</key>
-				<array>
-					<string>81AC32CCCB56FAABA3E1BDE0</string>
-				</array>
-				<key>isa</key>
-				<string>PBXGroup</string>
-				<key>name</key>
-				<string>frameworks</string>
-				<key>sourceTree</key>
-				<string>&lt;group&gt;</string>
-			</dict>
-			<key>631702104AFC104323A9EB79</key>
-			<dict>
-				<key>fileRef</key>
-				<string>81AC32CCCB56FAABA3E1BDE0</string>
-				<key>isa</key>
-				<string>PBXBuildFile</string>
-			</dict>
-			<key>81AC32CCCB56FAABA3E1BDE0</key>
-			<dict>
-				<key>lastKnownFileType</key>
-				<string>wrapper.framework</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>CoreMIDI.framework</string>
-				<key>path</key>
-				<string>/System/Library/Frameworks/CoreMIDI.framework</string>
-				<key>sourceTree</key>
-				<string>&lt;group&gt;</string>
-			</dict>
-			<key>A8793707281FD436C34316A5</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>RtMidi.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxMidi/libs/rtmidi/RtMidi.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>945CEFADFB0DF400A92A507C</key>
-			<dict>
-				<key>children</key>
-				<array>
-					<string>ABDEF0ACF05BF28F5C74E008</string>
-					<string>A8793707281FD436C34316A5</string>
-				</array>
-				<key>isa</key>
-				<string>PBXGroup</string>
-				<key>name</key>
-				<string>rtmidi</string>
-				<key>sourceTree</key>
-				<string>&lt;group&gt;</string>
-			</dict>
-			<key>5A08CCDC8D19E7162DE57128</key>
-			<dict>
-				<key>children</key>
-				<array>
-					<string>945CEFADFB0DF400A92A507C</string>
-				</array>
-				<key>isa</key>
-				<string>PBXGroup</string>
-				<key>name</key>
-				<string>libs</string>
-				<key>sourceTree</key>
-				<string>&lt;group&gt;</string>
-			</dict>
-			<key>63D0FD8734D5760B8080C901</key>
-			<dict>
-				<key>fileRef</key>
-				<string>ABDEF0ACF05BF28F5C74E008</string>
-				<key>isa</key>
-				<string>PBXBuildFile</string>
-			</dict>
-			<key>ABDEF0ACF05BF28F5C74E008</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.cpp.cpp</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>RtMidi.cpp</string>
-				<key>path</key>
-				<string>../../../addons/ofxMidi/libs/rtmidi/RtMidi.cpp</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>E16BB73D19DD0713FDCC7986</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>ofxMidiTypes.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxMidi/src/ofxMidiTypes.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>81436E53CC4A77E326F659C3</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>ofxMidiOut.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxMidi/src/ofxMidiOut.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>83D9F930112E0944444124EE</key>
-			<dict>
-				<key>fileRef</key>
-				<string>04F77E5C73A62E2E77C78EC6</string>
-				<key>isa</key>
-				<string>PBXBuildFile</string>
-			</dict>
-			<key>04F77E5C73A62E2E77C78EC6</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.cpp.cpp</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>ofxMidiOut.cpp</string>
-				<key>path</key>
-				<string>../../../addons/ofxMidi/src/ofxMidiOut.cpp</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>BD0E7AC8BE205034D5B377A6</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>ofxMidiMessage.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxMidi/src/ofxMidiMessage.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>C6FE64F74F1EA1D98C8F9847</key>
-			<dict>
-				<key>fileRef</key>
-				<string>C0E7EDA67EDF213FC0E83D17</string>
-				<key>isa</key>
-				<string>PBXBuildFile</string>
-			</dict>
-			<key>C0E7EDA67EDF213FC0E83D17</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.cpp.cpp</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>ofxMidiMessage.cpp</string>
-				<key>path</key>
-				<string>../../../addons/ofxMidi/src/ofxMidiMessage.cpp</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>B76FA489151DBAF1616DF378</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>ofxMidiIn.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxMidi/src/ofxMidiIn.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>0BFC9C20FD7E3C8D5873AA97</key>
-			<dict>
-				<key>fileRef</key>
-				<string>3DD359247F3ED1550D8BB5C9</string>
-				<key>isa</key>
-				<string>PBXBuildFile</string>
-			</dict>
-			<key>3DD359247F3ED1550D8BB5C9</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.cpp.cpp</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>ofxMidiIn.cpp</string>
-				<key>path</key>
-				<string>../../../addons/ofxMidi/src/ofxMidiIn.cpp</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>938214A2795AA8FED29086DB</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>ofxMidiConstants.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxMidi/src/ofxMidiConstants.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>05F6CF127D4A621113D4A62F</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>ofxMidi.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxMidi/src/ofxMidi.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>63F9FE1D90234FA6DE6F509E</key>
-			<dict>
-				<key>fileRef</key>
-				<string>E238CCDE032640E0FEBFAD82</string>
-				<key>isa</key>
-				<string>PBXBuildFile</string>
-			</dict>
-			<key>E238CCDE032640E0FEBFAD82</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.cpp.cpp</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>ofxMidi.cpp</string>
-				<key>path</key>
-				<string>../../../addons/ofxMidi/src/ofxMidi.cpp</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>4310BEFDE24FF04FEBEE8086</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>ofxBaseMidi.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxMidi/src/ofxBaseMidi.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>1A86B7721CAEBC6F1C572C45</key>
-			<dict>
-				<key>fileRef</key>
-				<string>94B3C3C21F92F9310CA90986</string>
-				<key>isa</key>
-				<string>PBXBuildFile</string>
-			</dict>
-			<key>94B3C3C21F92F9310CA90986</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.cpp.cpp</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>ofxBaseMidi.cpp</string>
-				<key>path</key>
-				<string>../../../addons/ofxMidi/src/ofxBaseMidi.cpp</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>470CF04F1D4D1B38D5AA1797</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>ofxRtMidiOut.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxMidi/src/desktop/ofxRtMidiOut.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>3AEFE4FA8AD5C72671AD07F8</key>
-			<dict>
-				<key>fileRef</key>
-				<string>712B183BC00EBFFB1EEA5AB8</string>
-				<key>isa</key>
-				<string>PBXBuildFile</string>
-			</dict>
-			<key>712B183BC00EBFFB1EEA5AB8</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.cpp.cpp</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>ofxRtMidiOut.cpp</string>
-				<key>path</key>
-				<string>../../../addons/ofxMidi/src/desktop/ofxRtMidiOut.cpp</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>208298154B11456DCD0BE131</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>ofxRtMidiIn.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxMidi/src/desktop/ofxRtMidiIn.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>99DED6A5D3EDE030B1A80348</key>
-			<dict>
-				<key>children</key>
-				<array>
-					<string>F634AA6CA2E3C60F3B87B59A</string>
-					<string>208298154B11456DCD0BE131</string>
-					<string>712B183BC00EBFFB1EEA5AB8</string>
-					<string>470CF04F1D4D1B38D5AA1797</string>
-				</array>
-				<key>isa</key>
-				<string>PBXGroup</string>
-				<key>name</key>
-				<string>desktop</string>
-				<key>sourceTree</key>
-				<string>&lt;group&gt;</string>
-			</dict>
-			<key>9CBF51184BE294FD9D73043F</key>
-			<dict>
-				<key>children</key>
-				<array>
-					<string>99DED6A5D3EDE030B1A80348</string>
-					<string>94B3C3C21F92F9310CA90986</string>
-					<string>4310BEFDE24FF04FEBEE8086</string>
-					<string>E238CCDE032640E0FEBFAD82</string>
-					<string>05F6CF127D4A621113D4A62F</string>
-					<string>938214A2795AA8FED29086DB</string>
-					<string>3DD359247F3ED1550D8BB5C9</string>
-					<string>B76FA489151DBAF1616DF378</string>
-					<string>C0E7EDA67EDF213FC0E83D17</string>
-					<string>BD0E7AC8BE205034D5B377A6</string>
-					<string>04F77E5C73A62E2E77C78EC6</string>
-					<string>81436E53CC4A77E326F659C3</string>
-					<string>E16BB73D19DD0713FDCC7986</string>
-				</array>
-				<key>isa</key>
-				<string>PBXGroup</string>
-				<key>name</key>
-				<string>src</string>
-				<key>sourceTree</key>
-				<string>&lt;group&gt;</string>
-			</dict>
-			<key>2413C01760B1811BED0F502D</key>
-			<dict>
-				<key>children</key>
-				<array>
-					<string>9CBF51184BE294FD9D73043F</string>
-					<string>5A08CCDC8D19E7162DE57128</string>
-					<string>36D7EC7EF50E326EAC88A0AD</string>
-				</array>
-				<key>isa</key>
-				<string>PBXGroup</string>
-				<key>name</key>
-				<string>ofxMidi</string>
-				<key>sourceTree</key>
-				<string>&lt;group&gt;</string>
-			</dict>
-			<key>BCC8D420CBA9217E437D2D76</key>
-			<dict>
-				<key>fileRef</key>
-				<string>F634AA6CA2E3C60F3B87B59A</string>
-				<key>isa</key>
-				<string>PBXBuildFile</string>
-			</dict>
-			<key>F634AA6CA2E3C60F3B87B59A</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.cpp.cpp</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>ofxRtMidiIn.cpp</string>
-				<key>path</key>
-				<string>../../../addons/ofxMidi/src/desktop/ofxRtMidiIn.cpp</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>96FB3DE3F0BA2F1A21C7105D</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>sincosineLut.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxFatLines/src/sincosineLut.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>0A03A75CD4D4AC0E1B4F6B2B</key>
-			<dict>
-				<key>fileRef</key>
-				<string>7CC54E4B0C96A06E3519BB90</string>
-				<key>isa</key>
-				<string>PBXBuildFile</string>
-			</dict>
-			<key>7CC54E4B0C96A06E3519BB90</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.cpp.cpp</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>sincosineLut.cpp</string>
-				<key>path</key>
-				<string>../../../addons/ofxFatLines/src/sincosineLut.cpp</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>7C2E99643B13D6A7E390334D</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>ofxFatLine.h</string>
-				<key>path</key>
-				<string>../../../addons/ofxFatLines/src/ofxFatLine.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>7AB2A2D0D03885EE1A41A760</key>
-			<dict>
-				<key>children</key>
-				<array>
-					<string>B5863663BF3A48604EA5786D</string>
-					<string>7C2E99643B13D6A7E390334D</string>
-					<string>7CC54E4B0C96A06E3519BB90</string>
-					<string>96FB3DE3F0BA2F1A21C7105D</string>
-				</array>
-				<key>isa</key>
-				<string>PBXGroup</string>
-				<key>name</key>
-				<string>src</string>
-				<key>sourceTree</key>
-				<string>&lt;group&gt;</string>
-			</dict>
-			<key>8A3DD780D89619FC9FE77FBA</key>
-			<dict>
-				<key>children</key>
-				<array>
-					<string>7AB2A2D0D03885EE1A41A760</string>
-				</array>
-				<key>isa</key>
-				<string>PBXGroup</string>
-				<key>name</key>
-				<string>ofxFatLines</string>
-				<key>sourceTree</key>
-				<string>&lt;group&gt;</string>
-			</dict>
-			<key>B3A9A95BCDE7FF1B89486968</key>
-			<dict>
-				<key>fileRef</key>
-				<string>B5863663BF3A48604EA5786D</string>
-				<key>isa</key>
-				<string>PBXBuildFile</string>
-			</dict>
-			<key>B5863663BF3A48604EA5786D</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.cpp.cpp</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>ofxFatLine.cpp</string>
-				<key>path</key>
-				<string>../../../addons/ofxFatLines/src/ofxFatLine.cpp</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>6948EE371B920CB800B5AC1A</key>
-			<dict>
-				<key>children</key>
-				<array />
-				<key>isa</key>
-				<string>PBXGroup</string>
-				<key>name</key>
-				<string>local_addons</string>
-				<key>sourceTree</key>
-				<string>&lt;group&gt;</string>
-			</dict>
-			<key>BB4B014C10F69532006C3DED</key>
-			<dict>
-				<key>children</key>
-				<array>
-					<string>8A3DD780D89619FC9FE77FBA</string>
-					<string>2413C01760B1811BED0F502D</string>
-					<string>ABC5123E2929C5438D237753</string>
-					<string>C3C57D7F2C074534D007A193</string>
-				</array>
-				<key>isa</key>
-				<string>PBXGroup</string>
-				<key>name</key>
-				<string>addons</string>
-				<key>sourceTree</key>
-				<string>&lt;group&gt;</string>
-			</dict>
-			<key>E4328143138ABC890047C5CB</key>
-			<dict>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>lastKnownFileType</key>
-				<string>wrapper.pb-project</string>
-				<key>name</key>
-				<string>openFrameworksLib.xcodeproj</string>
-				<key>path</key>
-				<string>../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>E4328144138ABC890047C5CB</key>
-			<dict>
-				<key>children</key>
-				<array>
-					<string>E4328148138ABC890047C5CB</string>
-				</array>
-				<key>isa</key>
-				<string>PBXGroup</string>
-				<key>name</key>
-				<string>Products</string>
-				<key>sourceTree</key>
-				<string>&lt;group&gt;</string>
-			</dict>
-			<key>E4328147138ABC890047C5CB</key>
-			<dict>
-				<key>containerPortal</key>
-				<string>E4328143138ABC890047C5CB</string>
-				<key>isa</key>
-				<string>PBXContainerItemProxy</string>
-				<key>proxyType</key>
-				<string>2</string>
-				<key>remoteGlobalIDString</key>
-				<string>E4B27C1510CBEB8E00536013</string>
-				<key>remoteInfo</key>
-				<string>openFrameworks</string>
-			</dict>
-			<key>E4328148138ABC890047C5CB</key>
-			<dict>
-				<key>fileType</key>
-				<string>archive.ar</string>
-				<key>isa</key>
-				<string>PBXReferenceProxy</string>
-				<key>path</key>
-				<string>openFrameworksDebug.a</string>
-				<key>remoteRef</key>
-				<string>E4328147138ABC890047C5CB</string>
-				<key>sourceTree</key>
-				<string>BUILT_PRODUCTS_DIR</string>
-			</dict>
-			<key>E4328149138ABC9F0047C5CB</key>
-			<dict>
-				<key>fileRef</key>
-				<string>E4328148138ABC890047C5CB</string>
-				<key>isa</key>
-				<string>PBXBuildFile</string>
-			</dict>
-			<key>E4B69B4A0A3A1720003C02F2</key>
-			<dict>
-				<key>children</key>
-				<array>
-					<string>E4B6FCAD0C3E899E008CF71C</string>
-					<string>E4EB6923138AFD0F00A09F29</string>
-					<string>E4B69E1C0A3A1BDC003C02F2</string>
-					<string>E4EEC9E9138DF44700A80321</string>
-					<string>BB4B014C10F69532006C3DED</string>
-					<string>6948EE371B920CB800B5AC1A</string>
-					<string>E4B69B5B0A3A1756003C02F2</string>
-				</array>
-				<key>isa</key>
-				<string>PBXGroup</string>
-				<key>sourceTree</key>
-				<string>&lt;group&gt;</string>
-			</dict>
-			<key>E4B69B4C0A3A1720003C02F2</key>
-			<dict>
-				<key>attributes</key>
-				<dict>
-					<key>LastUpgradeCheck</key>
-					<string>0600</string>
-				</dict>
-				<key>buildConfigurationList</key>
-				<string>E4B69B4D0A3A1720003C02F2</string>
-				<key>compatibilityVersion</key>
-				<string>Xcode 3.2</string>
-				<key>developmentRegion</key>
-				<string>English</string>
-				<key>hasScannedForEncodings</key>
-				<string>0</string>
-				<key>isa</key>
-				<string>PBXProject</string>
-				<key>knownRegions</key>
-				<array>
-					<string>English</string>
-					<string>Japanese</string>
-					<string>French</string>
-					<string>German</string>
-				</array>
-				<key>mainGroup</key>
-				<string>E4B69B4A0A3A1720003C02F2</string>
-				<key>productRefGroup</key>
-				<string>E4B69B4A0A3A1720003C02F2</string>
-				<key>projectDirPath</key>
-				<string />
-				<key>projectReferences</key>
-				<array>
-					<dict>
-						<key>ProductGroup</key>
-						<string>E4328144138ABC890047C5CB</string>
-						<key>ProjectRef</key>
-						<string>E4328143138ABC890047C5CB</string>
-					</dict>
-				</array>
-				<key>projectRoot</key>
-				<string />
-				<key>targets</key>
-				<array>
-					<string>E4B69B5A0A3A1756003C02F2</string>
-				</array>
-			</dict>
-			<key>E4B69B4D0A3A1720003C02F2</key>
-			<dict>
-				<key>buildConfigurations</key>
-				<array>
-					<string>E4B69B4E0A3A1720003C02F2</string>
-					<string>E4B69B4F0A3A1720003C02F2</string>
-				</array>
-				<key>defaultConfigurationIsVisible</key>
-				<string>0</string>
-				<key>defaultConfigurationName</key>
-				<string>Release</string>
-				<key>isa</key>
-				<string>XCConfigurationList</string>
-			</dict>
-			<key>E4B69B4E0A3A1720003C02F2</key>
-			<dict>
-				<key>baseConfigurationReference</key>
-				<string>E4EB6923138AFD0F00A09F29</string>
-				<key>buildSettings</key>
-				<dict>
-					<key>HEADER_SEARCH_PATHS</key>
-					<array>
-						<string>$(OF_CORE_HEADERS)</string>
-						<string>src</string>
-						<string>../../../addons/ofxFatLines/src</string>
-						<string>../../../addons/ofxMidi/libs</string>
-						<string>../../../addons/ofxMidi/libs/pgmidi</string>
-						<string>../../../addons/ofxMidi/libs/rtmidi</string>
-						<string>../../../addons/ofxMidi/src</string>
-						<string>../../../addons/ofxMidi/src/desktop</string>
-						<string>../../../addons/ofxMidi/src/ios</string>
-						<string>../../../addons/ofxMidiFighterTwister/src</string>
-						<string>../../../addons/ofxShivaVG/libs</string>
-						<string>../../../addons/ofxShivaVG/libs/ShivaVG</string>
-						<string>../../../addons/ofxShivaVG/libs/ShivaVG/include</string>
-						<string>../../../addons/ofxShivaVG/libs/ShivaVG/include/vg</string>
-						<string>../../../addons/ofxShivaVG/libs/ShivaVG/src</string>
-						<string>../../../addons/ofxShivaVG/src</string>
-					</array>
-					<key>CONFIGURATION_BUILD_DIR</key>
-					<string>$(SRCROOT)/bin/</string>
-					<key>COPY_PHASE_STRIP</key>
-					<string>NO</string>
-					<key>DEAD_CODE_STRIPPING</key>
-					<string>YES</string>
-					<key>GCC_AUTO_VECTORIZATION</key>
-					<string>YES</string>
-					<key>GCC_ENABLE_SSE3_EXTENSIONS</key>
-					<string>YES</string>
-					<key>GCC_ENABLE_SUPPLEMENTAL_SSE3_INSTRUCTIONS</key>
-					<string>YES</string>
-					<key>GCC_INLINES_ARE_PRIVATE_EXTERN</key>
-					<string>NO</string>
-					<key>GCC_OPTIMIZATION_LEVEL</key>
-					<string>0</string>
-					<key>GCC_SYMBOLS_PRIVATE_EXTERN</key>
-					<string>NO</string>
-					<key>GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS</key>
-					<string>YES</string>
-					<key>GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO</key>
-					<string>NO</string>
-					<key>GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL</key>
-					<string>NO</string>
-					<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
-					<string>NO</string>
-					<key>GCC_WARN_UNUSED_VALUE</key>
-					<string>NO</string>
-					<key>GCC_WARN_UNUSED_VARIABLE</key>
-					<string>NO</string>
-					<key>MACOSX_DEPLOYMENT_TARGET</key>
-					<string>10.8</string>
-					<key>ONLY_ACTIVE_ARCH</key>
-					<string>YES</string>
-					<key>OTHER_CPLUSPLUSFLAGS</key>
-					<array>
-						<string>-D__MACOSX_CORE__</string>
-						<string>-mtune=native</string>
-					</array>
-					<key>SDKROOT</key>
-					<string>macosx</string>
-				</dict>
-				<key>isa</key>
-				<string>XCBuildConfiguration</string>
-				<key>name</key>
-				<string>Debug</string>
-			</dict>
-			<key>E4B69B4F0A3A1720003C02F2</key>
-			<dict>
-				<key>baseConfigurationReference</key>
-				<string>E4EB6923138AFD0F00A09F29</string>
-				<key>buildSettings</key>
-				<dict>
-					<key>HEADER_SEARCH_PATHS</key>
-					<array>
-						<string>$(OF_CORE_HEADERS)</string>
-						<string>src</string>
-						<string>../../../addons/ofxFatLines/src</string>
-						<string>../../../addons/ofxMidi/libs</string>
-						<string>../../../addons/ofxMidi/libs/pgmidi</string>
-						<string>../../../addons/ofxMidi/libs/rtmidi</string>
-						<string>../../../addons/ofxMidi/src</string>
-						<string>../../../addons/ofxMidi/src/desktop</string>
-						<string>../../../addons/ofxMidi/src/ios</string>
-						<string>../../../addons/ofxMidiFighterTwister/src</string>
-						<string>../../../addons/ofxShivaVG/libs</string>
-						<string>../../../addons/ofxShivaVG/libs/ShivaVG</string>
-						<string>../../../addons/ofxShivaVG/libs/ShivaVG/include</string>
-						<string>../../../addons/ofxShivaVG/libs/ShivaVG/include/vg</string>
-						<string>../../../addons/ofxShivaVG/libs/ShivaVG/src</string>
-						<string>../../../addons/ofxShivaVG/src</string>
-					</array>
-					<key>CONFIGURATION_BUILD_DIR</key>
-					<string>$(SRCROOT)/bin/</string>
-					<key>COPY_PHASE_STRIP</key>
-					<string>YES</string>
-					<key>DEAD_CODE_STRIPPING</key>
-					<string>YES</string>
-					<key>GCC_AUTO_VECTORIZATION</key>
-					<string>YES</string>
-					<key>GCC_ENABLE_SSE3_EXTENSIONS</key>
-					<string>YES</string>
-					<key>GCC_ENABLE_SUPPLEMENTAL_SSE3_INSTRUCTIONS</key>
-					<string>YES</string>
-					<key>GCC_INLINES_ARE_PRIVATE_EXTERN</key>
-					<string>NO</string>
-					<key>GCC_OPTIMIZATION_LEVEL</key>
-					<string>3</string>
-					<key>GCC_SYMBOLS_PRIVATE_EXTERN</key>
-					<string>NO</string>
-					<key>GCC_UNROLL_LOOPS</key>
-					<string>YES</string>
-					<key>GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS</key>
-					<string>YES</string>
-					<key>GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO</key>
-					<string>NO</string>
-					<key>GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL</key>
-					<string>NO</string>
-					<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
-					<string>NO</string>
-					<key>GCC_WARN_UNUSED_VALUE</key>
-					<string>NO</string>
-					<key>GCC_WARN_UNUSED_VARIABLE</key>
-					<string>NO</string>
-					<key>MACOSX_DEPLOYMENT_TARGET</key>
-					<string>10.8</string>
-					<key>OTHER_CPLUSPLUSFLAGS</key>
-					<array>
-						<string>-D__MACOSX_CORE__</string>
-						<string>-mtune=native</string>
-					</array>
-					<key>SDKROOT</key>
-					<string>macosx</string>
-				</dict>
-				<key>isa</key>
-				<string>XCBuildConfiguration</string>
-				<key>name</key>
-				<string>Release</string>
-			</dict>
-			<key>E4B69B580A3A1756003C02F2</key>
-			<dict>
-				<key>buildActionMask</key>
-				<string>2147483647</string>
-				<key>files</key>
-				<array>
-					<string>E4B69E200A3A1BDC003C02F2</string>
-					<string>E4B69E210A3A1BDC003C02F2</string>
-					<string>B3A9A95BCDE7FF1B89486968</string>
-					<string>0A03A75CD4D4AC0E1B4F6B2B</string>
-					<string>BCC8D420CBA9217E437D2D76</string>
-					<string>3AEFE4FA8AD5C72671AD07F8</string>
-					<string>1A86B7721CAEBC6F1C572C45</string>
-					<string>63F9FE1D90234FA6DE6F509E</string>
-					<string>0BFC9C20FD7E3C8D5873AA97</string>
-					<string>C6FE64F74F1EA1D98C8F9847</string>
-					<string>83D9F930112E0944444124EE</string>
-					<string>63D0FD8734D5760B8080C901</string>
-					<string>EC0A61ABB5A2ABAC37BB87B1</string>
-					<string>69F1233945AF12BB8CB4FD98</string>
-					<string>1C4E92C17B63D8592B1B3F3C</string>
-					<string>9568F15AF1DF79837AC6DDA0</string>
-					<string>624BAD2EF0B64CEBBF94135B</string>
-					<string>614E00FEB2A84A253E9002A5</string>
-					<string>5A83FB2E1B86442B3B2FBC53</string>
-					<string>30F8CEA9712C8FCE39D3B1D9</string>
-					<string>CE29D5F7939844D88FD3F6D2</string>
-					<string>4C2B9798639946BC69B1C9A0</string>
-					<string>AEFA334814D3EE4F9E6F4829</string>
-					<string>A8CC477E84407E63FBE21942</string>
-					<string>77FCF151C0F9384474A465A3</string>
-					<string>8332C9CAF1F847B43A86F345</string>
-					<string>528756D1A6760D229052A271</string>
-				</array>
-				<key>isa</key>
-				<string>PBXSourcesBuildPhase</string>
-				<key>runOnlyForDeploymentPostprocessing</key>
-				<string>0</string>
-			</dict>
-			<key>E4B69B590A3A1756003C02F2</key>
-			<dict>
-				<key>buildActionMask</key>
-				<string>2147483647</string>
-				<key>files</key>
-				<array>
-					<string>E4328149138ABC9F0047C5CB</string>
-					<string>631702104AFC104323A9EB79</string>
-				</array>
-				<key>isa</key>
-				<string>PBXFrameworksBuildPhase</string>
-				<key>runOnlyForDeploymentPostprocessing</key>
-				<string>0</string>
-			</dict>
-			<key>E4B69B5A0A3A1756003C02F2</key>
-			<dict>
-				<key>buildConfigurationList</key>
-				<string>E4B69B5F0A3A1757003C02F2</string>
-				<key>buildPhases</key>
-				<array>
-					<string>E4B69B580A3A1756003C02F2</string>
-					<string>E4B69B590A3A1756003C02F2</string>
-					<string>E4B6FFFD0C3F9AB9008CF71C</string>
-					<string>E4C2427710CC5ABF004149E2</string>
-				</array>
-				<key>buildRules</key>
-				<array />
-				<key>dependencies</key>
-				<array>
-					<string>E4EEB9AC138B136A00A80321</string>
-				</array>
-				<key>isa</key>
-				<string>PBXNativeTarget</string>
-				<key>name</key>
-				<string>Tracer</string>
-				<key>productName</key>
-				<string>myOFApp</string>
-				<key>productReference</key>
-				<string>E4B69B5B0A3A1756003C02F2</string>
-				<key>productType</key>
-				<string>com.apple.product-type.application</string>
-			</dict>
-			<key>E4B69B5B0A3A1756003C02F2</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>wrapper.application</string>
-				<key>includeInIndex</key>
-				<string>0</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>path</key>
-				<string>TracerDebug.app</string>
-				<key>sourceTree</key>
-				<string>BUILT_PRODUCTS_DIR</string>
-			</dict>
-			<key>E4B69B5F0A3A1757003C02F2</key>
-			<dict>
-				<key>buildConfigurations</key>
-				<array>
-					<string>E4B69B600A3A1757003C02F2</string>
-					<string>E4B69B610A3A1757003C02F2</string>
-				</array>
-				<key>defaultConfigurationIsVisible</key>
-				<string>0</string>
-				<key>defaultConfigurationName</key>
-				<string>Release</string>
-				<key>isa</key>
-				<string>XCConfigurationList</string>
-			</dict>
-			<key>E4B69B600A3A1757003C02F2</key>
-			<dict>
-				<key>baseConfigurationReference</key>
-				<string>E4EB6923138AFD0F00A09F29</string>
-				<key>buildSettings</key>
-				<dict>
-					<key>HEADER_SEARCH_PATHS</key>
-					<array>
-						<string>$(OF_CORE_HEADERS)</string>
-						<string>src</string>
-						<string>../../../addons/ofxFatLines/src</string>
-						<string>../../../addons/ofxMidi/libs</string>
-						<string>../../../addons/ofxMidi/libs/pgmidi</string>
-						<string>../../../addons/ofxMidi/libs/rtmidi</string>
-						<string>../../../addons/ofxMidi/src</string>
-						<string>../../../addons/ofxMidi/src/desktop</string>
-						<string>../../../addons/ofxMidi/src/ios</string>
-						<string>../../../addons/ofxMidiFighterTwister/src</string>
-						<string>../../../addons/ofxShivaVG/libs</string>
-						<string>../../../addons/ofxShivaVG/libs/ShivaVG</string>
-						<string>../../../addons/ofxShivaVG/libs/ShivaVG/include</string>
-						<string>../../../addons/ofxShivaVG/libs/ShivaVG/include/vg</string>
-						<string>../../../addons/ofxShivaVG/libs/ShivaVG/src</string>
-						<string>../../../addons/ofxShivaVG/src</string>
-					</array>
-					<key>COMBINE_HIDPI_IMAGES</key>
-					<string>YES</string>
-					<key>COPY_PHASE_STRIP</key>
-					<string>NO</string>
-					<key>FRAMEWORK_SEARCH_PATHS</key>
-					<array>
-						<string>$(inherited)</string>
-						<string>$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)</string>
-						<string>/System/Library/Frameworks</string>
-					</array>
-					<key>FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1</key>
-					<string>"$(SRCROOT)/../../../libs/glut/lib/osx"</string>
-					<key>GCC_DYNAMIC_NO_PIC</key>
-					<string>NO</string>
-					<key>GCC_GENERATE_DEBUGGING_SYMBOLS</key>
-					<string>YES</string>
-					<key>GCC_MODEL_TUNING</key>
-					<string>NONE</string>
-					<key>ICON</key>
-					<string>$(ICON_NAME_DEBUG)</string>
-					<key>ICON_FILE</key>
-					<string>$(ICON_FILE_PATH)$(ICON)</string>
-					<key>INFOPLIST_FILE</key>
-					<string>openFrameworks-Info.plist</string>
-					<key>INSTALL_PATH</key>
-					<string>/Applications</string>
-					<key>LIBRARY_SEARCH_PATHS</key>
-					<string>$(inherited)</string>
-					<key>PRODUCT_NAME</key>
-					<string>$(TARGET_NAME)Debug</string>
-					<key>WRAPPER_EXTENSION</key>
-					<string>app</string>
-				</dict>
-				<key>isa</key>
-				<string>XCBuildConfiguration</string>
-				<key>name</key>
-				<string>Debug</string>
-			</dict>
-			<key>E4B69B610A3A1757003C02F2</key>
-			<dict>
-				<key>baseConfigurationReference</key>
-				<string>E4EB6923138AFD0F00A09F29</string>
-				<key>buildSettings</key>
-				<dict>
-					<key>HEADER_SEARCH_PATHS</key>
-					<array>
-						<string>$(OF_CORE_HEADERS)</string>
-						<string>src</string>
-						<string>../../../addons/ofxFatLines/src</string>
-						<string>../../../addons/ofxMidi/libs</string>
-						<string>../../../addons/ofxMidi/libs/pgmidi</string>
-						<string>../../../addons/ofxMidi/libs/rtmidi</string>
-						<string>../../../addons/ofxMidi/src</string>
-						<string>../../../addons/ofxMidi/src/desktop</string>
-						<string>../../../addons/ofxMidi/src/ios</string>
-						<string>../../../addons/ofxMidiFighterTwister/src</string>
-						<string>../../../addons/ofxShivaVG/libs</string>
-						<string>../../../addons/ofxShivaVG/libs/ShivaVG</string>
-						<string>../../../addons/ofxShivaVG/libs/ShivaVG/include</string>
-						<string>../../../addons/ofxShivaVG/libs/ShivaVG/include/vg</string>
-						<string>../../../addons/ofxShivaVG/libs/ShivaVG/src</string>
-						<string>../../../addons/ofxShivaVG/src</string>
-					</array>
-					<key>COMBINE_HIDPI_IMAGES</key>
-					<string>YES</string>
-					<key>COPY_PHASE_STRIP</key>
-					<string>YES</string>
-					<key>FRAMEWORK_SEARCH_PATHS</key>
-					<array>
-						<string>$(inherited)</string>
-						<string>$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)</string>
-						<string>/System/Library/Frameworks</string>
-					</array>
-					<key>FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1</key>
-					<string>"$(SRCROOT)/../../../libs/glut/lib/osx"</string>
-					<key>GCC_GENERATE_DEBUGGING_SYMBOLS</key>
-					<string>YES</string>
-					<key>GCC_MODEL_TUNING</key>
-					<string>NONE</string>
-					<key>ICON</key>
-					<string>$(ICON_NAME_RELEASE)</string>
-					<key>ICON_FILE</key>
-					<string>$(ICON_FILE_PATH)$(ICON)</string>
-					<key>INFOPLIST_FILE</key>
-					<string>openFrameworks-Info.plist</string>
-					<key>INSTALL_PATH</key>
-					<string>/Applications</string>
-					<key>LIBRARY_SEARCH_PATHS</key>
-					<string>$(inherited)</string>
-					<key>PRODUCT_NAME</key>
-					<string>$(TARGET_NAME)</string>
-					<key>WRAPPER_EXTENSION</key>
-					<string>app</string>
-					<key>baseConfigurationReference</key>
-					<string>E4EB6923138AFD0F00A09F29</string>
-				</dict>
-				<key>isa</key>
-				<string>XCBuildConfiguration</string>
-				<key>name</key>
-				<string>Release</string>
-			</dict>
-			<key>E4B69E1C0A3A1BDC003C02F2</key>
-			<dict>
-				<key>children</key>
-				<array>
-					<string>E4B69E1D0A3A1BDC003C02F2</string>
-					<string>E4B69E1E0A3A1BDC003C02F2</string>
-					<string>E4B69E1F0A3A1BDC003C02F2</string>
-				</array>
-				<key>isa</key>
-				<string>PBXGroup</string>
-				<key>path</key>
-				<string>src</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>E4B69E1D0A3A1BDC003C02F2</key>
-			<dict>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>lastKnownFileType</key>
-				<string>sourcecode.cpp.cpp</string>
-				<key>name</key>
-				<string>main.cpp</string>
-				<key>path</key>
-				<string>src/main.cpp</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>E4B69E1E0A3A1BDC003C02F2</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.cpp.cpp</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>ofApp.cpp</string>
-				<key>path</key>
-				<string>src/ofApp.cpp</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>E4B69E1F0A3A1BDC003C02F2</key>
-			<dict>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>lastKnownFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>name</key>
-				<string>ofApp.h</string>
-				<key>path</key>
-				<string>src/ofApp.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>E4B69E200A3A1BDC003C02F2</key>
-			<dict>
-				<key>fileRef</key>
-				<string>E4B69E1D0A3A1BDC003C02F2</string>
-				<key>isa</key>
-				<string>PBXBuildFile</string>
-			</dict>
-			<key>E4B69E210A3A1BDC003C02F2</key>
-			<dict>
-				<key>fileRef</key>
-				<string>E4B69E1E0A3A1BDC003C02F2</string>
-				<key>isa</key>
-				<string>PBXBuildFile</string>
-			</dict>
-			<key>E4B6FCAD0C3E899E008CF71C</key>
-			<dict>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>lastKnownFileType</key>
-				<string>text.plist.xml</string>
-				<key>path</key>
-				<string>openFrameworks-Info.plist</string>
-				<key>sourceTree</key>
-				<string>&lt;group&gt;</string>
-			</dict>
-			<key>E4B6FFFD0C3F9AB9008CF71C</key>
-			<dict>
-				<key>buildActionMask</key>
-				<string>2147483647</string>
-				<key>files</key>
-				<array />
-				<key>inputPaths</key>
-				<array />
-				<key>isa</key>
-				<string>PBXShellScriptBuildPhase</string>
-				<key>outputPaths</key>
-				<array />
-				<key>runOnlyForDeploymentPostprocessing</key>
-				<string>0</string>
-				<key>shellPath</key>
-				<string>/bin/sh</string>
-				<key>shellScript</key>
-				<string>mkdir -p "$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Resources/"
-# Copy default icon file into App/Resources
-rsync -aved "$ICON_FILE" "$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Resources/"
-# Copy libfmod and change install directory for fmod to run
-rsync -aved ../../../libs/fmodex/lib/osx/libfmodex.dylib "$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Frameworks/";
-install_name_tool -change @executable_path/libfmodex.dylib @executable_path/../Frameworks/libfmodex.dylib "$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/$PRODUCT_NAME";
-# Copy GLUT framework (must remove for AppStore submissions)
-rsync -aved ../../../libs/glut/lib/osx/GLUT.framework "$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Frameworks/"
-</string>
-			</dict>
-			<key>E4C2427710CC5ABF004149E2</key>
-			<dict>
-				<key>buildActionMask</key>
-				<string>2147483647</string>
-				<key>dstPath</key>
-				<string />
-				<key>dstSubfolderSpec</key>
-				<string>10</string>
-				<key>files</key>
-				<array />
-				<key>isa</key>
-				<string>PBXCopyFilesBuildPhase</string>
-				<key>runOnlyForDeploymentPostprocessing</key>
-				<string>0</string>
-			</dict>
-			<key>E4EB691F138AFCF100A09F29</key>
-			<dict>
-				<key>fileEncoding</key>
-				<string>4</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>lastKnownFileType</key>
-				<string>text.xcconfig</string>
-				<key>name</key>
-				<string>CoreOF.xcconfig</string>
-				<key>path</key>
-				<string>../../../libs/openFrameworksCompiled/project/osx/CoreOF.xcconfig</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>E4EB6923138AFD0F00A09F29</key>
-			<dict>
-				<key>fileEncoding</key>
-				<string>4</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>lastKnownFileType</key>
-				<string>text.xcconfig</string>
-				<key>path</key>
-				<string>Project.xcconfig</string>
-				<key>sourceTree</key>
-				<string>&lt;group&gt;</string>
-			</dict>
-			<key>E4EEB9AB138B136A00A80321</key>
-			<dict>
-				<key>containerPortal</key>
-				<string>E4328143138ABC890047C5CB</string>
-				<key>isa</key>
-				<string>PBXContainerItemProxy</string>
-				<key>proxyType</key>
-				<string>1</string>
-				<key>remoteGlobalIDString</key>
-				<string>E4B27C1410CBEB8E00536013</string>
-				<key>remoteInfo</key>
-				<string>openFrameworks</string>
-			</dict>
-			<key>E4EEB9AC138B136A00A80321</key>
-			<dict>
-				<key>isa</key>
-				<string>PBXTargetDependency</string>
-				<key>name</key>
-				<string>openFrameworks</string>
-				<key>targetProxy</key>
-				<string>E4EEB9AB138B136A00A80321</string>
-			</dict>
-			<key>E4EEC9E9138DF44700A80321</key>
-			<dict>
-				<key>children</key>
-				<array>
-					<string>E4EB691F138AFCF100A09F29</string>
-					<string>E4328143138ABC890047C5CB</string>
-				</array>
-				<key>isa</key>
-				<string>PBXGroup</string>
-				<key>name</key>
-				<string>openFrameworks</string>
-				<key>sourceTree</key>
-				<string>&lt;group&gt;</string>
-			</dict>
-		</dict>
-		<key>rootObject</key>
-		<string>E4B69B4C0A3A1720003C02F2</string>
-	</dict>
-</plist>
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0A03A75CD4D4AC0E1B4F6B2B /* sincosineLut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CC54E4B0C96A06E3519BB90 /* sincosineLut.cpp */; };
+		0BFC9C20FD7E3C8D5873AA97 /* ofxMidiIn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3DD359247F3ED1550D8BB5C9 /* ofxMidiIn.cpp */; };
+		1A86B7721CAEBC6F1C572C45 /* ofxBaseMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94B3C3C21F92F9310CA90986 /* ofxBaseMidi.cpp */; };
+		1C4E92C17B63D8592B1B3F3C /* simpleVGContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 225821E3F9982E8E66F90F9C /* simpleVGContext.cpp */; };
+		30F8CEA9712C8FCE39D3B1D9 /* shGeometry.c in Sources */ = {isa = PBXBuildFile; fileRef = F2A1EF4C771D7C5BF39F106A /* shGeometry.c */; };
+		3AEFE4FA8AD5C72671AD07F8 /* ofxRtMidiOut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 712B183BC00EBFFB1EEA5AB8 /* ofxRtMidiOut.cpp */; };
+		4C2B9798639946BC69B1C9A0 /* shPaint.c in Sources */ = {isa = PBXBuildFile; fileRef = 3F6C91B3031B6E39F34139A1 /* shPaint.c */; };
+		528756D1A6760D229052A271 /* shVgu.c in Sources */ = {isa = PBXBuildFile; fileRef = 547A18E0AF7E07048E2ED97D /* shVgu.c */; };
+		5A83FB2E1B86442B3B2FBC53 /* shExtensions.c in Sources */ = {isa = PBXBuildFile; fileRef = 0017730065F918830FF718A1 /* shExtensions.c */; };
+		614E00FEB2A84A253E9002A5 /* shContext.c in Sources */ = {isa = PBXBuildFile; fileRef = 00882C67C0C5616E9CD55898 /* shContext.c */; };
+		624BAD2EF0B64CEBBF94135B /* shArrays.c in Sources */ = {isa = PBXBuildFile; fileRef = D00162B34D1F26468CB6DAE0 /* shArrays.c */; };
+		631702104AFC104323A9EB79 /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81AC32CCCB56FAABA3E1BDE0 /* CoreMIDI.framework */; };
+		63D0FD8734D5760B8080C901 /* RtMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABDEF0ACF05BF28F5C74E008 /* RtMidi.cpp */; };
+		63F9FE1D90234FA6DE6F509E /* ofxMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E238CCDE032640E0FEBFAD82 /* ofxMidi.cpp */; };
+		69F1233945AF12BB8CB4FD98 /* ofxShivaVGRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B9831B435E39EB95AED87C75 /* ofxShivaVGRenderer.cpp */; };
+		77FCF151C0F9384474A465A3 /* shPipeline.c in Sources */ = {isa = PBXBuildFile; fileRef = 4F967362F67D33C9273D67C2 /* shPipeline.c */; };
+		8332C9CAF1F847B43A86F345 /* shVectors.c in Sources */ = {isa = PBXBuildFile; fileRef = 5EA7D72DC7EC2DF57FC6194F /* shVectors.c */; };
+		83D9F930112E0944444124EE /* ofxMidiOut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04F77E5C73A62E2E77C78EC6 /* ofxMidiOut.cpp */; };
+		9568F15AF1DF79837AC6DDA0 /* simpleVGPath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DBB867ED25E170AF3A601FEF /* simpleVGPath.cpp */; };
+		A8CC477E84407E63FBE21942 /* shPath.c in Sources */ = {isa = PBXBuildFile; fileRef = 6203EA51772E81F5895A72FB /* shPath.c */; };
+		AEFA334814D3EE4F9E6F4829 /* shParams.c in Sources */ = {isa = PBXBuildFile; fileRef = A128F7DF9E47492BCF66CE75 /* shParams.c */; };
+		B3A9A95BCDE7FF1B89486968 /* ofxFatLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5863663BF3A48604EA5786D /* ofxFatLine.cpp */; };
+		BCC8D420CBA9217E437D2D76 /* ofxRtMidiIn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F634AA6CA2E3C60F3B87B59A /* ofxRtMidiIn.cpp */; };
+		C6FE64F74F1EA1D98C8F9847 /* ofxMidiMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C0E7EDA67EDF213FC0E83D17 /* ofxMidiMessage.cpp */; };
+		CE29D5F7939844D88FD3F6D2 /* shImage.c in Sources */ = {isa = PBXBuildFile; fileRef = 96AF9AB73B6206BC0E128883 /* shImage.c */; };
+		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
+		E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4B69E1D0A3A1BDC003C02F2 /* main.cpp */; };
+		E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */; };
+		EC0A61ABB5A2ABAC37BB87B1 /* ofxMidiFighterTwister.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FC090738E05B8FA44B5F10FE /* ofxMidiFighterTwister.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		E4328147138ABC890047C5CB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E4B27C1510CBEB8E00536013;
+			remoteInfo = openFrameworks;
+		};
+		E4EEB9AB138B136A00A80321 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = E4B27C1410CBEB8E00536013;
+			remoteInfo = openFrameworks;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		E4C2427710CC5ABF004149E2 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		0017730065F918830FF718A1 /* shExtensions.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 30; name = shExtensions.c; path = ../../../addons/ofxShivaVG/libs/ShivaVG/src/shExtensions.c; sourceTree = SOURCE_ROOT; };
+		00882C67C0C5616E9CD55898 /* shContext.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 30; name = shContext.c; path = ../../../addons/ofxShivaVG/libs/ShivaVG/src/shContext.c; sourceTree = SOURCE_ROOT; };
+		04F77E5C73A62E2E77C78EC6 /* ofxMidiOut.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxMidiOut.cpp; path = ../../../addons/ofxMidi/src/ofxMidiOut.cpp; sourceTree = SOURCE_ROOT; };
+		05F6CF127D4A621113D4A62F /* ofxMidi.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxMidi.h; path = ../../../addons/ofxMidi/src/ofxMidi.h; sourceTree = SOURCE_ROOT; };
+		1931D59D9FBEFF3D976D5BDE /* simpleVGPath.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = simpleVGPath.h; path = ../../../addons/ofxShivaVG/src/simpleVGPath.h; sourceTree = SOURCE_ROOT; };
+		200635693A29D896983E39FA /* simpleVGContext.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = simpleVGContext.h; path = ../../../addons/ofxShivaVG/src/simpleVGContext.h; sourceTree = SOURCE_ROOT; };
+		208298154B11456DCD0BE131 /* ofxRtMidiIn.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxRtMidiIn.h; path = ../../../addons/ofxMidi/src/desktop/ofxRtMidiIn.h; sourceTree = SOURCE_ROOT; };
+		225821E3F9982E8E66F90F9C /* simpleVGContext.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = simpleVGContext.cpp; path = ../../../addons/ofxShivaVG/src/simpleVGContext.cpp; sourceTree = SOURCE_ROOT; };
+		384B4CB71128CF0334DBE1D2 /* shPaint.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = shPaint.h; path = ../../../addons/ofxShivaVG/libs/ShivaVG/src/shPaint.h; sourceTree = SOURCE_ROOT; };
+		38DC30979D68E3D5CB923891 /* openvg.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = openvg.h; path = ../../../addons/ofxShivaVG/libs/ShivaVG/include/vg/openvg.h; sourceTree = SOURCE_ROOT; };
+		3DD359247F3ED1550D8BB5C9 /* ofxMidiIn.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxMidiIn.cpp; path = ../../../addons/ofxMidi/src/ofxMidiIn.cpp; sourceTree = SOURCE_ROOT; };
+		3F6C91B3031B6E39F34139A1 /* shPaint.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 30; name = shPaint.c; path = ../../../addons/ofxShivaVG/libs/ShivaVG/src/shPaint.c; sourceTree = SOURCE_ROOT; };
+		4310BEFDE24FF04FEBEE8086 /* ofxBaseMidi.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxBaseMidi.h; path = ../../../addons/ofxMidi/src/ofxBaseMidi.h; sourceTree = SOURCE_ROOT; };
+		470CF04F1D4D1B38D5AA1797 /* ofxRtMidiOut.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxRtMidiOut.h; path = ../../../addons/ofxMidi/src/desktop/ofxRtMidiOut.h; sourceTree = SOURCE_ROOT; };
+		4A1F5B1908FA91168825B38E /* ofxMidiFighterTwister.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxMidiFighterTwister.h; path = ../../../addons/ofxMidiFighterTwister/src/ofxMidiFighterTwister.h; sourceTree = SOURCE_ROOT; };
+		4F967362F67D33C9273D67C2 /* shPipeline.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 30; name = shPipeline.c; path = ../../../addons/ofxShivaVG/libs/ShivaVG/src/shPipeline.c; sourceTree = SOURCE_ROOT; };
+		547A18E0AF7E07048E2ED97D /* shVgu.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 30; name = shVgu.c; path = ../../../addons/ofxShivaVG/libs/ShivaVG/src/shVgu.c; sourceTree = SOURCE_ROOT; };
+		5EA7D72DC7EC2DF57FC6194F /* shVectors.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 30; name = shVectors.c; path = ../../../addons/ofxShivaVG/libs/ShivaVG/src/shVectors.c; sourceTree = SOURCE_ROOT; };
+		6203EA51772E81F5895A72FB /* shPath.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 30; name = shPath.c; path = ../../../addons/ofxShivaVG/libs/ShivaVG/src/shPath.c; sourceTree = SOURCE_ROOT; };
+		6B8A53518465F3899295605E /* shGeometry.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = shGeometry.h; path = ../../../addons/ofxShivaVG/libs/ShivaVG/src/shGeometry.h; sourceTree = SOURCE_ROOT; };
+		712B183BC00EBFFB1EEA5AB8 /* ofxRtMidiOut.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxRtMidiOut.cpp; path = ../../../addons/ofxMidi/src/desktop/ofxRtMidiOut.cpp; sourceTree = SOURCE_ROOT; };
+		7331179BBD3148D11CEC5493 /* shPath.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = shPath.h; path = ../../../addons/ofxShivaVG/libs/ShivaVG/src/shPath.h; sourceTree = SOURCE_ROOT; };
+		760CC9EF64750BCA93736C4F /* shExtensions.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = shExtensions.h; path = ../../../addons/ofxShivaVG/libs/ShivaVG/src/shExtensions.h; sourceTree = SOURCE_ROOT; };
+		7C2E99643B13D6A7E390334D /* ofxFatLine.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxFatLine.h; path = ../../../addons/ofxFatLines/src/ofxFatLine.h; sourceTree = SOURCE_ROOT; };
+		7CC54E4B0C96A06E3519BB90 /* sincosineLut.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = sincosineLut.cpp; path = ../../../addons/ofxFatLines/src/sincosineLut.cpp; sourceTree = SOURCE_ROOT; };
+		81436E53CC4A77E326F659C3 /* ofxMidiOut.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxMidiOut.h; path = ../../../addons/ofxMidi/src/ofxMidiOut.h; sourceTree = SOURCE_ROOT; };
+		81AC32CCCB56FAABA3E1BDE0 /* CoreMIDI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = /System/Library/Frameworks/CoreMIDI.framework; sourceTree = "<group>"; };
+		84F44EA61F6E25AB00653B30 /* Tracer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Tracer.h; sourceTree = "<group>"; };
+		85A4021032286C9CBE811772 /* shArrayBase.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = shArrayBase.h; path = ../../../addons/ofxShivaVG/libs/ShivaVG/src/shArrayBase.h; sourceTree = SOURCE_ROOT; };
+		892C09360B911BEB40889C00 /* shVectors.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = shVectors.h; path = ../../../addons/ofxShivaVG/libs/ShivaVG/src/shVectors.h; sourceTree = SOURCE_ROOT; };
+		938214A2795AA8FED29086DB /* ofxMidiConstants.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxMidiConstants.h; path = ../../../addons/ofxMidi/src/ofxMidiConstants.h; sourceTree = SOURCE_ROOT; };
+		94B3C3C21F92F9310CA90986 /* ofxBaseMidi.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxBaseMidi.cpp; path = ../../../addons/ofxMidi/src/ofxBaseMidi.cpp; sourceTree = SOURCE_ROOT; };
+		96AF9AB73B6206BC0E128883 /* shImage.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 30; name = shImage.c; path = ../../../addons/ofxShivaVG/libs/ShivaVG/src/shImage.c; sourceTree = SOURCE_ROOT; };
+		96FB3DE3F0BA2F1A21C7105D /* sincosineLut.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = sincosineLut.h; path = ../../../addons/ofxFatLines/src/sincosineLut.h; sourceTree = SOURCE_ROOT; };
+		99C07695E461F5C73A6F20B7 /* ofxShivaVGRenderer.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxShivaVGRenderer.h; path = ../../../addons/ofxShivaVG/src/ofxShivaVGRenderer.h; sourceTree = SOURCE_ROOT; };
+		A128F7DF9E47492BCF66CE75 /* shParams.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 30; name = shParams.c; path = ../../../addons/ofxShivaVG/libs/ShivaVG/src/shParams.c; sourceTree = SOURCE_ROOT; };
+		A8793707281FD436C34316A5 /* RtMidi.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = RtMidi.h; path = ../../../addons/ofxMidi/libs/rtmidi/RtMidi.h; sourceTree = SOURCE_ROOT; };
+		ABDEF0ACF05BF28F5C74E008 /* RtMidi.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = RtMidi.cpp; path = ../../../addons/ofxMidi/libs/rtmidi/RtMidi.cpp; sourceTree = SOURCE_ROOT; };
+		B5863663BF3A48604EA5786D /* ofxFatLine.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxFatLine.cpp; path = ../../../addons/ofxFatLines/src/ofxFatLine.cpp; sourceTree = SOURCE_ROOT; };
+		B75DD18D4AD62928FB4708B5 /* shDefs.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = shDefs.h; path = ../../../addons/ofxShivaVG/libs/ShivaVG/src/shDefs.h; sourceTree = SOURCE_ROOT; };
+		B76FA489151DBAF1616DF378 /* ofxMidiIn.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxMidiIn.h; path = ../../../addons/ofxMidi/src/ofxMidiIn.h; sourceTree = SOURCE_ROOT; };
+		B9831B435E39EB95AED87C75 /* ofxShivaVGRenderer.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxShivaVGRenderer.cpp; path = ../../../addons/ofxShivaVG/src/ofxShivaVGRenderer.cpp; sourceTree = SOURCE_ROOT; };
+		BD0E7AC8BE205034D5B377A6 /* ofxMidiMessage.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxMidiMessage.h; path = ../../../addons/ofxMidi/src/ofxMidiMessage.h; sourceTree = SOURCE_ROOT; };
+		C0E7EDA67EDF213FC0E83D17 /* ofxMidiMessage.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxMidiMessage.cpp; path = ../../../addons/ofxMidi/src/ofxMidiMessage.cpp; sourceTree = SOURCE_ROOT; };
+		C58AD296F58D6E882E018372 /* shImage.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = shImage.h; path = ../../../addons/ofxShivaVG/libs/ShivaVG/src/shImage.h; sourceTree = SOURCE_ROOT; };
+		D00162B34D1F26468CB6DAE0 /* shArrays.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 30; name = shArrays.c; path = ../../../addons/ofxShivaVG/libs/ShivaVG/src/shArrays.c; sourceTree = SOURCE_ROOT; };
+		DA2B6664105D3D2F3DF18ADC /* vgu.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = vgu.h; path = ../../../addons/ofxShivaVG/libs/ShivaVG/include/vg/vgu.h; sourceTree = SOURCE_ROOT; };
+		DBB867ED25E170AF3A601FEF /* simpleVGPath.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = simpleVGPath.cpp; path = ../../../addons/ofxShivaVG/src/simpleVGPath.cpp; sourceTree = SOURCE_ROOT; };
+		E16BB73D19DD0713FDCC7986 /* ofxMidiTypes.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxMidiTypes.h; path = ../../../addons/ofxMidi/src/ofxMidiTypes.h; sourceTree = SOURCE_ROOT; };
+		E238CCDE032640E0FEBFAD82 /* ofxMidi.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxMidi.cpp; path = ../../../addons/ofxMidi/src/ofxMidi.cpp; sourceTree = SOURCE_ROOT; };
+		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
+		E4B69B5B0A3A1756003C02F2 /* TracerDebug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TracerDebug.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E4B69E1D0A3A1BDC003C02F2 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = src/main.cpp; sourceTree = SOURCE_ROOT; };
+		E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofApp.cpp; path = src/ofApp.cpp; sourceTree = SOURCE_ROOT; };
+		E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ofApp.h; path = src/ofApp.h; sourceTree = SOURCE_ROOT; };
+		E4B6FCAD0C3E899E008CF71C /* openFrameworks-Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; path = "openFrameworks-Info.plist"; sourceTree = "<group>"; };
+		E4EB691F138AFCF100A09F29 /* CoreOF.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = CoreOF.xcconfig; path = ../../../libs/openFrameworksCompiled/project/osx/CoreOF.xcconfig; sourceTree = SOURCE_ROOT; };
+		E4EB6923138AFD0F00A09F29 /* Project.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Project.xcconfig; sourceTree = "<group>"; };
+		E6212E06119DDEC06E3C6C63 /* shContext.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = shContext.h; path = ../../../addons/ofxShivaVG/libs/ShivaVG/src/shContext.h; sourceTree = SOURCE_ROOT; };
+		E8008BD7922EF5419B8CB061 /* shArrays.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = shArrays.h; path = ../../../addons/ofxShivaVG/libs/ShivaVG/src/shArrays.h; sourceTree = SOURCE_ROOT; };
+		F2A1EF4C771D7C5BF39F106A /* shGeometry.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 30; name = shGeometry.c; path = ../../../addons/ofxShivaVG/libs/ShivaVG/src/shGeometry.c; sourceTree = SOURCE_ROOT; };
+		F634AA6CA2E3C60F3B87B59A /* ofxRtMidiIn.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxRtMidiIn.cpp; path = ../../../addons/ofxMidi/src/desktop/ofxRtMidiIn.cpp; sourceTree = SOURCE_ROOT; };
+		FC090738E05B8FA44B5F10FE /* ofxMidiFighterTwister.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxMidiFighterTwister.cpp; path = ../../../addons/ofxMidiFighterTwister/src/ofxMidiFighterTwister.cpp; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E4B69B590A3A1756003C02F2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */,
+				631702104AFC104323A9EB79 /* CoreMIDI.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0C287C11E084135BA344B4EE /* src */ = {
+			isa = PBXGroup;
+			children = (
+				FC090738E05B8FA44B5F10FE /* ofxMidiFighterTwister.cpp */,
+				4A1F5B1908FA91168825B38E /* ofxMidiFighterTwister.h */,
+			);
+			name = src;
+			sourceTree = "<group>";
+		};
+		2413C01760B1811BED0F502D /* ofxMidi */ = {
+			isa = PBXGroup;
+			children = (
+				9CBF51184BE294FD9D73043F /* src */,
+				5A08CCDC8D19E7162DE57128 /* libs */,
+				36D7EC7EF50E326EAC88A0AD /* frameworks */,
+			);
+			name = ofxMidi;
+			sourceTree = "<group>";
+		};
+		2D9AC4E3BCAF9586BAF0E9B4 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				55E8551566003B4331C77827 /* vg */,
+			);
+			name = include;
+			sourceTree = "<group>";
+		};
+		36D7EC7EF50E326EAC88A0AD /* frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				81AC32CCCB56FAABA3E1BDE0 /* CoreMIDI.framework */,
+			);
+			name = frameworks;
+			sourceTree = "<group>";
+		};
+		55E8551566003B4331C77827 /* vg */ = {
+			isa = PBXGroup;
+			children = (
+				38DC30979D68E3D5CB923891 /* openvg.h */,
+				DA2B6664105D3D2F3DF18ADC /* vgu.h */,
+			);
+			name = vg;
+			sourceTree = "<group>";
+		};
+		5A08CCDC8D19E7162DE57128 /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				945CEFADFB0DF400A92A507C /* rtmidi */,
+			);
+			name = libs;
+			sourceTree = "<group>";
+		};
+		5EE4F98C98D10288D3937980 /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				B94BF1DAC92BB22060F1F7ED /* ShivaVG */,
+			);
+			name = libs;
+			sourceTree = "<group>";
+		};
+		5FF18395A75FE5A9F97E7171 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				85A4021032286C9CBE811772 /* shArrayBase.h */,
+				D00162B34D1F26468CB6DAE0 /* shArrays.c */,
+				E8008BD7922EF5419B8CB061 /* shArrays.h */,
+				00882C67C0C5616E9CD55898 /* shContext.c */,
+				E6212E06119DDEC06E3C6C63 /* shContext.h */,
+				B75DD18D4AD62928FB4708B5 /* shDefs.h */,
+				0017730065F918830FF718A1 /* shExtensions.c */,
+				760CC9EF64750BCA93736C4F /* shExtensions.h */,
+				F2A1EF4C771D7C5BF39F106A /* shGeometry.c */,
+				6B8A53518465F3899295605E /* shGeometry.h */,
+				96AF9AB73B6206BC0E128883 /* shImage.c */,
+				C58AD296F58D6E882E018372 /* shImage.h */,
+				3F6C91B3031B6E39F34139A1 /* shPaint.c */,
+				384B4CB71128CF0334DBE1D2 /* shPaint.h */,
+				A128F7DF9E47492BCF66CE75 /* shParams.c */,
+				6203EA51772E81F5895A72FB /* shPath.c */,
+				7331179BBD3148D11CEC5493 /* shPath.h */,
+				4F967362F67D33C9273D67C2 /* shPipeline.c */,
+				5EA7D72DC7EC2DF57FC6194F /* shVectors.c */,
+				892C09360B911BEB40889C00 /* shVectors.h */,
+				547A18E0AF7E07048E2ED97D /* shVgu.c */,
+			);
+			name = src;
+			sourceTree = "<group>";
+		};
+		6948EE371B920CB800B5AC1A /* local_addons */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = local_addons;
+			sourceTree = "<group>";
+		};
+		7AB2A2D0D03885EE1A41A760 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				B5863663BF3A48604EA5786D /* ofxFatLine.cpp */,
+				7C2E99643B13D6A7E390334D /* ofxFatLine.h */,
+				7CC54E4B0C96A06E3519BB90 /* sincosineLut.cpp */,
+				96FB3DE3F0BA2F1A21C7105D /* sincosineLut.h */,
+			);
+			name = src;
+			sourceTree = "<group>";
+		};
+		8A3DD780D89619FC9FE77FBA /* ofxFatLines */ = {
+			isa = PBXGroup;
+			children = (
+				7AB2A2D0D03885EE1A41A760 /* src */,
+			);
+			name = ofxFatLines;
+			sourceTree = "<group>";
+		};
+		945CEFADFB0DF400A92A507C /* rtmidi */ = {
+			isa = PBXGroup;
+			children = (
+				ABDEF0ACF05BF28F5C74E008 /* RtMidi.cpp */,
+				A8793707281FD436C34316A5 /* RtMidi.h */,
+			);
+			name = rtmidi;
+			sourceTree = "<group>";
+		};
+		99DED6A5D3EDE030B1A80348 /* desktop */ = {
+			isa = PBXGroup;
+			children = (
+				F634AA6CA2E3C60F3B87B59A /* ofxRtMidiIn.cpp */,
+				208298154B11456DCD0BE131 /* ofxRtMidiIn.h */,
+				712B183BC00EBFFB1EEA5AB8 /* ofxRtMidiOut.cpp */,
+				470CF04F1D4D1B38D5AA1797 /* ofxRtMidiOut.h */,
+			);
+			name = desktop;
+			sourceTree = "<group>";
+		};
+		9CBF51184BE294FD9D73043F /* src */ = {
+			isa = PBXGroup;
+			children = (
+				99DED6A5D3EDE030B1A80348 /* desktop */,
+				94B3C3C21F92F9310CA90986 /* ofxBaseMidi.cpp */,
+				4310BEFDE24FF04FEBEE8086 /* ofxBaseMidi.h */,
+				E238CCDE032640E0FEBFAD82 /* ofxMidi.cpp */,
+				05F6CF127D4A621113D4A62F /* ofxMidi.h */,
+				938214A2795AA8FED29086DB /* ofxMidiConstants.h */,
+				3DD359247F3ED1550D8BB5C9 /* ofxMidiIn.cpp */,
+				B76FA489151DBAF1616DF378 /* ofxMidiIn.h */,
+				C0E7EDA67EDF213FC0E83D17 /* ofxMidiMessage.cpp */,
+				BD0E7AC8BE205034D5B377A6 /* ofxMidiMessage.h */,
+				04F77E5C73A62E2E77C78EC6 /* ofxMidiOut.cpp */,
+				81436E53CC4A77E326F659C3 /* ofxMidiOut.h */,
+				E16BB73D19DD0713FDCC7986 /* ofxMidiTypes.h */,
+			);
+			name = src;
+			sourceTree = "<group>";
+		};
+		ABC5123E2929C5438D237753 /* ofxMidiFighterTwister */ = {
+			isa = PBXGroup;
+			children = (
+				0C287C11E084135BA344B4EE /* src */,
+			);
+			name = ofxMidiFighterTwister;
+			sourceTree = "<group>";
+		};
+		B94BF1DAC92BB22060F1F7ED /* ShivaVG */ = {
+			isa = PBXGroup;
+			children = (
+				2D9AC4E3BCAF9586BAF0E9B4 /* include */,
+				5FF18395A75FE5A9F97E7171 /* src */,
+			);
+			name = ShivaVG;
+			sourceTree = "<group>";
+		};
+		BB4B014C10F69532006C3DED /* addons */ = {
+			isa = PBXGroup;
+			children = (
+				8A3DD780D89619FC9FE77FBA /* ofxFatLines */,
+				2413C01760B1811BED0F502D /* ofxMidi */,
+				ABC5123E2929C5438D237753 /* ofxMidiFighterTwister */,
+				C3C57D7F2C074534D007A193 /* ofxShivaVG */,
+			);
+			name = addons;
+			sourceTree = "<group>";
+		};
+		BFC8D5A22EF0DA1976394128 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				B9831B435E39EB95AED87C75 /* ofxShivaVGRenderer.cpp */,
+				99C07695E461F5C73A6F20B7 /* ofxShivaVGRenderer.h */,
+				225821E3F9982E8E66F90F9C /* simpleVGContext.cpp */,
+				200635693A29D896983E39FA /* simpleVGContext.h */,
+				DBB867ED25E170AF3A601FEF /* simpleVGPath.cpp */,
+				1931D59D9FBEFF3D976D5BDE /* simpleVGPath.h */,
+			);
+			name = src;
+			sourceTree = "<group>";
+		};
+		C3C57D7F2C074534D007A193 /* ofxShivaVG */ = {
+			isa = PBXGroup;
+			children = (
+				BFC8D5A22EF0DA1976394128 /* src */,
+				5EE4F98C98D10288D3937980 /* libs */,
+			);
+			name = ofxShivaVG;
+			sourceTree = "<group>";
+		};
+		E4328144138ABC890047C5CB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E4328148138ABC890047C5CB /* openFrameworksDebug.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E4B69B4A0A3A1720003C02F2 = {
+			isa = PBXGroup;
+			children = (
+				E4B6FCAD0C3E899E008CF71C /* openFrameworks-Info.plist */,
+				E4EB6923138AFD0F00A09F29 /* Project.xcconfig */,
+				E4B69E1C0A3A1BDC003C02F2 /* src */,
+				E4EEC9E9138DF44700A80321 /* openFrameworks */,
+				BB4B014C10F69532006C3DED /* addons */,
+				6948EE371B920CB800B5AC1A /* local_addons */,
+				E4B69B5B0A3A1756003C02F2 /* TracerDebug.app */,
+			);
+			sourceTree = "<group>";
+		};
+		E4B69E1C0A3A1BDC003C02F2 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
+				E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */,
+				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
+				84F44EA61F6E25AB00653B30 /* Tracer.h */,
+			);
+			path = src;
+			sourceTree = SOURCE_ROOT;
+		};
+		E4EEC9E9138DF44700A80321 /* openFrameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E4EB691F138AFCF100A09F29 /* CoreOF.xcconfig */,
+				E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */,
+			);
+			name = openFrameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E4B69B5A0A3A1756003C02F2 /* Tracer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E4B69B5F0A3A1757003C02F2 /* Build configuration list for PBXNativeTarget "Tracer" */;
+			buildPhases = (
+				E4B69B580A3A1756003C02F2 /* Sources */,
+				E4B69B590A3A1756003C02F2 /* Frameworks */,
+				E4B6FFFD0C3F9AB9008CF71C /* ShellScript */,
+				E4C2427710CC5ABF004149E2 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E4EEB9AC138B136A00A80321 /* PBXTargetDependency */,
+			);
+			name = Tracer;
+			productName = myOFApp;
+			productReference = E4B69B5B0A3A1756003C02F2 /* TracerDebug.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E4B69B4C0A3A1720003C02F2 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0600;
+			};
+			buildConfigurationList = E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "Tracer" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
+			mainGroup = E4B69B4A0A3A1720003C02F2;
+			productRefGroup = E4B69B4A0A3A1720003C02F2;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = E4328144138ABC890047C5CB /* Products */;
+					ProjectRef = E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				E4B69B5A0A3A1756003C02F2 /* Tracer */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		E4328148138ABC890047C5CB /* openFrameworksDebug.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = openFrameworksDebug.a;
+			remoteRef = E4328147138ABC890047C5CB /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		E4B6FFFD0C3F9AB9008CF71C /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "mkdir -p \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Resources/\"\n# Copy default icon file into App/Resources\nrsync -aved \"$ICON_FILE\" \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Resources/\"\n# Copy libfmod and change install directory for fmod to run\nrsync -aved ../../../libs/fmodex/lib/osx/libfmodex.dylib \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Frameworks/\";\ninstall_name_tool -change @executable_path/libfmodex.dylib @executable_path/../Frameworks/libfmodex.dylib \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/$PRODUCT_NAME\";\n# Copy GLUT framework (must remove for AppStore submissions)\nrsync -aved ../../../libs/glut/lib/osx/GLUT.framework \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Frameworks/\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E4B69B580A3A1756003C02F2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
+				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,
+				B3A9A95BCDE7FF1B89486968 /* ofxFatLine.cpp in Sources */,
+				0A03A75CD4D4AC0E1B4F6B2B /* sincosineLut.cpp in Sources */,
+				BCC8D420CBA9217E437D2D76 /* ofxRtMidiIn.cpp in Sources */,
+				3AEFE4FA8AD5C72671AD07F8 /* ofxRtMidiOut.cpp in Sources */,
+				1A86B7721CAEBC6F1C572C45 /* ofxBaseMidi.cpp in Sources */,
+				63F9FE1D90234FA6DE6F509E /* ofxMidi.cpp in Sources */,
+				0BFC9C20FD7E3C8D5873AA97 /* ofxMidiIn.cpp in Sources */,
+				C6FE64F74F1EA1D98C8F9847 /* ofxMidiMessage.cpp in Sources */,
+				83D9F930112E0944444124EE /* ofxMidiOut.cpp in Sources */,
+				63D0FD8734D5760B8080C901 /* RtMidi.cpp in Sources */,
+				EC0A61ABB5A2ABAC37BB87B1 /* ofxMidiFighterTwister.cpp in Sources */,
+				69F1233945AF12BB8CB4FD98 /* ofxShivaVGRenderer.cpp in Sources */,
+				1C4E92C17B63D8592B1B3F3C /* simpleVGContext.cpp in Sources */,
+				9568F15AF1DF79837AC6DDA0 /* simpleVGPath.cpp in Sources */,
+				624BAD2EF0B64CEBBF94135B /* shArrays.c in Sources */,
+				614E00FEB2A84A253E9002A5 /* shContext.c in Sources */,
+				5A83FB2E1B86442B3B2FBC53 /* shExtensions.c in Sources */,
+				30F8CEA9712C8FCE39D3B1D9 /* shGeometry.c in Sources */,
+				CE29D5F7939844D88FD3F6D2 /* shImage.c in Sources */,
+				4C2B9798639946BC69B1C9A0 /* shPaint.c in Sources */,
+				AEFA334814D3EE4F9E6F4829 /* shParams.c in Sources */,
+				A8CC477E84407E63FBE21942 /* shPath.c in Sources */,
+				77FCF151C0F9384474A465A3 /* shPipeline.c in Sources */,
+				8332C9CAF1F847B43A86F345 /* shVectors.c in Sources */,
+				528756D1A6760D229052A271 /* shVgu.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E4EEB9AC138B136A00A80321 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = openFrameworks;
+			targetProxy = E4EEB9AB138B136A00A80321 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		E4B69B4E0A3A1720003C02F2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
+			buildSettings = {
+				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/bin/";
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				GCC_AUTO_VECTORIZATION = YES;
+				GCC_ENABLE_SSE3_EXTENSIONS = YES;
+				GCC_ENABLE_SUPPLEMENTAL_SSE3_INSTRUCTIONS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_UNINITIALIZED_AUTOS = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(OF_CORE_HEADERS)",
+					src,
+					../../../addons/ofxFatLines/src,
+					../../../addons/ofxMidi/libs,
+					../../../addons/ofxMidi/libs/pgmidi,
+					../../../addons/ofxMidi/libs/rtmidi,
+					../../../addons/ofxMidi/src,
+					../../../addons/ofxMidi/src/desktop,
+					../../../addons/ofxMidi/src/ios,
+					../../../addons/ofxMidiFighterTwister/src,
+					../../../addons/ofxShivaVG/libs,
+					../../../addons/ofxShivaVG/libs/ShivaVG,
+					../../../addons/ofxShivaVG/libs/ShivaVG/include,
+					../../../addons/ofxShivaVG/libs/ShivaVG/include/vg,
+					../../../addons/ofxShivaVG/libs/ShivaVG/src,
+					../../../addons/ofxShivaVG/src,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CPLUSPLUSFLAGS = (
+					"-D__MACOSX_CORE__",
+					"-mtune=native",
+				);
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		E4B69B4F0A3A1720003C02F2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
+			buildSettings = {
+				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/bin/";
+				COPY_PHASE_STRIP = YES;
+				DEAD_CODE_STRIPPING = YES;
+				GCC_AUTO_VECTORIZATION = YES;
+				GCC_ENABLE_SSE3_EXTENSIONS = YES;
+				GCC_ENABLE_SUPPLEMENTAL_SSE3_INSTRUCTIONS = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_UNROLL_LOOPS = YES;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_UNINITIALIZED_AUTOS = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(OF_CORE_HEADERS)",
+					src,
+					../../../addons/ofxFatLines/src,
+					../../../addons/ofxMidi/libs,
+					../../../addons/ofxMidi/libs/pgmidi,
+					../../../addons/ofxMidi/libs/rtmidi,
+					../../../addons/ofxMidi/src,
+					../../../addons/ofxMidi/src/desktop,
+					../../../addons/ofxMidi/src/ios,
+					../../../addons/ofxMidiFighterTwister/src,
+					../../../addons/ofxShivaVG/libs,
+					../../../addons/ofxShivaVG/libs/ShivaVG,
+					../../../addons/ofxShivaVG/libs/ShivaVG/include,
+					../../../addons/ofxShivaVG/libs/ShivaVG/include/vg,
+					../../../addons/ofxShivaVG/libs/ShivaVG/src,
+					../../../addons/ofxShivaVG/src,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				OTHER_CPLUSPLUSFLAGS = (
+					"-D__MACOSX_CORE__",
+					"-mtune=native",
+				);
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		E4B69B600A3A1757003C02F2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+					/System/Library/Frameworks,
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../libs/glut/lib/osx\"";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = NONE;
+				HEADER_SEARCH_PATHS = (
+					"$(OF_CORE_HEADERS)",
+					src,
+					../../../addons/ofxFatLines/src,
+					../../../addons/ofxMidi/libs,
+					../../../addons/ofxMidi/libs/pgmidi,
+					../../../addons/ofxMidi/libs/rtmidi,
+					../../../addons/ofxMidi/src,
+					../../../addons/ofxMidi/src/desktop,
+					../../../addons/ofxMidi/src/ios,
+					../../../addons/ofxMidiFighterTwister/src,
+					../../../addons/ofxShivaVG/libs,
+					../../../addons/ofxShivaVG/libs/ShivaVG,
+					../../../addons/ofxShivaVG/libs/ShivaVG/include,
+					../../../addons/ofxShivaVG/libs/ShivaVG/include/vg,
+					../../../addons/ofxShivaVG/libs/ShivaVG/src,
+					../../../addons/ofxShivaVG/src,
+				);
+				ICON = "$(ICON_NAME_DEBUG)";
+				ICON_FILE = "$(ICON_FILE_PATH)$(ICON)";
+				INFOPLIST_FILE = "openFrameworks-Info.plist";
+				INSTALL_PATH = /Applications;
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = "$(TARGET_NAME)Debug";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		E4B69B610A3A1757003C02F2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+					/System/Library/Frameworks,
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../libs/glut/lib/osx\"";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = NONE;
+				HEADER_SEARCH_PATHS = (
+					"$(OF_CORE_HEADERS)",
+					src,
+					../../../addons/ofxFatLines/src,
+					../../../addons/ofxMidi/libs,
+					../../../addons/ofxMidi/libs/pgmidi,
+					../../../addons/ofxMidi/libs/rtmidi,
+					../../../addons/ofxMidi/src,
+					../../../addons/ofxMidi/src/desktop,
+					../../../addons/ofxMidi/src/ios,
+					../../../addons/ofxMidiFighterTwister/src,
+					../../../addons/ofxShivaVG/libs,
+					../../../addons/ofxShivaVG/libs/ShivaVG,
+					../../../addons/ofxShivaVG/libs/ShivaVG/include,
+					../../../addons/ofxShivaVG/libs/ShivaVG/include/vg,
+					../../../addons/ofxShivaVG/libs/ShivaVG/src,
+					../../../addons/ofxShivaVG/src,
+				);
+				ICON = "$(ICON_NAME_RELEASE)";
+				ICON_FILE = "$(ICON_FILE_PATH)$(ICON)";
+				INFOPLIST_FILE = "openFrameworks-Info.plist";
+				INSTALL_PATH = /Applications;
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+				baseConfigurationReference = E4EB6923138AFD0F00A09F29;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "Tracer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E4B69B4E0A3A1720003C02F2 /* Debug */,
+				E4B69B4F0A3A1720003C02F2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E4B69B5F0A3A1757003C02F2 /* Build configuration list for PBXNativeTarget "Tracer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E4B69B600A3A1757003C02F2 /* Debug */,
+				E4B69B610A3A1757003C02F2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E4B69B4C0A3A1720003C02F2 /* Project object */;
+}

@@ -3,91 +3,8 @@
 #include "ofMain.h"
 #include "ofxShivaVGRenderer.h"
 #include "ofxMidiFighterTwister.h"
-
-class Particle;
-class Tracer;
-
-class property_base {
-public:
-    virtual void clean() = 0;
-};
-
-template <typename T>
-class property : public property_base {
-public:
-    typedef std::function<void(T v)> subscription_t;
-    
-    void subscribeTo(property<T>* otherProperty) {
-        otherProperty->addSubscriber([&](T otherValue) { this->dirtyValue = otherValue; });
-    }
-    
-    void addSubscriber(subscription_t s) {
-        subscribers.add(s);
-    }
-    
-    virtual void clean() {
-        if (dirty) {
-            cachedValue = dirtyValue;
-            dirty = false;
-            notifySubscribers();
-        }
-    }
-    
-    void notifySubscribers() {
-        for (auto& subscriber : subscribers) {
-            subscriber(cachedValue);
-        }
-    }
-    
-    void set(const T& v) {
-        std::lock_guard<std::mutex> guard(mutex);
-        dirtyValue = v;
-        dirty = true;
-    }
-    
-    const T& get() const {
-        return cachedValue;
-    }
-    
-    const T& operator()() const {
-        return get();
-    }
-    
-    operator const T&() const {
-        return get();
-    }
-    
-    T operator=(const T& v) {
-        set(v);
-        return dirtyValue;
-    }
-    
-    T operator+=(const T& v) {
-        set(dirtyValue + v);
-        return dirtyValue;
-    }
-    
-    T operator-=(const T& v) {
-        set(dirtyValue - v);
-        return dirtyValue;
-    }
-    
-    T operator++(T v) {
-        set(dirtyValue + 1);
-        return dirtyValue;
-    }
-    
-    T operator--(T v) {
-        set(dirtyValue - 1);
-        return dirtyValue;
-    }
-private:
-    T dirtyValue;
-    T cachedValue;
-    bool dirty;
-    std::vector<subscription_t> subscribers;
-    std::mutex mutex;
-};
+#include "Tracer.h"
+#include <limits.h>
 
 class ofApp : public ofBaseApp {
     
@@ -109,8 +26,12 @@ public:
     void gotMessage(ofMessage msg);
     
 private:
-    property<int> tracerCount;
-    void
+    void drawFPS();
+
+    std::vector<property_base*> properties;
+    property<int> master = {0, 127};
+    property<int> tracerCount = {0, 255};
+    property<int> background = {0, 255};
     
     Particle* p0;
     ofPolyline path;
