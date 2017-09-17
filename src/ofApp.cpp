@@ -42,8 +42,7 @@ public:
 
 class Tracer {
 public:
-    Tracer(ofPoint startLocation) : head(startLocation) {
-    }
+    Tracer(ofPoint startLocation) : head(startLocation) {}
     
     TracerUpdateStrategy* getUpdateBehavior(int index) {
         return (index >= 0 && index < updateStrategies.size()) ? updateStrategies[index] : nullptr;
@@ -355,7 +354,6 @@ void ofApp::setup(){
     tracersToAdd = 0;
     tracersToDelete = 0;
     windowPadding = 25;
-    
     ofSetFrameRate(60.0f);
     ofSetCurveResolution(100);
     setupTracers();
@@ -457,9 +455,9 @@ void ofApp::onEncoderUpdate(ofxMidiFighterTwister::EncoderEventArgs & a){
     ofLogNotice() << "Encoder '" << a.ID << "' Event! val: " << a.value;
     if (a.ID == 0) {
         if (a.value == ofxMidiFighterTwister::MIDI_INCREASE) {
-            tracersToAdd++;
+            tracerCount++;
         } else if (a.value == ofxMidiFighterTwister::MIDI_DECREASE) {
-            tracersToDelete++;
+            tracerCount--;
         }
     } else if (a.ID == 1) {
         std::cout << a.value << std::endl;
@@ -478,41 +476,28 @@ void ofApp::onSideButtonPressed(ofxMidiFighterTwister::SideButtonEventArgs & a){
 void ofApp::update() {
     float currentTime = ofGetElapsedTimeMillis();
     
-    int localTracersToAdd = tracersToAdd;
-    for (; localTracersToAdd > 0; localTracersToAdd--) {
-        tracers.push_back(makeTracer());
-    }
-    tracersToAdd = 0;
+    int oldTracerCount = tracerCount;
+    tracerCount.clean();
     
-    int localTracersToDelete = tracersToDelete;
-    for (; tracers.size() > 0 && localTracersToDelete > 0; localTracersToDelete--) {
-        tracers.pop_back();
+    for (int i = 0; i < abs(tracerCount - oldTracerCount); i++) {
+        if (tracerCount > oldTracerCount) {
+            tracers.push_back(makeTracer());
+        } else {
+            tracers.pop_back();
+        }
     }
-    tracersToDelete = 0;
     
-    std::for_each(tracers.begin(), tracers.end(), [currentTime](Tracer* t) {
+    for (auto& t : tracers) {
         t->update(currentTime);
-    });
-    
-//    if (currentTime - time >= 6*1000) {
-//        if (tick < tracers.size()) {
-//            Tracer* t = tracers[tick++];
-//            MaximumLength* behavior = (MaximumLength*) t->getUpdateBehavior(0);
-//            behavior->maxPoints = 0;
-//            HeadGrowth* headGrowth = (HeadGrowth*) t->getUpdateBehavior(2);
-//            headGrowth->enabled = false;
-//            time = currentTime;
-//            std::cout << "deleting 1" << std::endl;
-//        }
-//    }
-    
-    time = currentTime;
+    }
     
     scaledVol = ofMap(smoothedVol, 0.0, 0.17, 0.0, 1.0, true);
-    volHistory.push_back( scaledVol );
+    volHistory.push_back(scaledVol);
     if (volHistory.size() >= 400) {
         volHistory.erase(volHistory.begin(), volHistory.begin()+1);
     }
+    
+    time = currentTime;
 }
 
 //--------------------------------------------------------------
