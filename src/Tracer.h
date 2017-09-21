@@ -393,7 +393,7 @@ public:
     void draw(Tracer* t, float time, std::shared_ptr<ofBaseRenderer> renderer) {
         Particle* head = t->getHead();
         if (head != nullptr) {
-            ofDrawEllipse(head->location.x, head->location.y, strokeWidth, strokeWidth);
+            ofDrawEllipse(head->location.x, head->location.y, head->location.z, strokeWidth, strokeWidth);
         }
     }
 private:
@@ -407,7 +407,7 @@ public:
     void draw(Tracer* t, float time, std::shared_ptr<ofBaseRenderer> renderer) {
         Particle* tail = t->getTail();
         if (tail != nullptr) {
-            ofDrawEllipse(tail->location.x, tail->location.y, strokeWidth, strokeWidth);
+            ofDrawEllipse(tail->location.x, tail->location.y, tail->location.z, strokeWidth, strokeWidth);
         }
     }
 private:
@@ -429,7 +429,9 @@ public:
         if (t->particles.size() >= 2) {
             t->path.clear();
             t->path.moveTo(t->particles[0]->location);
-            std::for_each(t->particles.begin()+1, t->particles.end(), [&](Particle* particle) {t->path.curveTo(particle->location);});
+            for (Particle* particle : t->particles) {
+                t->path.curveTo(particle->location);
+            }
         }
     }
 };
@@ -493,15 +495,12 @@ public:
     PerlinMovement(ofPoint velocity, ofPoint stageSize, ofPoint timeShift) : velocity(velocity), stageSize(stageSize), timeShift(timeShift) {}
     
     void update(Tracer* t, float time) {
-        float xMax = stageSize[0]*2;
-        float yMax = stageSize[1]*2;
-        float zMax = stageSize[2];
-        float x = xMax * ofNoise(time * velocity[0] + timeShift[0]);
-        float y = yMax * ofNoise(time * velocity[1] + timeShift[1]);
-        float z = zMax * ofNoise(time * velocity[2] + timeShift[2]);
-        x = ofMap(x, 0, xMax, 0, stageSize[0], true);
-        y = ofMap(y, 0, yMax, 0, stageSize[1], true);
-        z = ofMap(z, 0, zMax, -1 * stageSize[2], stageSize[2], true);
+        float x = ofNoise(time * velocity[0] + timeShift[0]);
+        float y = ofNoise(time * velocity[1] + timeShift[1]);
+        float z = ofNoise(time * velocity[2] + timeShift[2]);
+        x = ofMap(x, 0, 1, -0.5*stageSize[0], 0.5*stageSize[0], true);
+        y = ofMap(y, 0, 1, -0.5*stageSize[1], 0.5*stageSize[1], true);
+        z = ofMap(z, 0, 1, -0.5*stageSize[2], 0.5*stageSize[2], true);
         t->head = ofPoint(x, y, z);
     }
     

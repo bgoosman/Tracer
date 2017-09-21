@@ -27,6 +27,8 @@ public:
     
 private:
     void drawFPS();
+    
+    ofCamera camera;
 
     std::vector<property_base*> properties;
     property<int> master = {"master", 0, 0, 127};

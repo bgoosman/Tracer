@@ -1,8 +1,8 @@
 #include "ofApp.h"
 
 void ofApp::setup() {
-    stageSize = ofPoint(ofGetWidth(), ofGetHeight(), maxZ);
-    stageCenter = ofPoint(ofGetWindowWidth() / 2, ofGetWindowHeight() / 2);
+    stageSize = ofPoint(ofGetWidth(), ofGetHeight(), (ofGetWidth() + ofGetHeight()) / 2.0f);
+    stageCenter = ofPoint(0, 0, 0);
     windowPadding = 25;
     
     tick = 0;
@@ -45,7 +45,6 @@ Tracer* ofApp::makeTracer() {
         ofColor(0, ofRandom(minGreen, maxGreen), ofRandom(minBlue, maxBlue))
     };
     ofPoint velocity(0.001, 0.001, 0.001);
-    ofPoint v2(1, 1, 1);
     ofPoint timeShift(ofRandom(stageSize[0]), ofRandom(stageSize[1]), ofRandom(stageSize[2]));
     auto tracer = new Tracer(stageCenter);
     tracer->addUpdateBehavior(new MaximumLength(maxPoints));
@@ -150,11 +149,18 @@ void ofApp::update() {
 void ofApp::draw() {
     float currentTime = ofGetElapsedTimeMillis();
     
+    ofEnableDepthTest();
     ofBackground(background);
+    ofPushMatrix();
+    ofTranslate(stageSize[0]/2, stageSize[1]/2, 0);
+    float time = ofGetElapsedTimef();
+    float angle = time * 5;
+    ofRotate(angle, 0, 1, 0);
     for (auto& t : tracers) {
         t->draw(currentTime, ofGetCurrentRenderer());
     }
-    
+    ofPopMatrix();
+
     drawFPS();
 }
 
