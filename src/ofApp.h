@@ -29,9 +29,11 @@ private:
     void drawFPS();
 
     std::vector<property_base*> properties;
-    property<int> master = {0, 127};
-    property<int> tracerCount = {0, 255};
-    property<int> background = {0, 255};
+    property<int> master = {"master", 0, 0, 127};
+    property<int> tracerCount = {"tracerCount", 1, 1, 255};
+    property<int> background = {"background", 0, 0, 255};
+    property<float> maxShift = {"maxShift", 3, 1, 8};
+    property<int> multiplierCount = {"multiplierCount", 5, 0, 255};
     
     Particle* p0;
     ofPolyline path;
@@ -41,8 +43,6 @@ private:
     std::vector<Tracer*> tracers;
     int tick;
     int lastVal;
-    int tracersToAdd;
-    int tracersToDelete;
     Tracer* makeTracer();
     void setupTracers();
    
@@ -55,7 +55,6 @@ private:
     ofPoint stageSize;
     ofPoint stageCenter;
     float maxZ;
-    int multiplierCount;
     float perlinShiftX;
     float perlinShiftY;
     float strokeWidth;

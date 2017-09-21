@@ -1,26 +1,26 @@
 #include "ofApp.h"
 
-void ofApp::setup(){
+void ofApp::setup() {
     stageSize = ofPoint(ofGetWidth(), ofGetHeight(), maxZ);
     stageCenter = ofPoint(ofGetWindowWidth() / 2, ofGetWindowHeight() / 2);
+    windowPadding = 25;
+    
     tick = 0;
     time = ofGetElapsedTimeMillis();
-    tracersToAdd = 0;
-    tracersToDelete = 0;
-    windowPadding = 25;
-    background = 0;
-    
-    master.addSubscriber([&]() { tracerCount = tracerCount.map(master);;});
-    master.addSubscriber([&]() { background = background.map(master); });
-    properties.push_back(static_cast<property_base*>(&tracerCount));
-    properties.push_back(static_cast<property_base*>(&background));
-    properties.push_back(static_cast<property_base*>(&master));
     
     ofSetFrameRate(60.0f);
     ofSetCurveResolution(100);
     setupTracers();
     setupSoundStream();
     setupMidiFighterTwister();
+    
+    master.addSubscriber([&]() { tracerCount = tracerCount.mapFrom(master);});
+    master.addSubscriber([&]() { background = background.mapFrom(master); });
+    properties.push_back(static_cast<property_base*>(&tracerCount));
+    properties.push_back(static_cast<property_base*>(&background));
+    properties.push_back(static_cast<property_base*>(&maxShift));
+    properties.push_back(static_cast<property_base*>(&multiplierCount));
+    properties.push_back(static_cast<property_base*>(&master));
 }
 
 void ofApp::setupRenderer() {
@@ -36,6 +36,7 @@ Tracer* ofApp::makeTracer() {
     int maxGreen = 225;
     int minBlue = 90;
     int maxBlue = 225;
+    int colorsSize = 5;
     ofColor blueColors[] = {
         ofColor(0, ofRandom(minGreen, maxGreen), ofRandom(minBlue, maxBlue)),
         ofColor(0, ofRandom(minGreen, maxGreen), ofRandom(minBlue, maxBlue)),
@@ -43,8 +44,8 @@ Tracer* ofApp::makeTracer() {
         ofColor(0, ofRandom(minGreen, maxGreen), ofRandom(minBlue, maxBlue)),
         ofColor(0, ofRandom(minGreen, maxGreen), ofRandom(minBlue, maxBlue))
     };
-    int colorsSize = 5;
     ofPoint velocity(0.001, 0.001, 0.001);
+    ofPoint v2(1, 1, 1);
     ofPoint timeShift(ofRandom(stageSize[0]), ofRandom(stageSize[1]), ofRandom(stageSize[2]));
     auto tracer = new Tracer(stageCenter);
     tracer->addUpdateBehavior(new MaximumLength(maxPoints));
@@ -57,36 +58,17 @@ Tracer* ofApp::makeTracer() {
     tracer->addDrawBehavior(new RandomStrokeColor(blueColors, 5));
     auto strokeWidthStrategy = new StrokeWidth(strokeWidth);
     tracer->addDrawBehavior(strokeWidthStrategy);
-//    ValueMapper<float>* zToStrokeWidth = new ValueMapper<float>(
-//        &(strokeWidthStrategy->strokeWidth),
-//        &(t->head.z),
-//        ofVec2f(1, strokeWidth),
-//        ofVec2f(-1*stageSize[2], stageSize[2])
-//    );
-//    t->addUpdateBehavior(zToStrokeWidth);
-//    t->addDrawBehavior(new StrokeColor(ofColor::white));
-//    t->addDrawBehavior(new StrokeWidthMappedToValue(strokeWidth, &(t->head.z), ofPoint(-1*stageSize[2], stageSize[2])));
     tracer->addDrawBehavior(new FilledPath(false));
-//    t->addDrawBehavior(new PerlinBrightness(timeShift, velocity));
-    auto multiplier = new VibratingMultiplier(new Multiplier(multiplierCount, 3.0f));
-    tracer->addDrawBehavior(multiplier);
-//    t->addUpdateBehavior(new VaryPerlin<float>(&multiplier->maxShift, ofVec2f(1, 5)));
-//    t->addUpdateBehavior(new ValueMapper<float>(
-//        &multiplier->maxShift,
-//        &this->scaledVol,
-//        ofVec2f(1, 120),
-//        ofVec2f(0, 1)
-//    ));
+    Multiplier* m = new Multiplier(multiplierCount, maxShift);
+    tracer->addDrawBehavior(new VibratingMultiplier(m));
     return tracer;
 }
 
 void ofApp::setupTracers() {
+    tracers.reserve(256);
+    strokeWidth = 1;
     maxPoints = 100;
     maxZ = 10;
-    multiplierCount = 5;
-    strokeWidth = 1;
-    tracerCount = 1;
-    tracers.reserve(256);
     for (int i = 0; i < tracerCount; i++) {
         tracers.push_back(makeTracer());
     }
@@ -98,8 +80,6 @@ void ofApp::setupSoundStream() {
     left.assign(bufferSize, 0.0);
     right.assign(bufferSize, 0.0);
     volHistory.assign(400, 0.0);
-    bufferCounter = 0;
-    drawCounter	= 0;
     smoothedVol = 0.0;
     scaledVol = 0.0;
     soundStream.setup(this, 0, 1, 44100, bufferSize, 4);
@@ -109,6 +89,7 @@ void ofApp::setupSoundStream() {
 void ofApp::setupMidiFighterTwister() {
     twister.setup();
     twister.setEncoderRingValue(0, 0);
+    twister.setEncoderRingValue(4, 0);
     ofAddListener(twister.eventEncoder, this, &ofApp::onEncoderUpdate);
     ofAddListener(twister.eventPushSwitch, this, &ofApp::onPushSwitchUpdate);
     ofAddListener(twister.eventSideButton, this, &ofApp::onSideButtonPressed);
@@ -122,6 +103,10 @@ void ofApp::onEncoderUpdate(ofxMidiFighterTwister::EncoderEventArgs & a){
         tracerCount += ofxMidiFighterTwister::relativeMidi(a.value);
     } else if (a.ID == 2) {
         background += ofxMidiFighterTwister::relativeMidi(a.value);
+    } else if (a.ID == 3) {
+        maxShift = maxShift.map(a.value, 0, 127);
+    } else if (a.ID == 4) {
+        multiplierCount += ofxMidiFighterTwister::relativeMidi(a.value);
     }
 }
 
@@ -162,7 +147,6 @@ void ofApp::update() {
     time = currentTime;
 }
 
-//--------------------------------------------------------------
 void ofApp::draw() {
     float currentTime = ofGetElapsedTimeMillis();
     
@@ -181,41 +165,24 @@ void ofApp::drawFPS() {
     ofSetWindowTitle(m.str());
 }
 
-void ofApp::audioIn(float * input, int bufferSize, int nChannels){
-    
+void ofApp::audioIn(float * input, int bufferSize, int nChannels) {
     float curVol = 0.0;
-    
-    // samples are "interleaved"
     int numCounted = 0;
-    
-    //lets go through each sample and calculate the root mean square which is a rough way to calculate volume
-    for (int i = 0; i < bufferSize; i++){
-        left[i]		= input[i]*0.5;
-//        right[i]	= input[i*2+1]*0.5;
-        
+    for (int i = 0; i < bufferSize; i++) {
+        left[i]	= input[i]*0.5;
         curVol += left[i] * left[i];
-//        curVol += right[i] * right[i];
-        numCounted+=1;
     }
     
-    //this is how we get the mean of rms :)
-    curVol /= (float)numCounted;
-    
-    // this is how we get the root of rms :)
-    curVol = sqrt( curVol );
+    curVol /= bufferSize;
+    curVol = sqrt(curVol);
     
     smoothedVol *= 0.93;
     smoothedVol += 0.07 * curVol;
-    
-    bufferCounter++;
 }
 
-//--------------------------------------------------------------
-void ofApp::keyPressed(int key){
-}
+void ofApp::keyPressed(int key) { }
 
-//--------------------------------------------------------------
-void ofApp::keyReleased(int key){
+void ofApp::keyReleased(int key) {
     if (key == 'f') {
         ofToggleFullscreen();
     }
@@ -234,57 +201,26 @@ void ofApp::keyReleased(int key){
     }
 }
 
-//--------------------------------------------------------------
-void ofApp::mouseMoved(int x, int y ){
+void ofApp::mouseMoved(int x, int y ) { }
 
-}
+void ofApp::mouseDragged(int x, int y, int button) { }
 
-//--------------------------------------------------------------
-void ofApp::mouseDragged(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mousePressed(int x, int y, int button){
-    if (ofGetCurrentRenderer() == defaultRenderer)
-    {
+void ofApp::mousePressed(int x, int y, int button) {
+    if (ofGetCurrentRenderer() == defaultRenderer) {
         ofSetCurrentRenderer(shivaVGRenderer);
-        std::cout << "shiva" << std::endl;
-    }
-    else
-    {
+    } else {
         ofSetCurrentRenderer(defaultRenderer);
-        std::cout << "default" << std::endl;
     }
-
 }
 
-//--------------------------------------------------------------
-void ofApp::mouseReleased(int x, int y, int button){
+void ofApp::mouseReleased(int x, int y, int button) { }
 
-}
+void ofApp::mouseEntered(int x, int y) { }
 
-//--------------------------------------------------------------
-void ofApp::mouseEntered(int x, int y){
+void ofApp::mouseExited(int x, int y) { }
 
-}
+void ofApp::windowResized(int w, int h) { }
 
-//--------------------------------------------------------------
-void ofApp::mouseExited(int x, int y){
+void ofApp::gotMessage(ofMessage msg) { }
 
-}
-
-//--------------------------------------------------------------
-void ofApp::windowResized(int w, int h){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::gotMessage(ofMessage msg){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::dragEvent(ofDragInfo dragInfo){ 
-
-}
+void ofApp::dragEvent(ofDragInfo dragInfo) { }

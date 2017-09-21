@@ -22,10 +22,26 @@ public:
     typedef std::function<void()> subscription_t;
     
     property() {}
-    property(const T& min, const T& max) : min(min), max(max) {}
+    property(const std::string& name, property<T>& other) {
+        this->name = name;
+        cachedValue = other.get();
+        min = other.getMin();
+        max = other.getMax();
+        other.addSubscriber([&]() { set(mapFrom(other)); });
+    }
+    property(const std::string& name, const T& defaultValue, const T& min, const T& max) : name(name), cachedValue(defaultValue), min(min), max(max) {}
     
-    T map(const property<T>& other) {
+    // defined behavior for any numeric type
+    // undefined otherwise
+    T mapFrom(property<T>& other) {
         return (T)ofMap(other, other.getMin(), other.getMax(), this->getMin(), this->getMax(), true);
+    }
+    
+    // defined behavior for any numeric type
+    // undefined otherwise
+    T map(const T& other, T otherMin, T otherMax) {
+        auto m = (T)ofMap(other, otherMin, otherMax, getMin(), getMax());
+        return m;
     }
     
     T getMin() const {
@@ -89,21 +105,22 @@ public:
         return dirtyValue;
     }
     
-    T operator++(T v) {
+    T operator++(int) {
         set(dirtyValue + 1);
         return dirtyValue;
     }
     
-    T operator--(T v) {
+    T operator--(int) {
         set(dirtyValue - 1);
         return dirtyValue;
     }
 private:
+    std::string name;
     T min;
     T max;
     T dirtyValue;
     T cachedValue;
-    bool dirty;
+    bool dirty = false;
     std::vector<subscription_t> subscribers;
     std::mutex mutex;
 };
@@ -229,8 +246,10 @@ public:
 
 class Multiplier : public TracerDrawStrategy {
 public:
-    Multiplier(int count, float maxShift) : count(count), maxShift(maxShift) {
-        for (int i = 0; i < count; i++) {
+    Multiplier(property<int>& multiplierCount, property<float>& maxShift) :
+        multiplierCount("multiplierCount", multiplierCount),
+        maxShift("multiplierMaxShift", maxShift) {
+        for (int i = 0; i < multiplierCount; i++) {
             ofPoint randomShift;
             randomShift.x = ofRandom(-1 * maxShift, maxShift);
             randomShift.y = ofRandom(-1 * maxShift, maxShift);
@@ -240,9 +259,10 @@ public:
     }
     
     void draw(Tracer* t, float time, std::shared_ptr<ofBaseRenderer> renderer) {
-        int countInt = (int)count;
+        multiplierCount.clean();
+        maxShift.clean();
         if (t->particles.size() >= 2) {
-            for (int i = 0; i < countInt; i++) {
+            for (int i = 0; i < multiplierCount; i++) {
                 ofPushMatrix();
                 ofPoint shift = shifts[i];
                 ofTranslate(shift);
@@ -253,8 +273,8 @@ public:
     }
     
     std::vector<ofPoint> shifts;
-    float count;
-    float maxShift;
+    property<int> multiplierCount;
+    property<float> maxShift;
 };
 
 class VibratingMultiplier : public TracerDrawStrategy {
@@ -263,9 +283,9 @@ public:
     
     void draw(Tracer* t, float time, std::shared_ptr<ofBaseRenderer> renderer) {
         std::vector<ofPoint> shifts;
-        int countInt = (int)super->count;
-        int maxShift = super->maxShift;
-        for (int i = 0; i < countInt; i++) {
+        int const multiplierCount = super->multiplierCount;
+        int const maxShift = super->maxShift;
+        for (int i = 0; i < multiplierCount; i++) {
             ofPoint randomShift;
             randomShift.x = ofRandom(-1 * maxShift, maxShift);
             randomShift.y = ofRandom(-1 * maxShift, maxShift);
@@ -429,10 +449,48 @@ public:
     size_t maxPoints;
 };
 
+class CubicMovement : public TracerUpdateStrategy {
+public:
+    CubicMovement(ofPoint velocity, ofPoint stageSize, ofPoint timeShift) : velocity(velocity), stageSize(stageSize), timeShift(timeShift) {
+        range1 = {ofRandom(-10, 10), ofRandom(-10, 10)};
+        range2 = {ofRandom(-10, 10), ofRandom(-10, 10)};
+        range3 = {ofRandom(-10, 10), ofRandom(-10, 10)};
+        range4 = {ofRandom(-10, 10), ofRandom(-10, 10)};
+    }
+    
+    void update(Tracer* t, float time) {
+        float x = (int)time % 100;
+        float y = cubic(ofMap((int)time % 100, 0, 100, 0, 1));
+        x = ofMap(x, 0, 100, 0, stageSize[0], true);
+        y = ofMap(y, -10000, 10000, 0, stageSize[1], true);
+        t->head = ofPoint(x, y);
+    }
+    
+    float cubic(float t) {
+        float a1 = ofLerp(t, range1[0], range1[1]);
+        float a2 = ofLerp(t, range2[0], range2[1]);
+        float a3 = ofLerp(t, range3[0], range3[1]);
+        float a4 = ofLerp(t, range4[0], range4[1]);
+        float b1 = ofLerp(t, a1, a2);
+        float b2 = ofLerp(t, a3, a4);
+        float c = ofLerp(t, b1, b2);
+        return c;
+    }
+    
+private:
+    ofPoint velocity;
+    ofPoint stageSize;
+    ofPoint timeShift;
+    ofVec2f range1;
+    ofVec2f range2;
+    ofVec2f range3;
+    ofVec2f range4;
+    float min, max;
+};
+
 class PerlinMovement : public TracerUpdateStrategy {
 public:
-    PerlinMovement(ofPoint velocity, ofPoint stageSize, ofPoint timeShift)
-    : velocity(velocity), stageSize(stageSize), timeShift(timeShift) {}
+    PerlinMovement(ofPoint velocity, ofPoint stageSize, ofPoint timeShift) : velocity(velocity), stageSize(stageSize), timeShift(timeShift) {}
     
     void update(Tracer* t, float time) {
         float xMax = stageSize[0]*2;
