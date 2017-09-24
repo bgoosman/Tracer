@@ -13,7 +13,16 @@ class Tracer;
 
 class property_base {
 public:
+    property_base(const std::string& name) : name(name) {}
+    
     virtual void clean() = 0;
+    virtual void save(ofxXmlSettings& settings) = 0;
+    
+    std::string getName() {
+        return name;
+    }
+protected:
+    std::string name;
 };
 
 template <typename T>
@@ -22,26 +31,38 @@ public:
     typedef std::function<void()> subscription_t;
     
     property() {}
-    property(const std::string& name, property<T>& other) {
-        this->name = name;
+    property(const std::string& name, property<T>& other) : property_base(name) {
         cachedValue = other.get();
+        dirtyValue = cachedValue;
         min = other.getMin();
         max = other.getMax();
-        other.addSubscriber([&]() { set(mapFrom(other)); });
-    }
-    property(const std::string& name, const T& defaultValue, const T& min, const T& max) : name(name), cachedValue(defaultValue), min(min), max(max) {}
-    
-    // defined behavior for any numeric type
-    // undefined otherwise
-    T mapFrom(property<T>& other) {
-        return (T)ofMap(other, other.getMin(), other.getMax(), this->getMin(), this->getMax(), true);
+        other.addSubscriber([&]() { set(map(other)); });
     }
     
-    // defined behavior for any numeric type
-    // undefined otherwise
-    T map(const T& other, T otherMin, T otherMax) {
-        auto m = (T)ofMap(other, otherMin, otherMax, getMin(), getMax());
-        return m;
+    property(const std::string& name,
+             const T& defaultValue,
+             const T& min, const T& max) : property_base(name), cachedValue(defaultValue), min(min), max(max) {}
+    
+    T map(property<T>& other) {
+        return map(other.get(), other.getMin(), other.getMax());
+    }
+    
+    float map(float v, float min, float max) {
+        return ofMap(v, min, max, getMin(), getMax());
+    }
+    
+    int map(int v, int min, int max) {
+        return (int)ofMap(v, min, max, getMin(), getMax());
+    }
+    
+    ofVec3f map(ofVec3f value, ofVec3f min, ofVec3f max) {
+        return value;
+    }
+    
+    ofVec3f map(int i, float value, float min, float max) {
+        auto v = dirtyValue;
+        v[i] = ofMap(value, min, max, getMin()[i], getMax()[i], true);
+        return v;
     }
     
     T getMin() const {
@@ -64,6 +85,10 @@ public:
         }
     }
     
+    virtual void save(ofxXmlSettings& settings) {
+        settings.setValue("settings:" + name, ofToString(get()));
+    }
+    
     void notifySubscribers() {
         for (auto& subscriber : subscribers) {
             subscriber();
@@ -72,10 +97,23 @@ public:
     
     void set(const T& v) {
         std::lock_guard<std::mutex> guard(mutex);
-        if (min <= v && v <= max) {
+        if (between(v, min, max)) {
             dirtyValue = v;
             dirty = true;
         }
+    }
+    
+    bool between(const ofVec3f& v, const ofVec3f& min, const ofVec3f& max) {
+        auto length = v.length();
+        return min.length() <= length && length <= max.length();
+    }
+    
+    bool between(float v, float min, float max) {
+        return min <= v && v <= max;
+    }
+    
+    bool between(int v, int min, int max) {
+        return min <= v && v <= max;
     }
     
     const T& get() const {
@@ -115,7 +153,6 @@ public:
         return dirtyValue;
     }
 private:
-    std::string name;
     T min;
     T max;
     T dirtyValue;
@@ -128,7 +165,6 @@ private:
 class TracerUpdateStrategy {
 public:
     virtual void update(Tracer* t, float time) = 0;
-    bool enabled = true;
 };
 
 class TracerDrawStrategy {
@@ -237,7 +273,6 @@ public:
     void update(Tracer* tracer, float time) {
         float perlin = ofNoise(time * 0.001);
         *source = ofMap(perlin, 0, 1, range[0], range[1], true);
-        std::cout << *source << std::endl;
     }
     
     T* source;
@@ -417,9 +452,7 @@ private:
 class HeadGrowth : public TracerUpdateStrategy {
 public:
     void update(Tracer* t, float time) {
-        if (enabled) {
-            t->particles.push_back(new Particle(t->head, ofVec3f::zero(), 0));
-        }
+        t->particles.push_back(new Particle(t->head, ofVec3f::zero(), 0));
     }
 };
 
@@ -438,17 +471,18 @@ public:
 
 class MaximumLength : public TracerUpdateStrategy {
 public:
-    MaximumLength(size_t maxPoints): maxPoints(maxPoints) {}
+    MaximumLength(property<int>& maxPoints): maxPoints("maxPoints", maxPoints) {}
     
     void update(Tracer* t, float time) {
-        if (t->particles.size() > maxPoints) {
+        maxPoints.clean();
+        while (t->particles.size() > maxPoints) {
             Particle* p = t->particles[0];
             t->particles.pop_front();
             delete p;
         }
     }
 
-    size_t maxPoints;
+    property<int> maxPoints;
 };
 
 class CubicMovement : public TracerUpdateStrategy {
@@ -492,12 +526,16 @@ private:
 
 class PerlinMovement : public TracerUpdateStrategy {
 public:
-    PerlinMovement(ofPoint velocity, ofPoint stageSize, ofPoint timeShift) : velocity(velocity), stageSize(stageSize), timeShift(timeShift) {}
+    PerlinMovement(property<ofVec3f>& velocity,
+                   ofPoint stageSize,
+                   ofPoint timeShift) : velocity("velocity", velocity), stageSize(stageSize), timeShift(timeShift) {}
     
     void update(Tracer* t, float time) {
-        float x = ofNoise(time * velocity[0] + timeShift[0]);
-        float y = ofNoise(time * velocity[1] + timeShift[1]);
-        float z = ofNoise(time * velocity[2] + timeShift[2]);
+        velocity.clean();
+        ofVec3f v = velocity;
+        float x = ofNoise(time * v[0] + timeShift[0]);
+        float y = ofNoise(time * v[1] + timeShift[1]);
+        float z = ofNoise(time * v[2] + timeShift[2]);
         x = ofMap(x, 0, 1, -0.5*stageSize[0], 0.5*stageSize[0], true);
         y = ofMap(y, 0, 1, -0.5*stageSize[1], 0.5*stageSize[1], true);
         z = ofMap(z, 0, 1, -0.5*stageSize[2], 0.5*stageSize[2], true);
@@ -505,7 +543,7 @@ public:
     }
     
 private:
-    ofPoint velocity;
+    property<ofVec3f> velocity;
     ofPoint stageSize;
     ofPoint timeShift;
 };

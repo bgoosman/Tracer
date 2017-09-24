@@ -2,3 +2,4 @@ ofxFatLines
 ofxMidi
 ofxMidiFighterTwister
 ofxShivaVG
+ofxXmlSettings

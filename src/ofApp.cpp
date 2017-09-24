@@ -8,19 +8,40 @@ void ofApp::setup() {
     tick = 0;
     time = ofGetElapsedTimeMillis();
     
-    ofSetFrameRate(60.0f);
-    ofSetCurveResolution(100);
+    setupOpenFrameworks();
     setupTracers();
     setupSoundStream();
     setupMidiFighterTwister();
+    setupProperties();
+}
+
+ofApp::~ofApp() {
+    saveProperties();
+}
+
+void ofApp::saveProperties() {
+    for (auto property : properties) {
+        property->save(settings);
+    }
     
-    master.addSubscriber([&]() { tracerCount = tracerCount.mapFrom(master);});
-    master.addSubscriber([&]() { background = background.mapFrom(master); });
-    properties.push_back(static_cast<property_base*>(&tracerCount));
-    properties.push_back(static_cast<property_base*>(&background));
-    properties.push_back(static_cast<property_base*>(&maxShift));
-    properties.push_back(static_cast<property_base*>(&multiplierCount));
-    properties.push_back(static_cast<property_base*>(&master));
+    settings.save("settings.xml");
+}
+
+void ofApp::setupOpenFrameworks() {
+    ofSetFrameRate(60.0f);
+    ofSetCurveResolution(100);
+}
+
+void ofApp::setupProperties() {
+    master.addSubscriber([&]() { tracerCount = tracerCount.map(master);});
+    master.addSubscriber([&]() { background = background.map(master); });
+    registerProperty(tracerCount);
+    registerProperty(background);
+    registerProperty(maxShift);
+    registerProperty(maxPoints);
+    registerProperty(multiplierCount);
+    registerProperty(master);
+    registerProperty(velocity);
 }
 
 void ofApp::setupRenderer() {
@@ -29,6 +50,12 @@ void ofApp::setupRenderer() {
     shivaVGRenderer->setLineJoinStyle(VG_JOIN_ROUND);
     shivaVGRenderer->setLineCapStyle(VG_CAP_ROUND);
     ofSetCurrentRenderer(shivaVGRenderer);
+}
+
+template <class T>
+void ofApp::registerProperty(property<T>& property) {
+    properties.push_back(static_cast<property_base*>(&property));
+    property.addSubscriber([&]() {this->settings.setValue(property.getName(), ofToString(property.get()));});
 }
 
 Tracer* ofApp::makeTracer() {
@@ -44,7 +71,6 @@ Tracer* ofApp::makeTracer() {
         ofColor(0, ofRandom(minGreen, maxGreen), ofRandom(minBlue, maxBlue)),
         ofColor(0, ofRandom(minGreen, maxGreen), ofRandom(minBlue, maxBlue))
     };
-    ofPoint velocity(0.001, 0.001, 0.001);
     ofPoint timeShift(ofRandom(stageSize[0]), ofRandom(stageSize[1]), ofRandom(stageSize[2]));
     auto tracer = new Tracer(stageCenter);
     tracer->addUpdateBehavior(new MaximumLength(maxPoints));
@@ -54,7 +80,11 @@ Tracer* ofApp::makeTracer() {
     tracer->addDrawBehavior(new EllipseTail(strokeWidth));
     tracer->addDrawBehavior(new EllipseHead(strokeWidth));
     tracer->addDrawBehavior(new DrawPath);
-    tracer->addDrawBehavior(new RandomStrokeColor(blueColors, 5));
+    if (ofRandom(1) < 0.01) {
+        tracer->addDrawBehavior(new RandomStrokeColor(blueColors, 5));
+    } else {
+        tracer->addDrawBehavior(new StrokeColor(ofColor::black));
+    }
     auto strokeWidthStrategy = new StrokeWidth(strokeWidth);
     tracer->addDrawBehavior(strokeWidthStrategy);
     tracer->addDrawBehavior(new FilledPath(false));
@@ -66,7 +96,6 @@ Tracer* ofApp::makeTracer() {
 void ofApp::setupTracers() {
     tracers.reserve(256);
     strokeWidth = 1;
-    maxPoints = 100;
     maxZ = 10;
     for (int i = 0; i < tracerCount; i++) {
         tracers.push_back(makeTracer());
@@ -100,12 +129,21 @@ void ofApp::onEncoderUpdate(ofxMidiFighterTwister::EncoderEventArgs & a){
         master = a.value;
     } else if (a.ID == 1) {
         tracerCount += ofxMidiFighterTwister::relativeMidi(a.value);
+        settings.setValue("properties:" + tracerCount.getName(), tracerCount);
     } else if (a.ID == 2) {
         background += ofxMidiFighterTwister::relativeMidi(a.value);
     } else if (a.ID == 3) {
         maxShift = maxShift.map(a.value, 0, 127);
     } else if (a.ID == 4) {
         multiplierCount += ofxMidiFighterTwister::relativeMidi(a.value);
+    } else if (a.ID == 5) {
+        velocity = velocity.map(0, a.value, ofxMidiFighterTwister::MIDI_MIN, ofxMidiFighterTwister::MIDI_MAX);
+    } else if (a.ID == 6) {
+        velocity = velocity.map(1, a.value, ofxMidiFighterTwister::MIDI_MIN, ofxMidiFighterTwister::MIDI_MAX);
+    } else if (a.ID == 7) {
+        velocity = velocity.map(2, a.value, ofxMidiFighterTwister::MIDI_MIN, ofxMidiFighterTwister::MIDI_MAX);
+    } else if (a.ID == 8) {
+        maxPoints = maxPoints.map(a.value, ofxMidiFighterTwister::MIDI_MIN, ofxMidiFighterTwister::MIDI_MAX);
     }
 }
 

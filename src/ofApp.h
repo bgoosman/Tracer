@@ -3,12 +3,14 @@
 #include "ofMain.h"
 #include "ofxShivaVGRenderer.h"
 #include "ofxMidiFighterTwister.h"
+#include "ofxXmlSettings.h"
 #include "Tracer.h"
 #include <limits.h>
 
 class ofApp : public ofBaseApp {
     
 public:
+    virtual ~ofApp();
     void setup();
     void update();
     void draw();
@@ -27,6 +29,12 @@ public:
     
 private:
     void drawFPS();
+    void setupOpenFrameworks();
+    void setupProperties();
+    void saveProperties();
+    template <class T> void registerProperty(property<T>& property);
+    
+    ofxXmlSettings settings;
     
     ofCamera camera;
 
@@ -35,11 +43,12 @@ private:
     property<int> tracerCount = {"tracerCount", 1, 1, 255};
     property<int> background = {"background", 0, 0, 255};
     property<float> maxShift = {"maxShift", 3, 1, 8};
+    property<int> maxPoints = {"maxPoints", 100, 1, 1000};
     property<int> multiplierCount = {"multiplierCount", 5, 0, 255};
+    property<ofVec3f> velocity = {"velocity", ofVec3f(0.001, 0.001, 0.001), ofVec3f(0, 0, 0), ofVec3f(0.005, 0.005, 0.005)};
     
     Particle* p0;
     ofPolyline path;
-    size_t maxPoints;
     std::deque<ofFloatColor> colors;
     std::deque<double> weights;
     std::vector<Tracer*> tracers;
