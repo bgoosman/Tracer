@@ -17,6 +17,8 @@ public:
     
     virtual void clean() = 0;
     virtual void save(ofxXmlSettings& settings) = 0;
+    virtual void load(ofxXmlSettings& settings) = 0;
+    virtual void setScale(float scale) = 0;
     
     std::string getName() {
         return name;
@@ -55,14 +57,44 @@ public:
         return (int)ofMap(v, min, max, getMin(), getMax());
     }
     
-    ofVec3f map(ofVec3f value, ofVec3f min, ofVec3f max) {
-        return value;
+    ofVec3f map(ofVec3f v, ofVec3f min, ofVec3f max) {
+        return v;
     }
     
     ofVec3f map(int i, float value, float min, float max) {
         auto v = dirtyValue;
         v[i] = ofMap(value, min, max, getMin()[i], getMax()[i], true);
         return v;
+    }
+    
+    float lerp(float t, float min, float max) {
+        return ofLerp(min, max, t);
+    }
+    
+    int lerp(float t, int min, int max) {
+        return (int)roundf(ofLerp((float)min, (float)max, t));
+    }
+    
+    ofVec3f lerp(float t, ofVec3f min, ofVec3f max) {
+        return t * max;
+        
+    }
+    
+    int mapTo(int min, int max) {
+        return (int)ofMap(get(), getMin(), getMax(), min, max, true);
+    }
+    
+    float mapTo(float min, float max) {
+        return ofMap(get(), getMin(), getMax(), min, max, true);
+    }
+    
+    ofVec3f mapTo(ofVec3f min, ofVec3f max) {
+        return get();
+    }
+    
+    void setScale(float v) {
+        scale = v;
+        set(lerp(scale, getMin(), getMax()));
     }
     
     T getMin() const {
@@ -86,7 +118,16 @@ public:
     }
     
     virtual void save(ofxXmlSettings& settings) {
-        settings.setValue("settings:" + name, ofToString(get()));
+        settings.setValue(tag + ":" + name, ofToString(get()));
+    }
+    
+    virtual void load(ofxXmlSettings& settings) {
+        std::string defaultValue = "missing";
+        std::string s = settings.getValue(tag + ":" + name, defaultValue);
+        if (s.compare(defaultValue) != 0) {
+            T v = ofFromString<T>(s);
+            set(v);
+        }
     }
     
     void notifySubscribers() {
@@ -158,8 +199,10 @@ private:
     T dirtyValue;
     T cachedValue;
     bool dirty = false;
+    float scale;
     std::vector<subscription_t> subscribers;
     std::mutex mutex;
+    std::string const tag = "property";
 };
 
 class TracerUpdateStrategy {
@@ -245,23 +288,6 @@ public:
 };
 
 template <class T>
-class ValueMapper : public TracerUpdateStrategy {
-public:
-    ValueMapper(T* subscriber, T* subscription, ofVec2f subscriberRange, ofVec2f subscriptionRange)
-    : subscriber(subscriber), subscription(subscription), subscriberRange(subscriberRange), subscriptionRange(subscriptionRange) {}
-    
-    void update(Tracer* t, float time) {
-        *subscriber = (T)(ofMap(*subscription, subscriptionRange[0], subscriptionRange[1], subscriberRange[0], subscriberRange[1]));
-    }
-    
-private:
-    T* subscriber;
-    T* subscription;
-    ofVec2f subscriberRange;
-    ofVec2f subscriptionRange;
-};
-
-template <class T>
 class VaryPerlin : public TracerUpdateStrategy {
 public:
     VaryPerlin(T* source, ofVec2f range) :
@@ -296,7 +322,7 @@ public:
     void draw(Tracer* t, float time, std::shared_ptr<ofBaseRenderer> renderer) {
         multiplierCount.clean();
         maxShift.clean();
-        if (t->particles.size() >= 2) {
+        if (t->particles.size() >= 2 && shifts.size() >= multiplierCount) {
             for (int i = 0; i < multiplierCount; i++) {
                 ofPushMatrix();
                 ofPoint shift = shifts[i];

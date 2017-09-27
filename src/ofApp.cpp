@@ -13,18 +13,28 @@ void ofApp::setup() {
     setupSoundStream();
     setupMidiFighterTwister();
     setupProperties();
+    loadPropertiesFromXml(ofApp::SETTINGS_FILE);
 }
 
 ofApp::~ofApp() {
-    saveProperties();
+    savePropertiesToXml(ofApp::SETTINGS_FILE);
 }
 
-void ofApp::saveProperties() {
+void ofApp::loadPropertiesFromXml(std::string& file) {
+    settings.load(file);
+    
+    int encoder = 0;
+    for (auto property : properties) {
+        property->load(settings);
+    }
+}
+
+void ofApp::savePropertiesToXml(std::string& file) {
     for (auto property : properties) {
         property->save(settings);
     }
     
-    settings.save("settings.xml");
+    settings.save(file);
 }
 
 void ofApp::setupOpenFrameworks() {
@@ -35,13 +45,22 @@ void ofApp::setupOpenFrameworks() {
 void ofApp::setupProperties() {
     master.addSubscriber([&]() { tracerCount = tracerCount.map(master);});
     master.addSubscriber([&]() { background = background.map(master); });
-    registerProperty(tracerCount);
-    registerProperty(background);
-    registerProperty(maxShift);
-    registerProperty(maxPoints);
-    registerProperty(multiplierCount);
-    registerProperty(master);
-    registerProperty(velocity);
+    registerProperty(master, 0);
+    registerProperty(tracerCount, 1);
+    registerProperty(background, 2);
+    registerProperty(maxShift, 3);
+    registerProperty(maxPoints, 4);
+    registerProperty(multiplierCount, 5);
+    registerProperty(velocity, 6);
+}
+
+template <class T>
+void ofApp::registerProperty(property<T>& property, int encoder) {
+    properties.push_back(static_cast<property_base*>(&property));
+    
+    encoderBindings[encoder].push_back([&](int v) {
+        property.setScale(ofMap(v, 0, 127, 0, 1));
+    });
 }
 
 void ofApp::setupRenderer() {
@@ -50,12 +69,6 @@ void ofApp::setupRenderer() {
     shivaVGRenderer->setLineJoinStyle(VG_JOIN_ROUND);
     shivaVGRenderer->setLineCapStyle(VG_CAP_ROUND);
     ofSetCurrentRenderer(shivaVGRenderer);
-}
-
-template <class T>
-void ofApp::registerProperty(property<T>& property) {
-    properties.push_back(static_cast<property_base*>(&property));
-    property.addSubscriber([&]() {this->settings.setValue(property.getName(), ofToString(property.get()));});
 }
 
 Tracer* ofApp::makeTracer() {
@@ -94,9 +107,7 @@ Tracer* ofApp::makeTracer() {
 }
 
 void ofApp::setupTracers() {
-    tracers.reserve(256);
     strokeWidth = 1;
-    maxZ = 10;
     for (int i = 0; i < tracerCount; i++) {
         tracers.push_back(makeTracer());
     }
@@ -116,8 +127,6 @@ void ofApp::setupSoundStream() {
 
 void ofApp::setupMidiFighterTwister() {
     twister.setup();
-    twister.setEncoderRingValue(0, 0);
-    twister.setEncoderRingValue(4, 0);
     ofAddListener(twister.eventEncoder, this, &ofApp::onEncoderUpdate);
     ofAddListener(twister.eventPushSwitch, this, &ofApp::onPushSwitchUpdate);
     ofAddListener(twister.eventSideButton, this, &ofApp::onSideButtonPressed);
@@ -125,26 +134,30 @@ void ofApp::setupMidiFighterTwister() {
 
 void ofApp::onEncoderUpdate(ofxMidiFighterTwister::EncoderEventArgs & a){
     ofLogNotice() << "Encoder '" << a.ID << "' Event! val: " << a.value;
-    if (a.ID == 0) {
-        master = a.value;
-    } else if (a.ID == 1) {
-        tracerCount += ofxMidiFighterTwister::relativeMidi(a.value);
-        settings.setValue("properties:" + tracerCount.getName(), tracerCount);
-    } else if (a.ID == 2) {
-        background += ofxMidiFighterTwister::relativeMidi(a.value);
-    } else if (a.ID == 3) {
-        maxShift = maxShift.map(a.value, 0, 127);
-    } else if (a.ID == 4) {
-        multiplierCount += ofxMidiFighterTwister::relativeMidi(a.value);
-    } else if (a.ID == 5) {
-        velocity = velocity.map(0, a.value, ofxMidiFighterTwister::MIDI_MIN, ofxMidiFighterTwister::MIDI_MAX);
-    } else if (a.ID == 6) {
-        velocity = velocity.map(1, a.value, ofxMidiFighterTwister::MIDI_MIN, ofxMidiFighterTwister::MIDI_MAX);
-    } else if (a.ID == 7) {
-        velocity = velocity.map(2, a.value, ofxMidiFighterTwister::MIDI_MIN, ofxMidiFighterTwister::MIDI_MAX);
-    } else if (a.ID == 8) {
-        maxPoints = maxPoints.map(a.value, ofxMidiFighterTwister::MIDI_MIN, ofxMidiFighterTwister::MIDI_MAX);
+    if (encoderBindings.count(a.ID) > 0) {
+        for (auto binding : encoderBindings[a.ID]) {
+            binding(a.value);
+        }
     }
+//    if (a.ID == 0) {
+//        master = a.value;
+//    } else if (a.ID == 1) {
+//        tracerCount.setScale(ofMap(a.value, 0, 127, 0, 1, true));
+//    } else if (a.ID == 2) {
+//        background += ofxMidiFighterTwister::relativeMidi(a.value);
+//    } else if (a.ID == 3) {
+//        maxShift = maxShift.map(a.value, 0, 127);
+//    } else if (a.ID == 4) {
+//        multiplierCount += ofxMidiFighterTwister::relativeMidi(a.value);
+//    } else if (a.ID == 5) {
+//        velocity = velocity.map(0, a.value, ofxMidiFighterTwister::MIDI_MIN, ofxMidiFighterTwister::MIDI_MAX);
+//    } else if (a.ID == 6) {
+//        velocity = velocity.map(1, a.value, ofxMidiFighterTwister::MIDI_MIN, ofxMidiFighterTwister::MIDI_MAX);
+//    } else if (a.ID == 7) {
+//        velocity = velocity.map(2, a.value, ofxMidiFighterTwister::MIDI_MIN, ofxMidiFighterTwister::MIDI_MAX);
+//    } else if (a.ID == 8) {
+//        maxPoints = maxPoints.map(a.value, ofxMidiFighterTwister::MIDI_MIN, ofxMidiFighterTwister::MIDI_MAX);
+//    }
 }
 
 void ofApp::onPushSwitchUpdate(ofxMidiFighterTwister::PushSwitchEventArgs & a){
