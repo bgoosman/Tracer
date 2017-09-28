@@ -13,7 +13,6 @@ void ofApp::setup() {
     setupSoundStream();
     setupMidiFighterTwister();
     setupProperties();
-    loadPropertiesFromXml(ofApp::SETTINGS_FILE);
 }
 
 ofApp::~ofApp() {
@@ -45,22 +44,35 @@ void ofApp::setupOpenFrameworks() {
 void ofApp::setupProperties() {
     master.addSubscriber([&]() { tracerCount = tracerCount.map(master);});
     master.addSubscriber([&]() { background = background.map(master); });
-    registerProperty(master, 0);
-    registerProperty(tracerCount, 1);
-    registerProperty(background, 2);
-    registerProperty(maxShift, 3);
-    registerProperty(maxPoints, 4);
-    registerProperty(multiplierCount, 5);
-    registerProperty(velocity, 6);
+    registerProperty(master);
+    registerProperty(tracerCount);
+    registerProperty(background);
+    registerProperty(maxShift);
+    registerProperty(maxPoints);
+    registerProperty(multiplierCount);
+    registerProperty(velocity);
+    loadPropertiesFromXml(ofApp::SETTINGS_FILE);
+    bindEncoder(master, 0);
+    bindEncoder(tracerCount, 1);
+    bindEncoder(background, 2);
+    bindEncoder(maxShift, 3);
+    bindEncoder(maxPoints, 4);
+    bindEncoder(multiplierCount, 5);
+    bindEncoder(velocity, 6);
 }
 
 template <class T>
-void ofApp::registerProperty(property<T>& property, int encoder) {
-    properties.push_back(static_cast<property_base*>(&property));
-    
+void ofApp::bindEncoder(property<T>& property, int encoder) {
+    std::cout << encoder << " " << property.getScale() << std::endl;
+    twister.setEncoderRingValue(encoder, property.getScale());
     encoderBindings[encoder].push_back([&](int v) {
         property.setScale(ofMap(v, 0, 127, 0, 1));
     });
+}
+
+template <class T>
+void ofApp::registerProperty(property<T>& property) {
+    properties.push_back(static_cast<property_base*>(&property));
 }
 
 void ofApp::setupRenderer() {

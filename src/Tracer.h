@@ -92,6 +92,10 @@ public:
         return get();
     }
     
+    float getScale() {
+        return scale;
+    }
+    
     void setScale(float v) {
         scale = v;
         set(lerp(scale, getMin(), getMax()));
@@ -118,15 +122,15 @@ public:
     }
     
     virtual void save(ofxXmlSettings& settings) {
-        settings.setValue(tag + ":" + name, ofToString(get()));
+        settings.setValue(tag + ":" + name, getScale());
     }
     
     virtual void load(ofxXmlSettings& settings) {
         std::string defaultValue = "missing";
         std::string s = settings.getValue(tag + ":" + name, defaultValue);
         if (s.compare(defaultValue) != 0) {
-            T v = ofFromString<T>(s);
-            set(v);
+            float v = ofFromString<float>(s);
+            setScale(v);
         }
     }
     

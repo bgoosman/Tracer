@@ -48,7 +48,8 @@ private:
     void setupProperties();
     void savePropertiesToXml(std::string& file);
     void loadPropertiesFromXml(std::string& file);
-    template <class T> void registerProperty(property<T>& property, int encoder);
+    template <class T> void registerProperty(property<T>& property);
+    template <class T> void bindEncoder(property<T>& property, int encoder);
     typedef std::function<void(int)> encoderbinding_t;
     std::map<int, std::vector<encoderbinding_t>> encoderBindings;
     
