@@ -20,7 +20,7 @@ public:
     virtual void load(ofxXmlSettings& settings) = 0;
     virtual void setScale(float scale) = 0;
     
-    std::string getName() {
+    virtual std::string getName() {
         return name;
     }
 protected:
@@ -131,6 +131,7 @@ public:
         if (s.compare(defaultValue) != 0) {
             float v = ofFromString<float>(s);
             setScale(v);
+            clean();
         }
     }
     
@@ -143,6 +144,7 @@ public:
     void set(const T& v) {
         std::lock_guard<std::mutex> guard(mutex);
         if (between(v, min, max)) {
+            std::cout << "Set " << getName() << " to " << v << std::endl;
             dirtyValue = v;
             dirty = true;
         }
@@ -311,28 +313,46 @@ public:
 
 class Multiplier : public TracerDrawStrategy {
 public:
-    Multiplier(property<int>& multiplierCount, property<float>& maxShift) :
-        multiplierCount("multiplierCount", multiplierCount),
-        maxShift("multiplierMaxShift", maxShift) {
+    Multiplier(property<int>& multiplierCount, property<float>& maxShift) : multiplierCount("multiplierCount", multiplierCount), maxShift("multiplierMaxShift", maxShift) {
+        this->shifts = getRandomShifts();
+        this->maxShift.addSubscriber([&]() {
+            this->shifts = getRandomShifts();
+        });
+        this->multiplierCount.addSubscriber([&]() {
+            this->shifts = getRandomShifts();
+        });
+    }
+    
+    ofPoint getRandomShift() {
+        float const maxShift = this->maxShift;
+        ofPoint randomShift;
+        randomShift.x = ofRandom(-1 * maxShift, maxShift);
+        randomShift.y = ofRandom(-1 * maxShift, maxShift);
+        randomShift.z = ofRandom(-1 * maxShift, maxShift);
+        return randomShift;
+    }
+    
+    std::vector<ofPoint> getRandomShifts() {
+        std::vector<ofPoint> shifts;
         for (int i = 0; i < multiplierCount; i++) {
-            ofPoint randomShift;
-            randomShift.x = ofRandom(-1 * maxShift, maxShift);
-            randomShift.y = ofRandom(-1 * maxShift, maxShift);
-            randomShift.z = ofRandom(-1 * maxShift, maxShift);
-            shifts.push_back(randomShift);
+            ofPoint shift = getRandomShift();
+            shifts.push_back(shift);
         }
+        return shifts;
     }
     
     void draw(Tracer* t, float time, std::shared_ptr<ofBaseRenderer> renderer) {
         multiplierCount.clean();
         maxShift.clean();
-        if (t->particles.size() >= 2 && shifts.size() >= multiplierCount) {
+        if (t->particles.size() >= 2) {
             for (int i = 0; i < multiplierCount; i++) {
-                ofPushMatrix();
-                ofPoint shift = shifts[i];
-                ofTranslate(shift);
-                renderer->draw(t->path);
-                ofPopMatrix();
+                if (i < shifts.size()) {
+                    ofPushMatrix();
+                    ofPoint shift = shifts[i];
+                    ofTranslate(shift);
+                    renderer->draw(t->path);
+                    ofPopMatrix();
+                }
             }
         }
     }
@@ -344,26 +364,36 @@ public:
 
 class VibratingMultiplier : public TracerDrawStrategy {
 public:
-    VibratingMultiplier(Multiplier* super) : super(super) {}
+    VibratingMultiplier(Multiplier* super, property<float>& entropy) : super(super), entropy("entropy", entropy) { }
     
     void draw(Tracer* t, float time, std::shared_ptr<ofBaseRenderer> renderer) {
-        std::vector<ofPoint> shifts;
-        int const multiplierCount = super->multiplierCount;
-        int const maxShift = super->maxShift;
-        for (int i = 0; i < multiplierCount; i++) {
-            ofPoint randomShift;
-            randomShift.x = ofRandom(-1 * maxShift, maxShift);
-            randomShift.y = ofRandom(-1 * maxShift, maxShift);
-            randomShift.z = ofRandom(-1 * maxShift, maxShift);
-            shifts.push_back(randomShift);
+        entropy.clean();
+        if (entropy > 0.1) {
+            super->shifts = super->getRandomShifts();
         }
         
-        super->shifts = shifts;
         super->draw(t, time, renderer);
     }
     
 private:
     Multiplier* super;
+    property<float> entropy;
+};
+
+class DrawPizza : public TracerDrawStrategy {
+public:
+    DrawPizza(ofImage& pizza) : pizza(pizza) {}
+    
+    void draw(Tracer* t, float time, std::shared_ptr<ofBaseRenderer> renderer) {
+        if (t->particles.size() > 0) {
+            for (Particle* particle : t->particles) {
+                pizza.draw(particle->location.x, particle->location.y);
+            }
+        }
+    }
+    
+private:
+    ofImage& pizza;
 };
 
 class PerlinBrightness : public TracerDrawStrategy {
@@ -401,32 +431,42 @@ private:
 
 class StrokeWidth : public TracerDrawStrategy {
 public:
-    StrokeWidth(float strokeWidth) : strokeWidth(strokeWidth) {}
+    StrokeWidth(property<float>& strokeWidth) : strokeWidth("StrokeWidth", strokeWidth) {}
     
     void draw(Tracer* t, float time, std::shared_ptr<ofBaseRenderer> renderer) {
+        strokeWidth.clean();
         t->path.setStrokeWidth(strokeWidth);
     }
     
-    float strokeWidth;
+    property<float> strokeWidth;
 };
 
 class FilledPath : public TracerDrawStrategy {
 public:
-    FilledPath(bool filled) : filled(filled) {}
+    FilledPath(bool filled, ofColor color) :
+        filled(filled),
+        color(color) {}
     
     void draw(Tracer* t, float time, std::shared_ptr<ofBaseRenderer> renderer) {
         t->path.setFilled(filled);
+        t->path.setFillColor(color);
     }
     
 private:
     bool filled;
+    ofColor color;
 };
 
 class StrokeColor : public TracerDrawStrategy {
 public:
     StrokeColor(ofColor strokeColor) : strokeColor(strokeColor) {}
     void draw(Tracer* t, float time, std::shared_ptr<ofBaseRenderer> renderer) {
+        ofSetColor(strokeColor);
         t->path.setStrokeColor(strokeColor);
+    }
+    
+    ofColor getColor() {
+        return strokeColor;
     }
     
 private:
@@ -453,30 +493,32 @@ public:
 
 class EllipseHead : public TracerDrawStrategy {
 public:
-    EllipseHead(float strokeWidth) : strokeWidth(strokeWidth) {}
+    EllipseHead(property<float>& strokeWidth) : strokeWidth("EllipseHeadStrokeWidth", strokeWidth) {}
     
     void draw(Tracer* t, float time, std::shared_ptr<ofBaseRenderer> renderer) {
+        strokeWidth.clean();
         Particle* head = t->getHead();
         if (head != nullptr) {
             ofDrawEllipse(head->location.x, head->location.y, head->location.z, strokeWidth, strokeWidth);
         }
     }
 private:
-    float strokeWidth;
+    property<float> strokeWidth;
 };
 
 class EllipseTail : public TracerDrawStrategy {
 public:
-    EllipseTail(float strokeWidth) : strokeWidth(strokeWidth) {}
+    EllipseTail(property<float>& strokeWidth) : strokeWidth("EllipseTailStrokeWidth", strokeWidth) {}
     
     void draw(Tracer* t, float time, std::shared_ptr<ofBaseRenderer> renderer) {
+        strokeWidth.clean();
         Particle* tail = t->getTail();
         if (tail != nullptr) {
             ofDrawEllipse(tail->location.x, tail->location.y, tail->location.z, strokeWidth, strokeWidth);
         }
     }
 private:
-    float strokeWidth;
+    property<float> strokeWidth;
 };
 
 class HeadGrowth : public TracerUpdateStrategy {

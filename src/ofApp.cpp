@@ -4,15 +4,15 @@ void ofApp::setup() {
     stageSize = ofPoint(ofGetWidth(), ofGetHeight(), (ofGetWidth() + ofGetHeight()) / 2.0f);
     stageCenter = ofPoint(0, 0, 0);
     windowPadding = 25;
-    
     tick = 0;
     time = ofGetElapsedTimeMillis();
+    pizza.load("pizza.png");
     
     setupOpenFrameworks();
-    setupTracers();
     setupSoundStream();
     setupMidiFighterTwister();
     setupProperties();
+    setupTracers();
 }
 
 ofApp::~ofApp() {
@@ -39,6 +39,7 @@ void ofApp::savePropertiesToXml(std::string& file) {
 void ofApp::setupOpenFrameworks() {
     ofSetFrameRate(60.0f);
     ofSetCurveResolution(100);
+    ofEnableBlendMode(OF_BLENDMODE_ALPHA);
 }
 
 void ofApp::setupProperties() {
@@ -51,6 +52,8 @@ void ofApp::setupProperties() {
     registerProperty(maxPoints);
     registerProperty(multiplierCount);
     registerProperty(velocity);
+    registerProperty(strokeWidth);
+    registerProperty(entropy);
     loadPropertiesFromXml(ofApp::SETTINGS_FILE);
     bindEncoder(master, 0);
     bindEncoder(tracerCount, 1);
@@ -59,6 +62,8 @@ void ofApp::setupProperties() {
     bindEncoder(maxPoints, 4);
     bindEncoder(multiplierCount, 5);
     bindEncoder(velocity, 6);
+    bindEncoder(strokeWidth, 7);
+    bindEncoder(entropy, 8);
 }
 
 template <class T>
@@ -66,7 +71,9 @@ void ofApp::bindEncoder(property<T>& property, int encoder) {
     std::cout << encoder << " " << property.getScale() << std::endl;
     twister.setEncoderRingValue(encoder, property.getScale());
     encoderBindings[encoder].push_back([&](int v) {
-        property.setScale(ofMap(v, 0, 127, 0, 1));
+        float scale = ofMap(v, 0, 127, 0, 1);
+        std::cout << "Set " << property.getName() << " to " << scale << std::endl;
+        property.setScale(scale);
     });
 }
 
@@ -83,43 +90,42 @@ void ofApp::setupRenderer() {
     ofSetCurrentRenderer(shivaVGRenderer);
 }
 
+ofColor randomColor(ofVec2f redRange, ofVec2f blueRange, ofVec2f greenRange) {
+    return ofColor(ofRandom(redRange[0], redRange[1]),
+                   ofRandom(blueRange[0], blueRange[1]),
+                   ofRandom(greenRange[0], greenRange[1]));
+}
+
 Tracer* ofApp::makeTracer() {
-    int minGreen = 90;
-    int maxGreen = 225;
-    int minBlue = 90;
-    int maxBlue = 225;
-    int colorsSize = 5;
-    ofColor blueColors[] = {
-        ofColor(0, ofRandom(minGreen, maxGreen), ofRandom(minBlue, maxBlue)),
-        ofColor(0, ofRandom(minGreen, maxGreen), ofRandom(minBlue, maxBlue)),
-        ofColor(0, ofRandom(minGreen, maxGreen), ofRandom(minBlue, maxBlue)),
-        ofColor(0, ofRandom(minGreen, maxGreen), ofRandom(minBlue, maxBlue)),
-        ofColor(0, ofRandom(minGreen, maxGreen), ofRandom(minBlue, maxBlue))
+    ofVec2f redRange = {225, 255};
+    ofVec2f blueRange = {225, 255};
+    ofVec2f greenRange = {225, 255};
+    int const colorsSize = 5;
+    ofColor colors[] = {
+        randomColor(redRange, blueRange, greenRange),
+        randomColor(redRange, blueRange, greenRange),
+        randomColor(redRange, blueRange, greenRange),
+        randomColor(redRange, blueRange, greenRange),
+        randomColor(redRange, blueRange, greenRange)
     };
+    StrokeColor* strokeColor = new RandomStrokeColor(colors, 5);
     ofPoint timeShift(ofRandom(stageSize[0]), ofRandom(stageSize[1]), ofRandom(stageSize[2]));
+    
     auto tracer = new Tracer(stageCenter);
     tracer->addUpdateBehavior(new MaximumLength(maxPoints));
     tracer->addUpdateBehavior(new PerlinMovement(velocity, stageSize, timeShift));
     tracer->addUpdateBehavior(new HeadGrowth);
     tracer->addUpdateBehavior(new CurvedPath);
-    tracer->addDrawBehavior(new EllipseTail(strokeWidth));
-    tracer->addDrawBehavior(new EllipseHead(strokeWidth));
-    tracer->addDrawBehavior(new DrawPath);
-    if (ofRandom(1) < 0.01) {
-        tracer->addDrawBehavior(new RandomStrokeColor(blueColors, 5));
-    } else {
-        tracer->addDrawBehavior(new StrokeColor(ofColor::black));
-    }
-    auto strokeWidthStrategy = new StrokeWidth(strokeWidth);
-    tracer->addDrawBehavior(strokeWidthStrategy);
-    tracer->addDrawBehavior(new FilledPath(false));
-    Multiplier* m = new Multiplier(multiplierCount, maxShift);
-    tracer->addDrawBehavior(new VibratingMultiplier(m));
+//    tracer->addDrawBehavior(strokeColor);
+//    tracer->addDrawBehavior(new StrokeWidth(strokeWidth));
+//    tracer->addDrawBehavior(new FilledPath(false, strokeColor->getColor()));
+//    tracer->addDrawBehavior(new DrawPath);
+//    tracer->addDrawBehavior(new VibratingMultiplier(new Multiplier(multiplierCount, maxShift), entropy));
+    tracer->addDrawBehavior(new DrawPizza(pizza));
     return tracer;
 }
 
 void ofApp::setupTracers() {
-    strokeWidth = 1;
     for (int i = 0; i < tracerCount; i++) {
         tracers.push_back(makeTracer());
     }
@@ -151,25 +157,6 @@ void ofApp::onEncoderUpdate(ofxMidiFighterTwister::EncoderEventArgs & a){
             binding(a.value);
         }
     }
-//    if (a.ID == 0) {
-//        master = a.value;
-//    } else if (a.ID == 1) {
-//        tracerCount.setScale(ofMap(a.value, 0, 127, 0, 1, true));
-//    } else if (a.ID == 2) {
-//        background += ofxMidiFighterTwister::relativeMidi(a.value);
-//    } else if (a.ID == 3) {
-//        maxShift = maxShift.map(a.value, 0, 127);
-//    } else if (a.ID == 4) {
-//        multiplierCount += ofxMidiFighterTwister::relativeMidi(a.value);
-//    } else if (a.ID == 5) {
-//        velocity = velocity.map(0, a.value, ofxMidiFighterTwister::MIDI_MIN, ofxMidiFighterTwister::MIDI_MAX);
-//    } else if (a.ID == 6) {
-//        velocity = velocity.map(1, a.value, ofxMidiFighterTwister::MIDI_MIN, ofxMidiFighterTwister::MIDI_MAX);
-//    } else if (a.ID == 7) {
-//        velocity = velocity.map(2, a.value, ofxMidiFighterTwister::MIDI_MIN, ofxMidiFighterTwister::MIDI_MAX);
-//    } else if (a.ID == 8) {
-//        maxPoints = maxPoints.map(a.value, ofxMidiFighterTwister::MIDI_MIN, ofxMidiFighterTwister::MIDI_MAX);
-//    }
 }
 
 void ofApp::onPushSwitchUpdate(ofxMidiFighterTwister::PushSwitchEventArgs & a){
@@ -196,8 +183,10 @@ void ofApp::update() {
         }
     }
     
-    for (auto& t : tracers) {
-        t->update(currentTime);
+    if (tracers.size() > 0) {
+        for (auto& t : tracers) {
+            t->update(currentTime);
+        }
     }
     
     scaledVol = ofMap(smoothedVol, 0.0, 0.17, 0.0, 1.0, true);
@@ -212,7 +201,8 @@ void ofApp::update() {
 void ofApp::draw() {
     float currentTime = ofGetElapsedTimeMillis();
     
-    ofEnableDepthTest();
+//    ofEnableDepthTest();
+    ofEnableAlphaBlending();
     ofBackground(background);
     ofPushMatrix();
     ofTranslate(stageSize[0]/2, stageSize[1]/2, 0);
@@ -222,6 +212,7 @@ void ofApp::draw() {
     for (auto& t : tracers) {
         t->draw(currentTime, ofGetCurrentRenderer());
     }
+    ofDisableAlphaBlending();
     ofPopMatrix();
 
     drawFPS();
@@ -274,13 +265,7 @@ void ofApp::mouseMoved(int x, int y ) { }
 
 void ofApp::mouseDragged(int x, int y, int button) { }
 
-void ofApp::mousePressed(int x, int y, int button) {
-    if (ofGetCurrentRenderer() == defaultRenderer) {
-        ofSetCurrentRenderer(shivaVGRenderer);
-    } else {
-        ofSetCurrentRenderer(defaultRenderer);
-    }
-}
+void ofApp::mousePressed(int x, int y, int button) { }
 
 void ofApp::mouseReleased(int x, int y, int button) { }
 

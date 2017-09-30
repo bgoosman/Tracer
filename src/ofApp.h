@@ -31,6 +31,9 @@ private:
     void drawFPS();
     void setupOpenFrameworks();
     
+    // Image
+    ofImage pizza;
+    
     // 3d
     ofCamera camera;
 
@@ -45,6 +48,9 @@ private:
     property<int> maxPoints = {"maxPoints", 100, 1, 1000};
     property<int> multiplierCount = {"multiplierCount", 5, 0, 255};
     property<ofVec3f> velocity = {"velocity", ofVec3f(0.001, 0.001, 0.001), ofVec3f(0, 0, 0), ofVec3f(0.005, 0.005, 0.005)};
+    property<float> strokeWidth = {"strokeWidth", 3, 1, 20};
+    property<float> entropy = {"entropy", 0, 0, 1};
+    
     void setupProperties();
     void savePropertiesToXml(std::string& file);
     void loadPropertiesFromXml(std::string& file);
@@ -69,7 +75,6 @@ private:
     float maxZ;
     float perlinShiftX;
     float perlinShiftY;
-    float strokeWidth;
     float time;
     float windowPadding;
    
