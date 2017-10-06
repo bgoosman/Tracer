@@ -7,7 +7,6 @@ void ofApp::setup() {
     tick = 0;
     time = ofGetElapsedTimeMillis();
     pizza.load("pizza.png");
-    
     setupOpenFrameworks();
     setupSoundStream();
     setupMidiFighterTwister();
@@ -54,28 +53,20 @@ void ofApp::setupProperties() {
     registerProperty(velocity);
     registerProperty(strokeWidth);
     registerProperty(entropy);
+    registerProperty(rotationSpeed);
     loadPropertiesFromXml(ofApp::SETTINGS_FILE);
-    bindEncoder(master, 0);
-    bindEncoder(tracerCount, 1);
-    bindEncoder(background, 2);
-    bindEncoder(maxShift, 3);
-    bindEncoder(maxPoints, 4);
-    bindEncoder(multiplierCount, 5);
-    bindEncoder(velocity, 6);
-    bindEncoder(strokeWidth, 7);
-    bindEncoder(entropy, 8);
+    encoders[0]->bind(master);
+    encoders[1]->bind(tracerCount);
+    encoders[2]->bind(background);
+    encoders[3]->bind(maxShift);
+    encoders[4]->bind(maxPoints);
+    encoders[5]->bind(multiplierCount);
+    encoders[6]->bind(velocity);
+    encoders[7]->bind(strokeWidth);
+    encoders[8]->bind(entropy);
+    encoders[9]->bind(rotationSpeed);
 }
 
-template <class T>
-void ofApp::bindEncoder(property<T>& property, int encoder) {
-    std::cout << encoder << " " << property.getScale() << std::endl;
-    twister.setEncoderRingValue(encoder, property.getScale());
-    encoderBindings[encoder].push_back([&](int v) {
-        float scale = ofMap(v, 0, 127, 0, 1);
-        std::cout << "Set " << property.getName() << " to " << scale << std::endl;
-        property.setScale(scale);
-    });
-}
 
 template <class T>
 void ofApp::registerProperty(property<T>& property) {
@@ -116,12 +107,11 @@ Tracer* ofApp::makeTracer() {
     tracer->addUpdateBehavior(new PerlinMovement(velocity, stageSize, timeShift));
     tracer->addUpdateBehavior(new HeadGrowth);
     tracer->addUpdateBehavior(new CurvedPath);
-//    tracer->addDrawBehavior(strokeColor);
-//    tracer->addDrawBehavior(new StrokeWidth(strokeWidth));
-//    tracer->addDrawBehavior(new FilledPath(false, strokeColor->getColor()));
-//    tracer->addDrawBehavior(new DrawPath);
-//    tracer->addDrawBehavior(new VibratingMultiplier(new Multiplier(multiplierCount, maxShift), entropy));
-    tracer->addDrawBehavior(new DrawPizza(pizza));
+    tracer->addDrawBehavior(strokeColor);
+    tracer->addDrawBehavior(new StrokeWidth(strokeWidth));
+    tracer->addDrawBehavior(new FilledPath(false, strokeColor->getColor()));
+    tracer->addDrawBehavior(new DrawPath);
+    tracer->addDrawBehavior(new VibratingMultiplier(new Multiplier(multiplierCount, maxShift), entropy));
     return tracer;
 }
 
@@ -148,19 +138,33 @@ void ofApp::setupMidiFighterTwister() {
     ofAddListener(twister.eventEncoder, this, &ofApp::onEncoderUpdate);
     ofAddListener(twister.eventPushSwitch, this, &ofApp::onPushSwitchUpdate);
     ofAddListener(twister.eventSideButton, this, &ofApp::onSideButtonPressed);
+    for (int i = 0; i < ofxMidiFighterTwister::NUM_ENCODERS; i++) {
+        easings[i] = nullptr;
+        encoders[i] = new encoder(i, 0, 127, &twister);
+    }
 }
 
 void ofApp::onEncoderUpdate(ofxMidiFighterTwister::EncoderEventArgs & a){
     ofLogNotice() << "Encoder '" << a.ID << "' Event! val: " << a.value;
-    if (encoderBindings.count(a.ID) > 0) {
-        for (auto binding : encoderBindings[a.ID]) {
-            binding(a.value);
-        }
-    }
+    encoders[a.ID]->setValue(a.value);
 }
 
 void ofApp::onPushSwitchUpdate(ofxMidiFighterTwister::PushSwitchEventArgs & a){
     ofLogNotice() << "PushSwitch '" << a.ID << "' Event! val: " << a.value;
+    tweenEncoderToCurrentValue(a.ID);
+}
+
+void ofApp::tweenEncoderToCurrentValue(int encoder) {
+    if (easings[encoder] != nullptr) {
+        return;
+        delete easings[encoder];
+        easings[encoder] = nullptr;
+    }
+    
+    float startTime = ofGetElapsedTimeMillis();
+    float duration = 1000;
+    std::cout << "Tweening encoder " << encoder << " from 0 to " << encoders[encoder]->getValue() << " between t = [" << startTime << ", " << startTime + duration << "]" << std::endl;
+    easings[encoder] = new ease(startTime, duration, 0, encoders[encoder]->getValue(), ofxeasing::linear::easeIn);
 }
 
 void ofApp::onSideButtonPressed(ofxMidiFighterTwister::SideButtonEventArgs & a){
@@ -173,6 +177,18 @@ void ofApp::update() {
     int oldTracerCount = tracerCount;
     for (auto& global : properties) {
         global->clean();
+    }
+    
+    for (int i = 0; i < ofxMidiFighterTwister::NUM_ENCODERS; i++) {
+        ease* easing = easings[i];
+        if (easing != nullptr) {
+            float v = easing->update(currentTime);
+            encoders[i]->setValue(v);
+            if (easing->isDone()) {
+                delete easing;
+                easings[i] = nullptr;
+            }
+        }
     }
     
     for (int i = 0; i < abs(tracerCount - oldTracerCount); i++) {
@@ -201,13 +217,13 @@ void ofApp::update() {
 void ofApp::draw() {
     float currentTime = ofGetElapsedTimeMillis();
     
-//    ofEnableDepthTest();
+    ofEnableDepthTest();
     ofEnableAlphaBlending();
     ofBackground(background);
     ofPushMatrix();
     ofTranslate(stageSize[0]/2, stageSize[1]/2, 0);
     float time = ofGetElapsedTimef();
-    float angle = time * 5;
+    float angle = time * rotationSpeed;
     ofRotate(angle, 0, 1, 0);
     for (auto& t : tracers) {
         t->draw(currentTime, ofGetCurrentRenderer());

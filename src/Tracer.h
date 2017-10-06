@@ -10,6 +10,7 @@
 #define Tracer_h
 
 class Tracer;
+typedef std::function<void(float)> encoderbinding_t;
 
 class property_base {
 public:
@@ -209,6 +210,89 @@ private:
     std::vector<subscription_t> subscribers;
     std::mutex mutex;
     std::string const tag = "property";
+};
+
+class encoder {
+public:
+    encoder(int index, int min, int max, ofxMidiFighterTwister* twister) : index(index), min(min), max(max), twister(twister) {}
+    
+    void setValue(int value) {
+        std::cout << "Set encoder " << index << " to " << value << std::endl;
+        twister->setEncoderRingValue(index, getScale());
+        this->value = value;
+        updateBindings();
+    }
+    
+    float getValue() {
+        return value;
+    }
+    
+    float getScale() {
+        return ((float)(value - min) / (float)(max - min));
+    }
+    
+    template <class T>
+    void bind(property<T>& property) {
+        twister->setEncoderRingValue(index, property.getScale());
+        twister->setEncoderColor(index, 0.25);
+        bindings.push_back([&](float scale) {
+            std::cout << "Set scale of " << property.getName() << " to " << scale << std::endl;
+            property.setScale(scale);
+        });
+    }
+    
+    void updateBindings() {
+        for (auto binding : bindings) {
+            float scale = ofxMidiFighterTwister::mapMidi(getValue(), 0, 1);
+            std::cout << "Calling binding with value " << getValue() << " and scale " << scale << std::endl;
+            binding(scale);
+        }
+    }
+    
+private:
+    ofxMidiFighterTwister* twister;
+    std::vector<encoderbinding_t> bindings;
+    int value;
+    int min;
+    int max;
+    int index;
+};
+
+class ease {
+public:
+    ease(float startTime, float duration, float startValue, float targetValue, ofxeasing::function easingFunction) :
+    startTime(startTime),
+    duration(duration),
+    startValue(startValue),
+    targetValue(targetValue),
+    easingFunction(easingFunction) {}
+    
+    float update(float currentTime) {
+        std::cout << "currentTime = " << currentTime << std::endl;
+        auto endTime = startTime + duration;
+        std::cout << targetValue << std::endl;
+        if (currentTime < startTime) {
+            currentValue = startValue;
+        } else if (currentTime >= endTime) {
+            currentValue = targetValue;
+        } else {
+            currentValue = ofxeasing::map(currentTime, startTime, endTime, startValue, targetValue, easingFunction);
+        }
+        std::cout << "currentValue is now " << currentValue << std::endl;
+        return currentValue;
+    }
+    
+    bool isDone() {
+        return currentValue >= targetValue;
+    }
+    
+private:
+    float startTime;
+    float startValue;
+    float currentValue;
+    float duration;
+    float targetValue;
+    ofxeasing::function easingFunction;
 };
 
 class TracerUpdateStrategy {

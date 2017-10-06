@@ -4,6 +4,7 @@
 #include "ofxShivaVGRenderer.h"
 #include "ofxMidiFighterTwister.h"
 #include "ofxXmlSettings.h"
+#include "ofxEasing.h"
 #include "Tracer.h"
 #include <limits.h>
 
@@ -50,14 +51,13 @@ private:
     property<ofVec3f> velocity = {"velocity", ofVec3f(0.001, 0.001, 0.001), ofVec3f(0, 0, 0), ofVec3f(0.005, 0.005, 0.005)};
     property<float> strokeWidth = {"strokeWidth", 3, 1, 20};
     property<float> entropy = {"entropy", 0, 0, 1};
+    property<float> rotationSpeed = {"rotationSpeed", 5, 0, 360};
     
     void setupProperties();
     void savePropertiesToXml(std::string& file);
     void loadPropertiesFromXml(std::string& file);
     template <class T> void registerProperty(property<T>& property);
-    template <class T> void bindEncoder(property<T>& property, int encoder);
-    typedef std::function<void(int)> encoderbinding_t;
-    std::map<int, std::vector<encoderbinding_t>> encoderBindings;
+    std::map<int, std::deque<ease>> propertyEasings;
     
     // Tracer
     Particle* p0;
@@ -98,7 +98,10 @@ private:
     
     // Midi Fighter Twister
     ofxMidiFighterTwister twister;
+    encoder* encoders[ofxMidiFighterTwister::NUM_ENCODERS];
+    ease* easings[ofxMidiFighterTwister::NUM_ENCODERS];
     void setupMidiFighterTwister();
+    void tweenEncoderToCurrentValue(int encoder);
     void onEncoderUpdate(ofxMidiFighterTwister::EncoderEventArgs &);
     void onPushSwitchUpdate(ofxMidiFighterTwister::PushSwitchEventArgs &);
     void onSideButtonPressed(ofxMidiFighterTwister::SideButtonEventArgs &);

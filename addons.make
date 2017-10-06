@@ -1,3 +1,4 @@
+ofxEasing
 ofxFatLines
 ofxMidi
 ofxMidiFighterTwister

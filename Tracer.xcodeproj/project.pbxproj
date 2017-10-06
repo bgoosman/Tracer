@@ -1432,6 +1432,70 @@
 				<key>sourceTree</key>
 				<string>SOURCE_ROOT</string>
 			</dict>
+			<key>FF2B018E24837032A4878576</key>
+			<dict>
+				<key>explicitFileType</key>
+				<string>sourcecode.c.h</string>
+				<key>fileEncoding</key>
+				<string>30</string>
+				<key>isa</key>
+				<string>PBXFileReference</string>
+				<key>name</key>
+				<string>ofxEasing.h</string>
+				<key>path</key>
+				<string>../../../addons/ofxEasing/src/ofxEasing.h</string>
+				<key>sourceTree</key>
+				<string>SOURCE_ROOT</string>
+			</dict>
+			<key>E78F8991E56DEF594815BB53</key>
+			<dict>
+				<key>children</key>
+				<array>
+					<string>528CB0EB22F0A199A5F479D5</string>
+					<string>FF2B018E24837032A4878576</string>
+				</array>
+				<key>isa</key>
+				<string>PBXGroup</string>
+				<key>name</key>
+				<string>src</string>
+				<key>sourceTree</key>
+				<string>&lt;group&gt;</string>
+			</dict>
+			<key>0D0595A62FF5ED8D37029107</key>
+			<dict>
+				<key>children</key>
+				<array>
+					<string>E78F8991E56DEF594815BB53</string>
+				</array>
+				<key>isa</key>
+				<string>PBXGroup</string>
+				<key>name</key>
+				<string>ofxEasing</string>
+				<key>sourceTree</key>
+				<string>&lt;group&gt;</string>
+			</dict>
+			<key>08C23182D394C53F6ECE6CCC</key>
+			<dict>
+				<key>fileRef</key>
+				<string>528CB0EB22F0A199A5F479D5</string>
+				<key>isa</key>
+				<string>PBXBuildFile</string>
+			</dict>
+			<key>528CB0EB22F0A199A5F479D5</key>
+			<dict>
+				<key>explicitFileType</key>
+				<string>file</string>
+				<key>fileEncoding</key>
+				<string>30</string>
+				<key>isa</key>
+				<string>PBXFileReference</string>
+				<key>name</key>
+				<string>easing_terms_of_use.html</string>
+				<key>path</key>
+				<string>../../../addons/ofxEasing/src/easing_terms_of_use.html</string>
+				<key>sourceTree</key>
+				<string>SOURCE_ROOT</string>
+			</dict>
 			<key>ABCFECEAEBA008527F77AFE9</key>
 			<dict>
 				<key>explicitFileType</key>
@@ -1462,6 +1526,7 @@
 			<dict>
 				<key>children</key>
 				<array>
+					<string>0D0595A62FF5ED8D37029107</string>
 					<string>8A3DD780D89619FC9FE77FBA</string>
 					<string>2413C01760B1811BED0F502D</string>
 					<string>ABC5123E2929C5438D237753</string>
@@ -1621,6 +1686,7 @@
 					<array>
 						<string>$(OF_CORE_HEADERS)</string>
 						<string>src</string>
+						<string>../../../addons/ofxEasing/src</string>
 						<string>../../../addons/ofxFatLines/src</string>
 						<string>../../../addons/ofxMidi/libs</string>
 						<string>../../../addons/ofxMidi/libs/pgmidi</string>
@@ -1695,6 +1761,7 @@
 					<array>
 						<string>$(OF_CORE_HEADERS)</string>
 						<string>src</string>
+						<string>../../../addons/ofxEasing/src</string>
 						<string>../../../addons/ofxFatLines/src</string>
 						<string>../../../addons/ofxMidi/libs</string>
 						<string>../../../addons/ofxMidi/libs/pgmidi</string>
@@ -1767,6 +1834,7 @@
 				<array>
 					<string>E4B69E200A3A1BDC003C02F2</string>
 					<string>E4B69E210A3A1BDC003C02F2</string>
+					<string>08C23182D394C53F6ECE6CCC</string>
 					<string>B3A9A95BCDE7FF1B89486968</string>
 					<string>0A03A75CD4D4AC0E1B4F6B2B</string>
 					<string>BCC8D420CBA9217E437D2D76</string>
@@ -1881,6 +1949,7 @@
 					<array>
 						<string>$(OF_CORE_HEADERS)</string>
 						<string>src</string>
+						<string>../../../addons/ofxEasing/src</string>
 						<string>../../../addons/ofxFatLines/src</string>
 						<string>../../../addons/ofxMidi/libs</string>
 						<string>../../../addons/ofxMidi/libs/pgmidi</string>
@@ -1946,6 +2015,7 @@
 					<array>
 						<string>$(OF_CORE_HEADERS)</string>
 						<string>src</string>
+						<string>../../../addons/ofxEasing/src</string>
 						<string>../../../addons/ofxFatLines/src</string>
 						<string>../../../addons/ofxMidi/libs</string>
 						<string>../../../addons/ofxMidi/libs/pgmidi</string>
