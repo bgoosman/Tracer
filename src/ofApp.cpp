@@ -43,12 +43,14 @@ void ofApp::setupOpenFrameworks() {
 
 void ofApp::setupProperties() {
     master.addSubscriber([&]() { tracerCount = tracerCount.map(master);});
-    master.addSubscriber([&]() { background = background.map(master); });
+    master.addSubscriber([&]() { hue = hue.map(master); });
     registerProperty(master);
     registerProperty(tracerCount);
-    registerProperty(background);
     registerProperty(maxShift);
     registerProperty(maxPoints);
+    registerProperty(hue);
+    registerProperty(saturation);
+    registerProperty(brightness);
     registerProperty(multiplierCount);
     registerProperty(velocity);
     registerProperty(strokeWidth);
@@ -57,14 +59,16 @@ void ofApp::setupProperties() {
     loadPropertiesFromXml(ofApp::SETTINGS_FILE);
     encoders[0]->bind(master);
     encoders[1]->bind(tracerCount);
-    encoders[2]->bind(background);
-    encoders[3]->bind(maxShift);
-    encoders[4]->bind(maxPoints);
-    encoders[5]->bind(multiplierCount);
-    encoders[6]->bind(velocity);
-    encoders[7]->bind(strokeWidth);
-    encoders[8]->bind(entropy);
-    encoders[9]->bind(rotationSpeed);
+    encoders[2]->bind(maxShift);
+    encoders[3]->bind(maxPoints);
+    encoders[4]->bind(hue);
+    encoders[5]->bind(saturation);
+    encoders[6]->bind(brightness);
+    encoders[7]->bind(multiplierCount);
+    encoders[8]->bind(velocity);
+    encoders[9]->bind(strokeWidth);
+    encoders[10]->bind(entropy);
+    encoders[11]->bind(rotationSpeed);
 }
 
 
@@ -88,6 +92,27 @@ ofColor randomColor(ofVec2f redRange, ofVec2f blueRange, ofVec2f greenRange) {
 }
 
 Tracer* ofApp::makeTracer() {
+    ofPoint timeShift(ofRandom(stageSize[0]), ofRandom(stageSize[1]), ofRandom(stageSize[2]));
+    
+    auto tracer = new Tracer(stageCenter);
+    tracer->addUpdateBehavior(new MaximumLength(maxPoints));
+    tracer->addUpdateBehavior(new PerlinMovement(velocity, stageSize, timeShift));
+    tracer->addUpdateBehavior(new HeadGrowth);
+    tracer->addUpdateBehavior(new CurvedPath);
+    StrokeColor* randomStroke = makeRandomStrokeColorBehavior();
+    tracer->addDrawBehavior(new Hue(randomStroke, hue));
+    tracer->addDrawBehavior(new Saturation(randomStroke, saturation));
+    tracer->addDrawBehavior(new Brightness(randomStroke, brightness));
+    tracer->addDrawBehavior(new InvertHue(randomStroke));
+    tracer->addDrawBehavior(randomStroke);
+    tracer->addDrawBehavior(new StrokeWidth(strokeWidth));
+    tracer->addDrawBehavior(new DrawPath);
+    tracer->addDrawBehavior(new VibratingMultiplier(new Multiplier(multiplierCount, maxShift), entropy));
+    tracer->addDrawBehavior(new FilledPath(false, 1));
+    return tracer;
+}
+
+StrokeColor* ofApp::makeRandomStrokeColorBehavior() {
     ofVec2f redRange = {225, 255};
     ofVec2f blueRange = {225, 255};
     ofVec2f greenRange = {225, 255};
@@ -99,20 +124,8 @@ Tracer* ofApp::makeTracer() {
         randomColor(redRange, blueRange, greenRange),
         randomColor(redRange, blueRange, greenRange)
     };
-    StrokeColor* strokeColor = new RandomStrokeColor(colors, 5);
-    ofPoint timeShift(ofRandom(stageSize[0]), ofRandom(stageSize[1]), ofRandom(stageSize[2]));
     
-    auto tracer = new Tracer(stageCenter);
-    tracer->addUpdateBehavior(new MaximumLength(maxPoints));
-    tracer->addUpdateBehavior(new PerlinMovement(velocity, stageSize, timeShift));
-    tracer->addUpdateBehavior(new HeadGrowth);
-    tracer->addUpdateBehavior(new CurvedPath);
-    tracer->addDrawBehavior(strokeColor);
-    tracer->addDrawBehavior(new StrokeWidth(strokeWidth));
-    tracer->addDrawBehavior(new FilledPath(false, strokeColor->getColor()));
-    tracer->addDrawBehavior(new DrawPath);
-    tracer->addDrawBehavior(new VibratingMultiplier(new Multiplier(multiplierCount, maxShift), entropy));
-    return tracer;
+    return new RandomStrokeColor(colors, colorsSize);
 }
 
 void ofApp::setupTracers() {
@@ -219,6 +232,8 @@ void ofApp::draw() {
     
     ofEnableDepthTest();
     ofEnableAlphaBlending();
+    ofColor background;
+    background.setHsb(hue, saturation, brightness);
     ofBackground(background);
     ofPushMatrix();
     ofTranslate(stageSize[0]/2, stageSize[1]/2, 0);

@@ -1,11 +1,3 @@
-//
-//  Tracer.h
-//  Tracer
-//
-//  Created by MacBook Pro on 9/16/17.
-//
-//
-
 #ifndef Tracer_h
 #define Tracer_h
 
@@ -41,7 +33,6 @@ public:
         max = other.getMax();
         other.addSubscriber([&]() { set(map(other)); });
     }
-    
     property(const std::string& name,
              const T& defaultValue,
              const T& min, const T& max) : property_base(name), cachedValue(defaultValue), min(min), max(max) {}
@@ -544,17 +535,92 @@ private:
 class StrokeColor : public TracerDrawStrategy {
 public:
     StrokeColor(ofColor strokeColor) : strokeColor(strokeColor) {}
-    void draw(Tracer* t, float time, std::shared_ptr<ofBaseRenderer> renderer) {
+    
+    virtual void draw(Tracer* t, float time, std::shared_ptr<ofBaseRenderer> renderer) {
         ofSetColor(strokeColor);
         t->path.setStrokeColor(strokeColor);
     }
     
-    ofColor getColor() {
+    virtual ofColor getColor() {
         return strokeColor;
+    }
+    
+    virtual void setColor(ofColor& color) {
+        strokeColor = color;
     }
     
 private:
     ofColor strokeColor;
+};
+
+class Saturation : public TracerDrawStrategy {
+public:
+    Saturation(StrokeColor* stroke, property<int>& saturation) : stroke(stroke), saturation("saturation", saturation) {}
+    
+    virtual void draw(Tracer* t, float time, std::shared_ptr<ofBaseRenderer> renderer) {
+        saturation.clean();
+        ofColor hsbColor = stroke->getColor();
+        float h, s, b;
+        hsbColor.getHsb(h, s, b);
+        hsbColor.setHsb(h, saturation, b);
+        stroke->setColor(hsbColor);
+    }
+    
+private:
+    StrokeColor* stroke;
+    property<int> saturation;
+};
+
+class Brightness : public TracerDrawStrategy {
+public:
+    Brightness(StrokeColor* stroke, property<int>& brightness) : stroke(stroke), brightness("brightness", brightness) {}
+    
+    virtual void draw(Tracer* t, float time, std::shared_ptr<ofBaseRenderer> renderer) {
+        brightness.clean();
+        ofColor hsbColor = stroke->getColor();
+        float h, s, b;
+        hsbColor.getHsb(h, s, b);
+        hsbColor.setHsb(h, s, brightness);
+        stroke->setColor(hsbColor);
+    }
+    
+private:
+    StrokeColor* stroke;
+    property<int> brightness;
+};
+
+class Hue : public TracerDrawStrategy {
+public:
+    Hue(StrokeColor* stroke, property<int>& hue) : stroke(stroke), hue("hue", hue) {}
+    
+    virtual void draw(Tracer* t, float time, std::shared_ptr<ofBaseRenderer> renderer) {
+        hue.clean();
+        ofColor hsbColor = stroke->getColor();
+        float h, s, b;
+        hsbColor.getHsb(h, s, b);
+        hsbColor.setHsb(hue, s, b);
+        stroke->setColor(hsbColor);
+    }
+    
+private:
+    StrokeColor* stroke;
+    property<int> hue;
+};
+
+class InvertHue : public TracerDrawStrategy {
+public:
+    InvertHue(StrokeColor* stroke) : stroke(stroke) {}
+    
+    virtual void draw(Tracer* t, float time, std::shared_ptr<ofBaseRenderer> renderer) {
+        ofColor hsbColor = stroke->getColor();
+        float hue, saturation, brightness;
+        hsbColor.getHsb(hue, saturation, brightness);
+        hsbColor.setHsb(255 - hue, saturation, brightness);
+        stroke->setColor(hsbColor);
+    }
+    
+private:
+    StrokeColor* stroke;
 };
 
 class RandomStrokeColor : public StrokeColor {

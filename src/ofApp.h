@@ -31,6 +31,7 @@ public:
 private:
     void drawFPS();
     void setupOpenFrameworks();
+    StrokeColor* makeRandomStrokeColorBehavior();
     
     // Image
     ofImage pizza;
@@ -44,7 +45,9 @@ private:
     std::vector<property_base*> properties;
     property<int> master = {"master", 0, 0, 127};
     property<int> tracerCount = {"tracerCount", 1, 1, 255};
-    property<int> background = {"background", 0, 0, 255};
+    property<int> hue = {"hue", 0, 0, 255};
+    property<int> saturation = {"saturation", 0, 0, 255};
+    property<int> brightness = {"brightness", 0, 0, 255};
     property<float> maxShift = {"maxShift", 3, 1, 8};
     property<int> maxPoints = {"maxPoints", 100, 1, 1000};
     property<int> multiplierCount = {"multiplierCount", 5, 0, 255};
