@@ -6,18 +6,14 @@ typedef std::function<void(float)> encoderbinding_t;
 
 class property_base {
 public:
-    property_base(const std::string& name) : name(name) {}
+    property_base() {}
     
     virtual void clean() = 0;
-    virtual void save(ofxXmlSettings& settings) = 0;
-    virtual void load(ofxXmlSettings& settings) = 0;
-    virtual void setScale(float scale) = 0;
-    
-    virtual std::string getName() {
-        return name;
-    }
-protected:
-    std::string name;
+    virtual void save(ofxXmlSettings& settings) {};
+    virtual void load(ofxXmlSettings& settings) {};
+    virtual void setScale(float scale) {};
+    virtual float getScale() {};
+    virtual std::string getName() {}
 };
 
 template <typename T>
@@ -25,17 +21,23 @@ class property : public property_base {
 public:
     typedef std::function<void()> subscription_t;
     
-    property() {}
-    property(const std::string& name, property<T>& other) : property_base(name) {
+    property(const std::string& name, property<T>& other) : name(name) {
         cachedValue = other.get();
         dirtyValue = cachedValue;
         min = other.getMin();
         max = other.getMax();
         other.addSubscriber([&]() { set(map(other)); });
     }
-    property(const std::string& name,
-             const T& defaultValue,
-             const T& min, const T& max) : property_base(name), cachedValue(defaultValue), min(min), max(max) {}
+    
+    property(const std::string& name, const T& defaultValue, const T& min, const T& max)
+        : name(name),
+          cachedValue(defaultValue),
+          min(min),
+          max(max) {}
+    
+    std::string getName() {
+        return name;
+    }
     
     T map(property<T>& other) {
         return map(other.get(), other.getMin(), other.getMax());
@@ -69,7 +71,6 @@ public:
     
     ofVec3f lerp(float t, ofVec3f min, ofVec3f max) {
         return t * max;
-        
     }
     
     int mapTo(int min, int max) {
@@ -133,7 +134,7 @@ public:
         }
     }
     
-    void set(const T& v) {
+    virtual void set(const T& v) {
         std::lock_guard<std::mutex> guard(mutex);
         if (between(v, min, max)) {
             std::cout << "Set " << getName() << " to " << v << std::endl;
@@ -201,6 +202,23 @@ private:
     std::vector<subscription_t> subscribers;
     std::mutex mutex;
     std::string const tag = "property";
+    std::string name;
+};
+
+template <typename T>
+class jitter : public property_base {
+public:
+    jitter(property<T>& target) : target(target) {}
+    
+    virtual void clean() {
+        target.clean();
+        float oldScale = target.getScale();
+        float newScale = oldScale + ofRandom(0.1);
+        target.setScale(newScale);
+    }
+    
+private:
+    property<T>& target;
 };
 
 class encoder {
@@ -298,13 +316,13 @@ public:
 
 class Particle {
 public:
-    Particle(ofPoint location, ofVec3f velocity = ofVec3f::zero(), float mass = 0) {
+    Particle(ofVec3f location, ofVec3f velocity = ofVec3f::zero(), float mass = 0) {
         this->location = location;
         this->velocity = velocity;
         this->mass = mass;
     }
     
-    void applyForce(ofPoint force) {
+    void applyForce(ofVec3f force) {
         force /= mass;
         acceleration += force;
     }
@@ -315,11 +333,11 @@ public:
         acceleration *= 0;
     }
     
-    void setLocation(ofPoint location) {
+    void setLocation(ofVec3f location) {
         this->location = location;
     }
     
-    ofPoint location;
+    ofVec3f location;
     ofVec3f velocity;
     ofVec3f acceleration;
     float mass;
@@ -327,7 +345,9 @@ public:
 
 class Tracer {
 public:
-    Tracer(ofPoint startLocation) : head(startLocation) {}
+    Tracer(ofVec3f startLocation, ofVec3f stageSize)
+        : head(startLocation),
+          stageSize(stageSize) {}
     
     TracerUpdateStrategy* getUpdateBehavior(int index) {
         return (index >= 0 && index < updateStrategies.size()) ? updateStrategies[index] : nullptr;
@@ -353,6 +373,14 @@ public:
         }
     }
     
+    void mapDimension(int dimension, ofVec2f range) {
+        head[dimension] = ofMap(head[dimension],
+                                -0.5 * stageSize[dimension],
+                                 0.5 * stageSize[dimension],
+                                range[0],
+                                range[1]);
+    }
+    
     Particle* getHead() {
         return (particles.size() > 0) ? particles[particles.size()-1] : nullptr;
     }
@@ -361,7 +389,8 @@ public:
         return (particles.size() > 0) ? particles[0] : nullptr;
     }
     
-    ofPoint head;
+    ofVec3f head;
+    ofVec3f stageSize;
     ofPath path;
     std::deque<Particle*> particles;
     std::vector<TracerUpdateStrategy*> updateStrategies;
@@ -398,19 +427,19 @@ public:
         });
     }
     
-    ofPoint getRandomShift() {
+    ofVec3f getRandomShift() {
         float const maxShift = this->maxShift;
-        ofPoint randomShift;
+        ofVec3f randomShift;
         randomShift.x = ofRandom(-1 * maxShift, maxShift);
         randomShift.y = ofRandom(-1 * maxShift, maxShift);
         randomShift.z = ofRandom(-1 * maxShift, maxShift);
         return randomShift;
     }
     
-    std::vector<ofPoint> getRandomShifts() {
-        std::vector<ofPoint> shifts;
+    std::vector<ofVec3f> getRandomShifts() {
+        std::vector<ofVec3f> shifts;
         for (int i = 0; i < multiplierCount; i++) {
-            ofPoint shift = getRandomShift();
+            ofVec3f shift = getRandomShift();
             shifts.push_back(shift);
         }
         return shifts;
@@ -423,7 +452,7 @@ public:
             for (int i = 0; i < multiplierCount; i++) {
                 if (i < shifts.size()) {
                     ofPushMatrix();
-                    ofPoint shift = shifts[i];
+                    ofVec3f shift = shifts[i];
                     ofTranslate(shift);
                     renderer->draw(t->path);
                     ofPopMatrix();
@@ -432,7 +461,7 @@ public:
         }
     }
     
-    std::vector<ofPoint> shifts;
+    std::vector<ofVec3f> shifts;
     property<int> multiplierCount;
     property<float> maxShift;
 };
@@ -473,7 +502,7 @@ private:
 
 class PerlinBrightness : public TracerDrawStrategy {
 public:
-    PerlinBrightness(ofPoint timeShift, ofPoint velocity)
+    PerlinBrightness(ofVec3f timeShift, ofVec3f velocity)
     : timeShift(timeShift), velocity(velocity) {}
     
     void draw(Tracer* t, float time, std::shared_ptr<ofBaseRenderer> renderer) {
@@ -484,8 +513,8 @@ public:
     }
     
 private:
-    ofPoint timeShift;
-    ofPoint velocity;
+    ofVec3f timeShift;
+    ofVec3f velocity;
 };
 
 class StrokeWidthMappedToValue : public TracerDrawStrategy {
@@ -641,6 +670,26 @@ public:
     }
 };
 
+class SphereHead : public TracerDrawStrategy {
+public:
+    SphereHead(property<float>& strokeWidth) : strokeWidth("SphereHeadStrokeWidth", strokeWidth) {}
+    
+    void draw(Tracer* t, float time, std::shared_ptr<ofBaseRenderer> renderer) {
+        strokeWidth.clean();
+        Particle* head = t->getHead();
+        if (head != nullptr) {
+            ofPushMatrix();
+            ofTranslate(head->location);
+            ofSpherePrimitive sphere;
+            sphere.set(strokeWidth, 100);
+            sphere.draw();
+            ofPopMatrix();
+        }
+    }
+private:
+    property<float> strokeWidth;
+};
+
 class EllipseHead : public TracerDrawStrategy {
 public:
     EllipseHead(property<float>& strokeWidth) : strokeWidth("EllipseHeadStrokeWidth", strokeWidth) {}
@@ -709,7 +758,7 @@ public:
 
 class CubicMovement : public TracerUpdateStrategy {
 public:
-    CubicMovement(ofPoint velocity, ofPoint stageSize, ofPoint timeShift) : velocity(velocity), stageSize(stageSize), timeShift(timeShift) {
+    CubicMovement(ofVec3f velocity, ofVec3f stageSize, ofVec3f timeShift) : velocity(velocity), stageSize(stageSize), timeShift(timeShift) {
         range1 = {ofRandom(-10, 10), ofRandom(-10, 10)};
         range2 = {ofRandom(-10, 10), ofRandom(-10, 10)};
         range3 = {ofRandom(-10, 10), ofRandom(-10, 10)};
@@ -721,7 +770,7 @@ public:
         float y = cubic(ofMap((int)time % 100, 0, 100, 0, 1));
         x = ofMap(x, 0, 100, 0, stageSize[0], true);
         y = ofMap(y, -10000, 10000, 0, stageSize[1], true);
-        t->head = ofPoint(x, y);
+        t->head = ofVec3f(x, y);
     }
     
     float cubic(float t) {
@@ -736,9 +785,9 @@ public:
     }
     
 private:
-    ofPoint velocity;
-    ofPoint stageSize;
-    ofPoint timeShift;
+    ofVec3f velocity;
+    ofVec3f stageSize;
+    ofVec3f timeShift;
     ofVec2f range1;
     ofVec2f range2;
     ofVec2f range3;
@@ -748,9 +797,10 @@ private:
 
 class PerlinMovement : public TracerUpdateStrategy {
 public:
-    PerlinMovement(property<ofVec3f>& velocity,
-                   ofPoint stageSize,
-                   ofPoint timeShift) : velocity("velocity", velocity), stageSize(stageSize), timeShift(timeShift) {}
+    PerlinMovement(property<ofVec3f>& velocity, ofVec3f timeShift) :
+          velocity("velocity", velocity),
+          timeShift(timeShift)
+    {}
     
     void update(Tracer* t, float time) {
         velocity.clean();
@@ -758,16 +808,25 @@ public:
         float x = ofNoise(time * v[0] + timeShift[0]);
         float y = ofNoise(time * v[1] + timeShift[1]);
         float z = ofNoise(time * v[2] + timeShift[2]);
-        x = ofMap(x, 0, 1, -0.5*stageSize[0], 0.5*stageSize[0], true);
-        y = ofMap(y, 0, 1, -0.5*stageSize[1], 0.5*stageSize[1], true);
-        z = ofMap(z, 0, 1, -0.5*stageSize[2], 0.5*stageSize[2], true);
-        t->head = ofPoint(x, y, z);
+        t->head = ofVec3f(x, y, z);
     }
     
 private:
     property<ofVec3f> velocity;
-    ofPoint stageSize;
-    ofPoint timeShift;
+    ofVec3f timeShift;
+};
+
+class MapDimension : public TracerUpdateStrategy {
+public:
+    MapDimension(int dimension, ofVec2f range) : dimension(dimension), range(range) {}
+    
+    void update(Tracer* tracer, float time) {
+        tracer->head[dimension] = ofMap(tracer->head[dimension], 0, 1, range[0], range[1]);
+    }
+    
+private:
+    int dimension;
+    ofVec2f range;
 };
 
 #endif /* Tracer_h */

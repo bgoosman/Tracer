@@ -1329,6 +1329,70 @@
 				<key>sourceTree</key>
 				<string>SOURCE_ROOT</string>
 			</dict>
+			<key>DB6EA0FA8D547E94771046BA</key>
+			<dict>
+				<key>explicitFileType</key>
+				<string>sourcecode.c.h</string>
+				<key>fileEncoding</key>
+				<string>30</string>
+				<key>isa</key>
+				<string>PBXFileReference</string>
+				<key>name</key>
+				<string>ofxIntersection.h</string>
+				<key>path</key>
+				<string>../../../addons/ofxIntersection/src/ofxIntersection.h</string>
+				<key>sourceTree</key>
+				<string>SOURCE_ROOT</string>
+			</dict>
+			<key>F51453917E7E1511D08CEE80</key>
+			<dict>
+				<key>children</key>
+				<array>
+					<string>6116AAD939653FC062266B79</string>
+					<string>DB6EA0FA8D547E94771046BA</string>
+				</array>
+				<key>isa</key>
+				<string>PBXGroup</string>
+				<key>name</key>
+				<string>src</string>
+				<key>sourceTree</key>
+				<string>&lt;group&gt;</string>
+			</dict>
+			<key>965DCABEA2C4DE1B6BDF53FA</key>
+			<dict>
+				<key>children</key>
+				<array>
+					<string>F51453917E7E1511D08CEE80</string>
+				</array>
+				<key>isa</key>
+				<string>PBXGroup</string>
+				<key>name</key>
+				<string>ofxIntersection</string>
+				<key>sourceTree</key>
+				<string>&lt;group&gt;</string>
+			</dict>
+			<key>CE39138F1F9058656A249693</key>
+			<dict>
+				<key>fileRef</key>
+				<string>6116AAD939653FC062266B79</string>
+				<key>isa</key>
+				<string>PBXBuildFile</string>
+			</dict>
+			<key>6116AAD939653FC062266B79</key>
+			<dict>
+				<key>explicitFileType</key>
+				<string>sourcecode.cpp.cpp</string>
+				<key>fileEncoding</key>
+				<string>30</string>
+				<key>isa</key>
+				<string>PBXFileReference</string>
+				<key>name</key>
+				<string>ofxIntersection.cpp</string>
+				<key>path</key>
+				<string>../../../addons/ofxIntersection/src/ofxIntersection.cpp</string>
+				<key>sourceTree</key>
+				<string>SOURCE_ROOT</string>
+			</dict>
 			<key>96FB3DE3F0BA2F1A21C7105D</key>
 			<dict>
 				<key>explicitFileType</key>
@@ -1528,6 +1592,7 @@
 				<array>
 					<string>0D0595A62FF5ED8D37029107</string>
 					<string>8A3DD780D89619FC9FE77FBA</string>
+					<string>965DCABEA2C4DE1B6BDF53FA</string>
 					<string>2413C01760B1811BED0F502D</string>
 					<string>ABC5123E2929C5438D237753</string>
 					<string>C3C57D7F2C074534D007A193</string>
@@ -1688,6 +1753,7 @@
 						<string>src</string>
 						<string>../../../addons/ofxEasing/src</string>
 						<string>../../../addons/ofxFatLines/src</string>
+						<string>../../../addons/ofxIntersection/src</string>
 						<string>../../../addons/ofxMidi/libs</string>
 						<string>../../../addons/ofxMidi/libs/pgmidi</string>
 						<string>../../../addons/ofxMidi/libs/rtmidi</string>
@@ -1763,6 +1829,7 @@
 						<string>src</string>
 						<string>../../../addons/ofxEasing/src</string>
 						<string>../../../addons/ofxFatLines/src</string>
+						<string>../../../addons/ofxIntersection/src</string>
 						<string>../../../addons/ofxMidi/libs</string>
 						<string>../../../addons/ofxMidi/libs/pgmidi</string>
 						<string>../../../addons/ofxMidi/libs/rtmidi</string>
@@ -1837,6 +1904,7 @@
 					<string>08C23182D394C53F6ECE6CCC</string>
 					<string>B3A9A95BCDE7FF1B89486968</string>
 					<string>0A03A75CD4D4AC0E1B4F6B2B</string>
+					<string>CE39138F1F9058656A249693</string>
 					<string>BCC8D420CBA9217E437D2D76</string>
 					<string>3AEFE4FA8AD5C72671AD07F8</string>
 					<string>1A86B7721CAEBC6F1C572C45</string>
@@ -1951,6 +2019,7 @@
 						<string>src</string>
 						<string>../../../addons/ofxEasing/src</string>
 						<string>../../../addons/ofxFatLines/src</string>
+						<string>../../../addons/ofxIntersection/src</string>
 						<string>../../../addons/ofxMidi/libs</string>
 						<string>../../../addons/ofxMidi/libs/pgmidi</string>
 						<string>../../../addons/ofxMidi/libs/rtmidi</string>
@@ -2017,6 +2086,7 @@
 						<string>src</string>
 						<string>../../../addons/ofxEasing/src</string>
 						<string>../../../addons/ofxFatLines/src</string>
+						<string>../../../addons/ofxIntersection/src</string>
 						<string>../../../addons/ofxMidi/libs</string>
 						<string>../../../addons/ofxMidi/libs/pgmidi</string>
 						<string>../../../addons/ofxMidi/libs/rtmidi</string>

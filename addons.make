@@ -1,5 +1,6 @@
 ofxEasing
 ofxFatLines
+ofxIntersection
 ofxMidi
 ofxMidiFighterTwister
 ofxShivaVG

@@ -2,7 +2,7 @@
 
 void ofApp::setup() {
     stageSize = ofPoint(ofGetWidth(), ofGetHeight(), (ofGetWidth() + ofGetHeight()) / 2.0f);
-    stageCenter = ofPoint(0, 0, 0);
+    stageCenter = ofPoint(stageSize.x / 2, stageSize.y / 2, 0);
     windowPadding = 25;
     tick = 0;
     time = ofGetElapsedTimeMillis();
@@ -56,6 +56,7 @@ void ofApp::setupProperties() {
     registerProperty(strokeWidth);
     registerProperty(entropy);
     registerProperty(rotationSpeed);
+    registerProperty(boxSize);
     loadPropertiesFromXml(ofApp::SETTINGS_FILE);
     encoders[0]->bind(master);
     encoders[1]->bind(tracerCount);
@@ -69,6 +70,7 @@ void ofApp::setupProperties() {
     encoders[9]->bind(strokeWidth);
     encoders[10]->bind(entropy);
     encoders[11]->bind(rotationSpeed);
+    encoders[12]->bind(boxSize);
 }
 
 
@@ -94,9 +96,11 @@ ofColor randomColor(ofVec2f redRange, ofVec2f blueRange, ofVec2f greenRange) {
 Tracer* ofApp::makeTracer() {
     ofPoint timeShift(ofRandom(stageSize[0]), ofRandom(stageSize[1]), ofRandom(stageSize[2]));
     
-    auto tracer = new Tracer(stageCenter);
+    auto tracer = new Tracer(stageCenter, stageSize);
     tracer->addUpdateBehavior(new MaximumLength(maxPoints));
-    tracer->addUpdateBehavior(new PerlinMovement(velocity, stageSize, timeShift));
+    tracer->addUpdateBehavior(new PerlinMovement(velocity, timeShift));
+    for (int i = 0; i <= 2; i++)
+        tracer->addUpdateBehavior(new MapDimension(i, ofVec2f(-10, 10)));
     tracer->addUpdateBehavior(new HeadGrowth);
     tracer->addUpdateBehavior(new CurvedPath);
     StrokeColor* randomStroke = makeRandomStrokeColorBehavior();
@@ -106,6 +110,7 @@ Tracer* ofApp::makeTracer() {
     tracer->addDrawBehavior(new InvertHue(randomStroke));
     tracer->addDrawBehavior(randomStroke);
     tracer->addDrawBehavior(new StrokeWidth(strokeWidth));
+    tracer->addDrawBehavior(new SphereHead(strokeWidth));
     tracer->addDrawBehavior(new DrawPath);
     tracer->addDrawBehavior(new VibratingMultiplier(new Multiplier(multiplierCount, maxShift), entropy));
     tracer->addDrawBehavior(new FilledPath(false, 1));
@@ -230,23 +235,72 @@ void ofApp::update() {
 void ofApp::draw() {
     float currentTime = ofGetElapsedTimeMillis();
     
-    ofEnableDepthTest();
-    ofEnableAlphaBlending();
-    ofColor background;
-    background.setHsb(hue, saturation, brightness);
-    ofBackground(background);
-    ofPushMatrix();
-    ofTranslate(stageSize[0]/2, stageSize[1]/2, 0);
-    float time = ofGetElapsedTimef();
-    float angle = time * rotationSpeed;
-    ofRotate(angle, 0, 1, 0);
-    for (auto& t : tracers) {
-        t->draw(currentTime, ofGetCurrentRenderer());
+    {
+        ofPushMatrix();
+        ofTranslate(stageCenter.x, stageCenter.y, stageCenter.z);
+        ofEnableDepthTest();
+        ofEnableAlphaBlending();
+        
+        float time = ofGetElapsedTimef();
+        float angle = time * rotationSpeed;
+        ofRotate(angle, 0, 1, 0);
+        
+        ofColor background;
+        background.setHsb(hue, saturation, brightness);
+        ofBackground(background);
+        
+        {
+            ofPushMatrix();
+            ofRotate(45, 0, 1, 0);
+            ofRotate(45, 1, 0, 0);
+            ofSetColor(255 - hue, saturation, brightness);
+            ofFill();
+            box.setPosition(0, 0, 0);
+            box.set(boxSize);
+            //box.draw();
+            ofNoFill();
+            ofPopMatrix();
+        }
+        
+        for (auto& t : tracers) {
+            ofVec3f closestIntersection = {10000, 10000, 10000};
+            for (int i = 0; i < 6; i++) {
+                auto side = box.getSideMesh(i);
+                boxSide.set(side.getVertices()[0], side.getNormals()[0]);
+                line.set(ofVec3f(0, 0, 0), 10000*t->head+0.0001);
+                intersection = is.LinePlaneIntersection(line, boxSide);
+                if (intersection.isIntersection) {
+                    if (intersection.pos.length() < closestIntersection.length()) {
+                        closestIntersection = intersection.pos;
+                    }
+                }
+            }
+            ofPushMatrix();
+            ofTranslate(closestIntersection);
+//            t->head = closestIntersection;
+            t->draw(currentTime, ofGetCurrentRenderer());
+            ofPopMatrix();
+        }
+        
+        ofDisableAlphaBlending();
+        ofPopMatrix();
     }
-    ofDisableAlphaBlending();
-    ofPopMatrix();
 
     drawFPS();
+}
+
+ofVec2f ofApp::getBoxSideRange(int dimension, ofMesh boxSideMesh) {
+    std::vector<ofPoint> vertices = boxSideMesh.getVertices();
+    ofVec2f range = {INT_MAX, INT_MIN};
+    for (auto vertex : vertices) {
+        if (vertex[dimension] < range[0]) {
+            range[0] = vertex[dimension];
+        }
+        if (vertex[dimension] > range[1]) {
+            range[1] = vertex[dimension];
+        }
+    }
+    return range;
 }
 
 void ofApp::drawFPS() {
@@ -276,19 +330,26 @@ void ofApp::keyPressed(int key) { }
 void ofApp::keyReleased(int key) {
     if (key == 'f') {
         ofToggleFullscreen();
-    }
-    
-    if (key == 'x') {
+    } else if (key == 'x') {
         screenGrabber.grabScreen(0, 0 , ofGetWidth(), ofGetHeight());
         screenGrabber.save("screenshot.png");
-    }
-    
-    if (key == 's') {
+    } else if (key == 's') {
         soundStream.start();
-    }
-    
-    if (key == 'e') {
+    } else if (key == 'e') {
         soundStream.stop();
+    } else if (key >= '0' && key <= '9') {
+        armedPropertyIndex = key - '0';
+        std::cout << "Arming " << properties[armedPropertyIndex]->getName() << std::endl;
+    } else if (key == 357 /* up */) {
+        property_base* p = properties[armedPropertyIndex];
+        float newScale = p->getScale() + 0.01;
+        p->setScale(newScale);
+    } else if (key == 359 /* down */) {
+        property_base* p = properties[armedPropertyIndex];
+        float newScale = p->getScale() - 0.01;
+        p->setScale(newScale);
+    } else {
+        std::cout << key << std::endl;
     }
 }
 

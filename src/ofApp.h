@@ -5,6 +5,7 @@
 #include "ofxMidiFighterTwister.h"
 #include "ofxXmlSettings.h"
 #include "ofxEasing.h"
+#include "ofxIntersection.h"
 #include "Tracer.h"
 #include <limits.h>
 
@@ -32,12 +33,19 @@ private:
     void drawFPS();
     void setupOpenFrameworks();
     StrokeColor* makeRandomStrokeColorBehavior();
+    ofVec2f getBoxSideRange(int dimension, ofMesh boxSideMesh);
     
     // Image
     ofImage pizza;
     
     // 3d
     ofCamera camera;
+    ofBoxPrimitive box;
+    int dimensions[3] = {0, 1, 2};
+    ofxIntersection is;
+    IntersectionData intersection;
+    IsLine line;
+    IsPlane boxSide;
 
     // Properties
     std::string SETTINGS_FILE = "settings.xml";
@@ -55,6 +63,8 @@ private:
     property<float> strokeWidth = {"strokeWidth", 3, 1, 20};
     property<float> entropy = {"entropy", 0, 0, 1};
     property<float> rotationSpeed = {"rotationSpeed", 5, 0, 360};
+    property<float> boxSize = {"boxSize", 150, 0, 500};
+    int armedPropertyIndex = 0;
     
     void setupProperties();
     void savePropertiesToXml(std::string& file);
@@ -73,8 +83,8 @@ private:
     Tracer* makeTracer();
     void setupTracers();
     ofPath curvedPath;
-    ofPoint stageSize;
-    ofPoint stageCenter;
+    ofVec3f stageSize;
+    ofVec3f stageCenter;
     float maxZ;
     float perlinShiftX;
     float perlinShiftY;
