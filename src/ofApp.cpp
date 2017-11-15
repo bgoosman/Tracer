@@ -21,7 +21,6 @@ ofApp::~ofApp() {
 void ofApp::loadPropertiesFromXml(std::string& file) {
     settings.load(file);
     
-    int encoder = 0;
     for (auto property : properties) {
         property->load(settings);
     }
@@ -42,37 +41,95 @@ void ofApp::setupOpenFrameworks() {
 }
 
 void ofApp::setupProperties() {
+    rangeX.setMax(ofVec2f(-stageSize[0]*0.5, stageSize[0]*0.5));
+    rangeY.setMax(ofVec2f(-stageSize[1]*0.5, stageSize[1]*0.5));
+    rangeZ.setMax(ofVec2f(-stageSize[2]*0.5, stageSize[2]*0.5));
+    
+    velocityX.addSubscriber([&]() { updateVelocity(); });
+    velocityY.addSubscriber([&]() { updateVelocity(); });
+    velocityZ.addSubscriber([&]() { updateVelocity(); });
+    
     master.addSubscriber([&]() { tracerCount = tracerCount.map(master);});
     master.addSubscriber([&]() { hue = hue.map(master); });
-    registerProperty(master);
+    
+    blendMode.addSubscriber([&]() {
+        switch (blendMode) {
+            case 0:
+                currentBlendMode = OF_BLENDMODE_ALPHA;
+                break;
+            case 1:
+                currentBlendMode = OF_BLENDMODE_MULTIPLY;
+                break;
+            case 2:
+                currentBlendMode = OF_BLENDMODE_ADD;
+                break;
+            case 3:
+                currentBlendMode = OF_BLENDMODE_SUBTRACT;
+                break;
+            case 4:
+                currentBlendMode = OF_BLENDMODE_SCREEN;
+                break;
+            case 5:
+                currentBlendMode = OF_BLENDMODE_DISABLED;
+                break;
+        }
+    });
+    
     registerProperty(tracerCount);
-    registerProperty(maxShift);
     registerProperty(maxPoints);
+    registerProperty(maxShift);
+    registerProperty(multiplierCount);
+    
     registerProperty(hue);
     registerProperty(saturation);
     registerProperty(brightness);
-    registerProperty(multiplierCount);
-    registerProperty(velocity);
     registerProperty(strokeWidth);
-    registerProperty(entropy);
+    
+    registerProperty(rangeX);
+    registerProperty(rangeY);
+    registerProperty(rangeZ);
     registerProperty(rotationSpeed);
+
+    registerProperty(velocityX);
+    registerProperty(velocityY);
+    registerProperty(velocityZ);
+    registerProperty(entropy);
+    
     registerProperty(boxSize);
+    registerProperty(boxTransparency);
+    registerProperty(blendMode);
+
     loadPropertiesFromXml(ofApp::SETTINGS_FILE);
-    encoders[0]->bind(master);
-    encoders[1]->bind(tracerCount);
-    encoders[2]->bind(maxShift);
-    encoders[3]->bind(maxPoints);
-    encoders[4]->bind(hue);
-    encoders[5]->bind(saturation);
-    encoders[6]->bind(brightness);
-    encoders[7]->bind(multiplierCount);
-    encoders[8]->bind(velocity);
-    encoders[9]->bind(strokeWidth);
-    encoders[10]->bind(entropy);
-    encoders[11]->bind(rotationSpeed);
-    encoders[12]->bind(boxSize);
+    
+    bindEncoder(tracerCount);
+    bindEncoder(maxPoints);
+    bindEncoder(maxShift);
+    bindEncoder(multiplierCount);
+    
+    bindEncoder(hue);
+    bindEncoder(saturation);
+    bindEncoder(brightness);
+    bindEncoder(strokeWidth);
+
+    bindEncoder(rangeX);
+    bindEncoder(rangeY);
+    bindEncoder(rangeZ);
+    bindEncoder(rotationSpeed);
+
+    bindEncoder(velocityX);
+    bindEncoder(velocityY);
+    bindEncoder(velocityZ);
+    bindEncoder(entropy);
+
+    bindEncoder(boxSize);
+    bindEncoder(boxTransparency);
+    bindEncoder(blendMode);
 }
 
+template <typename T>
+void ofApp::bindEncoder(property<T>& property) {
+    encoders[encoderIndex++]->bind(property);
+}
 
 template <class T>
 void ofApp::registerProperty(property<T>& property) {
@@ -97,10 +154,10 @@ Tracer* ofApp::makeTracer() {
     ofPoint timeShift(ofRandom(stageSize[0]), ofRandom(stageSize[1]), ofRandom(stageSize[2]));
     
     auto tracer = new Tracer(stageCenter, stageSize);
+    tracer->addUpdateBehavior(new SetHeadToZeroEveryUpdate());
+    tracer->addUpdateBehavior(new PerlinMovement(velocity, timeShift, rangeX, rangeY, rangeZ));
+    tracer->addUpdateBehavior(new ProjectOntoBox(&box));
     tracer->addUpdateBehavior(new MaximumLength(maxPoints));
-    tracer->addUpdateBehavior(new PerlinMovement(velocity, timeShift));
-    for (int i = 0; i <= 2; i++)
-        tracer->addUpdateBehavior(new MapDimension(i, ofVec2f(-10, 10)));
     tracer->addUpdateBehavior(new HeadGrowth);
     tracer->addUpdateBehavior(new CurvedPath);
     StrokeColor* randomStroke = makeRandomStrokeColorBehavior();
@@ -110,10 +167,11 @@ Tracer* ofApp::makeTracer() {
     tracer->addDrawBehavior(new InvertHue(randomStroke));
     tracer->addDrawBehavior(randomStroke);
     tracer->addDrawBehavior(new StrokeWidth(strokeWidth));
-    tracer->addDrawBehavior(new SphereHead(strokeWidth));
+//    tracer->addDrawBehavior(new SphereHead(strokeWidth));
+//    tracer->addDrawBehavior(new EllipseTail(strokeWidth));
     tracer->addDrawBehavior(new DrawPath);
     tracer->addDrawBehavior(new VibratingMultiplier(new Multiplier(multiplierCount, maxShift), entropy));
-    tracer->addDrawBehavior(new FilledPath(false, 1));
+    tracer->addDrawBehavior(new FilledPath(false, ofColor::black));
     return tracer;
 }
 
@@ -162,14 +220,20 @@ void ofApp::setupMidiFighterTwister() {
     }
 }
 
-void ofApp::onEncoderUpdate(ofxMidiFighterTwister::EncoderEventArgs & a){
-    ofLogNotice() << "Encoder '" << a.ID << "' Event! val: " << a.value;
+void ofApp::onEncoderUpdate(ofxMidiFighterTwister::EncoderEventArgs& a){
+    std::cout << "Encoder '" << a.ID << "' Event! val: " << a.value << std::endl;
     encoders[a.ID]->setValue(a.value);
 }
 
-void ofApp::onPushSwitchUpdate(ofxMidiFighterTwister::PushSwitchEventArgs & a){
-    ofLogNotice() << "PushSwitch '" << a.ID << "' Event! val: " << a.value;
-    tweenEncoderToCurrentValue(a.ID);
+void ofApp::onPushSwitchUpdate(ofxMidiFighterTwister::PushSwitchEventArgs& a){
+    std::cout << "PushSwitch '" << a.ID << "' Event! val: " << a.value << std::endl;
+    if (0 <= a.ID && a.ID <= 3) {
+        if (a.value == ofxMidiFighterTwister::MIDI_MAX) {
+            std::cout << "Switching to bank " << (a.ID + 1) << std::endl;
+        }
+    } else {
+        tweenEncoderToCurrentValue(a.ID);
+    }
 }
 
 void ofApp::tweenEncoderToCurrentValue(int encoder) {
@@ -186,7 +250,12 @@ void ofApp::tweenEncoderToCurrentValue(int encoder) {
 }
 
 void ofApp::onSideButtonPressed(ofxMidiFighterTwister::SideButtonEventArgs & a){
-    ofLogNotice() << "Side Button Pressed";
+    std::cout << "Side Button Pressed" << std::endl;
+}
+
+void ofApp::updateVelocity() {
+    velocity = ofVec3f(velocityX, velocityY, velocityZ);
+    velocity.clean();
 }
 
 void ofApp::update() {
@@ -196,7 +265,7 @@ void ofApp::update() {
     for (auto& global : properties) {
         global->clean();
     }
-    
+
     for (int i = 0; i < ofxMidiFighterTwister::NUM_ENCODERS; i++) {
         ease* easing = easings[i];
         if (easing != nullptr) {
@@ -239,50 +308,29 @@ void ofApp::draw() {
         ofPushMatrix();
         ofTranslate(stageCenter.x, stageCenter.y, stageCenter.z);
         ofEnableDepthTest();
-        ofEnableAlphaBlending();
-        
+        ofEnableBlendMode(currentBlendMode);
+
         float time = ofGetElapsedTimef();
         float angle = time * rotationSpeed;
         ofRotate(angle, 0, 1, 0);
+        ofRotate(45, 0, 1, 0);
+        ofRotate(45, 1, 0, 0);
         
         ofColor background;
         background.setHsb(hue, saturation, brightness);
         ofBackground(background);
-        
-        {
-            ofPushMatrix();
-            ofRotate(45, 0, 1, 0);
-            ofRotate(45, 1, 0, 0);
-            ofSetColor(255 - hue, saturation, brightness);
-            ofFill();
-            box.setPosition(0, 0, 0);
-            box.set(boxSize);
-            //box.draw();
-            ofNoFill();
-            ofPopMatrix();
-        }
-        
+
         for (auto& t : tracers) {
-            ofVec3f closestIntersection = {10000, 10000, 10000};
-            for (int i = 0; i < 6; i++) {
-                auto side = box.getSideMesh(i);
-                boxSide.set(side.getVertices()[0], side.getNormals()[0]);
-                line.set(ofVec3f(0, 0, 0), 10000*t->head+0.0001);
-                intersection = is.LinePlaneIntersection(line, boxSide);
-                if (intersection.isIntersection) {
-                    if (intersection.pos.length() < closestIntersection.length()) {
-                        closestIntersection = intersection.pos;
-                    }
-                }
-            }
-            ofPushMatrix();
-            ofTranslate(closestIntersection);
-//            t->head = closestIntersection;
             t->draw(currentTime, ofGetCurrentRenderer());
-            ofPopMatrix();
         }
         
-        ofDisableAlphaBlending();
+        ofPushStyle();
+        ofSetColor(255 - hue, saturation, brightness, boxTransparency);
+        box.setPosition(0, 0, 0);
+        box.set(boxSize);
+        box.draw();
+        ofPopStyle();
+        
         ofPopMatrix();
     }
 
@@ -334,9 +382,11 @@ void ofApp::keyReleased(int key) {
         screenGrabber.grabScreen(0, 0 , ofGetWidth(), ofGetHeight());
         screenGrabber.save("screenshot.png");
     } else if (key == 's') {
-        soundStream.start();
+        savePropertiesToXml(ofApp::SETTINGS_FILE);
     } else if (key == 'e') {
         soundStream.stop();
+    } else if (key == 'q') {
+        exit();
     } else if (key >= '0' && key <= '9') {
         armedPropertyIndex = key - '0';
         std::cout << "Arming " << properties[armedPropertyIndex]->getName() << std::endl;

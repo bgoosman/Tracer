@@ -5,7 +5,6 @@
 #include "ofxMidiFighterTwister.h"
 #include "ofxXmlSettings.h"
 #include "ofxEasing.h"
-#include "ofxIntersection.h"
 #include "Tracer.h"
 #include <limits.h>
 
@@ -19,7 +18,7 @@ public:
     
     void keyPressed(int key);
     void keyReleased(int key);
-    void mouseMoved(int x, int y );
+    void mouseMoved(int x, int y);
     void mouseDragged(int x, int y, int button);
     void mousePressed(int x, int y, int button);
     void mouseReleased(int x, int y, int button);
@@ -32,6 +31,7 @@ public:
 private:
     void drawFPS();
     void setupOpenFrameworks();
+    void updateVelocity();
     StrokeColor* makeRandomStrokeColorBehavior();
     ofVec2f getBoxSideRange(int dimension, ofMesh boxSideMesh);
     
@@ -41,16 +41,15 @@ private:
     // 3d
     ofCamera camera;
     ofBoxPrimitive box;
-    int dimensions[3] = {0, 1, 2};
-    ofxIntersection is;
-    IntersectionData intersection;
-    IsLine line;
-    IsPlane boxSide;
 
     // Properties
-    std::string SETTINGS_FILE = "settings.xml";
+    int const NUM_DIMENSIONS = 3;
+    int encoderIndex = 0;
+    template <typename T> void bindEncoder(property<T>& property);
     ofxXmlSettings settings;
+    std::string SETTINGS_FILE = "settings.xml";
     std::vector<property_base*> properties;
+    // {label, default, min, max}
     property<int> master = {"master", 0, 0, 127};
     property<int> tracerCount = {"tracerCount", 1, 1, 255};
     property<int> hue = {"hue", 0, 0, 255};
@@ -60,10 +59,21 @@ private:
     property<int> maxPoints = {"maxPoints", 100, 1, 1000};
     property<int> multiplierCount = {"multiplierCount", 5, 0, 255};
     property<ofVec3f> velocity = {"velocity", ofVec3f(0.001, 0.001, 0.001), ofVec3f(0, 0, 0), ofVec3f(0.005, 0.005, 0.005)};
+    float const MIN_VELOCITY = 0;
+    float const MAX_VELOCITY = 0.005;
+    float const DEFAULT_VELOCITY = 0.001;
+    property<float> velocityX = {"velocityX", DEFAULT_VELOCITY, MIN_VELOCITY, MAX_VELOCITY};
+    property<float> velocityY = {"velocityY", DEFAULT_VELOCITY, MIN_VELOCITY, MAX_VELOCITY};
+    property<float> velocityZ = {"velocityZ", DEFAULT_VELOCITY, MIN_VELOCITY, MAX_VELOCITY};
+    property<ofVec2f> rangeX = {"rangeX", ofVec2f(0, 0), ofVec2f(-5, 5), ofVec2f(-5000, 5000)};
+    property<ofVec2f> rangeY = {"rangeY", ofVec2f(0, 0), ofVec2f(-5, 5), ofVec2f(-5000, 5000)};
+    property<ofVec2f> rangeZ = {"rangeZ", ofVec2f(0, 0), ofVec2f(-5, 5), ofVec2f(-5000, 5000)};
     property<float> strokeWidth = {"strokeWidth", 3, 1, 20};
     property<float> entropy = {"entropy", 0, 0, 1};
     property<float> rotationSpeed = {"rotationSpeed", 5, 0, 360};
     property<float> boxSize = {"boxSize", 150, 0, 500};
+    property<int> boxTransparency = {"boxTransparency", 255, 0, 255};
+    property<int> blendMode = {"blendMode", 0, 0, 5};
     int armedPropertyIndex = 0;
     
     void setupProperties();
@@ -95,6 +105,7 @@ private:
     ofImage screenGrabber;
     ofPtr<ofBaseRenderer> defaultRenderer;
     ofPtr<ofxShivaVGRenderer> shivaVGRenderer;
+    ofBlendMode currentBlendMode;
     void setupRenderer();
     
     // Audio

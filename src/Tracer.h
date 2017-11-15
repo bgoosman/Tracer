@@ -1,6 +1,8 @@
 #ifndef Tracer_h
 #define Tracer_h
 
+#include "ofxIntersection.h"
+
 class Tracer;
 typedef std::function<void(float)> encoderbinding_t;
 
@@ -34,6 +36,23 @@ public:
           cachedValue(defaultValue),
           min(min),
           max(max) {}
+    
+    property(const property<T>& other) {
+        name = other.name;
+        cachedValue = other.cachedValue;
+        min = other.min;
+        max = other.max;
+    }
+    
+    property<T>& operator=(const property<T>& other) {
+        name = other.name;
+        cachedValue = other.cachedValue;
+        min = other.min;
+        max = other.max;
+        return *this;
+    }
+    
+    property() {}
     
     std::string getName() {
         return name;
@@ -98,8 +117,16 @@ public:
         return min;
     }
     
+    void setMin(T value) {
+        min = value;
+    }
+    
     T getMax() const {
         return max;
+    }
+    
+    void setMax(T value) {
+        max = value;
     }
     
     void addSubscriber(const subscription_t& s) {
@@ -137,9 +164,9 @@ public:
     virtual void set(const T& v) {
         std::lock_guard<std::mutex> guard(mutex);
         if (between(v, min, max)) {
-            std::cout << "Set " << getName() << " to " << v << std::endl;
             dirtyValue = v;
             dirty = true;
+            std::cout << "Set " << name << " to " << v << std::endl;
         }
     }
     
@@ -168,6 +195,10 @@ public:
         return get();
     }
     
+    float operator[](int const index) {
+        return get()[index];
+    }
+
     T operator=(const T& v) {
         set(v);
         return dirtyValue;
@@ -245,7 +276,6 @@ public:
         twister->setEncoderRingValue(index, property.getScale());
         twister->setEncoderColor(index, 0.25);
         bindings.push_back([&](float scale) {
-            std::cout << "Set scale of " << property.getName() << " to " << scale << std::endl;
             property.setScale(scale);
         });
     }
@@ -253,7 +283,6 @@ public:
     void updateBindings() {
         for (auto binding : bindings) {
             float scale = ofxMidiFighterTwister::mapMidi(getValue(), 0, 1);
-            std::cout << "Calling binding with value " << getValue() << " and scale " << scale << std::endl;
             binding(scale);
         }
     }
@@ -795,38 +824,106 @@ private:
     float min, max;
 };
 
+class SetHeadToZeroEveryUpdate : public TracerUpdateStrategy {
+public:
+    SetHeadToZeroEveryUpdate() {}
+    
+    void update(Tracer* t, float time) {
+        t->head = ofVec3f(0, 0, 0);
+    }
+};
+
+class ProjectOntoBox : public TracerUpdateStrategy {
+public:
+    ProjectOntoBox(ofBoxPrimitive* box) : box(box) {}
+    
+    void update(Tracer *t, float time) {
+        if (box->getSize().length() > 0) {
+            ofVec3f closestIntersection = MAX_INTERSECTION;
+            for (int i = 0; i < NUM_BOX_SIDES; i++) {
+                auto side = box->getSideMesh(i);
+                boxSide.set(side.getVertices()[0], side.getNormals()[0]);
+                line.set(ofVec3f(0, 0, 0), SCALE * t->head + JITTER);
+                intersection = is.LinePlaneIntersection(line, boxSide);
+                if (intersection.isIntersection) {
+                    if (intersection.pos.length() < closestIntersection.length()) {
+                        closestIntersection = intersection.pos;
+                    }
+                }
+            }
+            t->head += closestIntersection;
+        }
+    }
+    
+private:
+    ofBoxPrimitive* box;
+    float const JITTER = 0.0001;
+    int const SCALE = 100000;
+    int const NUM_BOX_SIDES = 6;
+    ofVec3f const MAX_INTERSECTION = {INT_MAX, INT_MAX, INT_MAX};
+    ofxIntersection is;
+    IntersectionData intersection;
+    IsLine line;
+    IsPlane boxSide;
+};
+
 class PerlinMovement : public TracerUpdateStrategy {
 public:
-    PerlinMovement(property<ofVec3f>& velocity, ofVec3f timeShift) :
-          velocity("velocity", velocity),
-          timeShift(timeShift)
-    {}
+    PerlinMovement(property<ofVec3f>& velocity, ofVec3f timeShift) : velocity("velocity", velocity), timeShift(timeShift) {
+        rangeX = {"rangeX", ofVec2f(0, 1), ofVec2f(0, 1), ofVec2f(0, 1)};
+        rangeY = {"rangeY", ofVec2f(0, 1), ofVec2f(0, 1), ofVec2f(0, 1)};
+        rangeZ = {"rangeZ", ofVec2f(0, 1), ofVec2f(0, 1), ofVec2f(0, 1)};
+    }
+    
+    PerlinMovement(property<ofVec3f>& velocity,
+                   ofVec3f timeShift,
+                   property<ofVec2f>& rangeX,
+                   property<ofVec2f>& rangeY,
+                   property<ofVec2f>& rangeZ) :
+        velocity("velocity", velocity),
+        rangeX("PerlinMovementRangeX", rangeX),
+        rangeY("PerlinMovementRangeY", rangeY),
+        rangeZ("PerlinMovementRangeZ", rangeZ),
+        timeShift(timeShift) {}
     
     void update(Tracer* t, float time) {
         velocity.clean();
-        ofVec3f v = velocity;
-        float x = ofNoise(time * v[0] + timeShift[0]);
-        float y = ofNoise(time * v[1] + timeShift[1]);
-        float z = ofNoise(time * v[2] + timeShift[2]);
-        t->head = ofVec3f(x, y, z);
+        rangeX.clean();
+        rangeY.clean();
+        rangeZ.clean();
+
+        float x = ofNoise(time * velocity[0] + timeShift[0]);
+        x = ofMap(x, 0, 1, rangeX[0], rangeX[1]);
+        
+        float y = ofNoise(time * velocity[1] + timeShift[1]);
+        y = ofMap(y, 0, 1, rangeY[0], rangeY[1]);
+        
+        float z = ofNoise(time * velocity[2] + timeShift[2]);
+        z = ofMap(z, 0, 1, rangeZ[0], rangeZ[1]);
+        
+        t->head += ofVec3f(x, y, z);
     }
     
 private:
     property<ofVec3f> velocity;
+    property<ofVec2f> rangeX;
+    property<ofVec2f> rangeY;
+    property<ofVec2f> rangeZ;
     ofVec3f timeShift;
 };
 
 class MapDimension : public TracerUpdateStrategy {
 public:
-    MapDimension(int dimension, ofVec2f range) : dimension(dimension), range(range) {}
+    MapDimension(int dimension, property<ofVec2f>& range) : dimension(dimension), range("MapDimensionRange", range) {}
     
-    void update(Tracer* tracer, float time) {
-        tracer->head[dimension] = ofMap(tracer->head[dimension], 0, 1, range[0], range[1]);
+    void update(Tracer* t, float time) {
+        range.clean();
+        t->head[dimension] = ofMap(t->head[dimension], 0, 1, range[0], range[1]);
     }
     
 private:
+    property<ofVec2f> range;
     int dimension;
-    ofVec2f range;
 };
 
 #endif /* Tracer_h */
