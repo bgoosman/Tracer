@@ -1,7 +1,9 @@
+ofxBenG
 ofxEasing
 ofxFatLines
 ofxIntersection
 ofxMidi
 ofxMidiFighterTwister
 ofxShivaVG
+ofxSyphon
 ofxXmlSettings

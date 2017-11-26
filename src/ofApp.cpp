@@ -1,12 +1,10 @@
 #include "ofApp.h"
 
 void ofApp::setup() {
-    stageSize = ofPoint(ofGetWidth(), ofGetHeight(), (ofGetWidth() + ofGetHeight()) / 2.0f);
-    stageCenter = ofPoint(stageSize.x / 2, stageSize.y / 2, 0);
-    windowPadding = 25;
-    tick = 0;
     time = ofGetElapsedTimeMillis();
     pizza.load("pizza.png");
+    setupSyphon();
+    setupRenderer();
     setupOpenFrameworks();
     setupSoundStream();
     setupMidiFighterTwister();
@@ -16,6 +14,18 @@ void ofApp::setup() {
 
 ofApp::~ofApp() {
     savePropertiesToXml(ofApp::SETTINGS_FILE);
+}
+
+void ofApp::setupSyphon() {
+    mainOutputSyphonServer.setName("Tracer");
+
+}
+ofVec3f ofApp::getStageSize() {
+    return ofVec3f(ofGetWidth(), ofGetHeight(), (ofGetWidth() + ofGetHeight()) / 2);
+}
+
+ofVec3f ofApp::getStageCenter(ofVec3f stageSize) {
+    return ofVec3f(stageSize.x / 2, stageSize.y / 2, 0);
 }
 
 void ofApp::loadPropertiesFromXml(std::string& file) {
@@ -75,55 +85,57 @@ void ofApp::setupProperties() {
         }
     });
     
-    registerProperty(tracerCount);
-    registerProperty(maxPoints);
-    registerProperty(maxShift);
-    registerProperty(multiplierCount);
+    property_base* bank[4][4][4] = {
+        {
+            {δ(tracerCount), δ(maxPoints), δ(maxShift), δ(multiplierCount)},
+            {δ(hue), δ(saturation), δ(brightness), δ(strokeWidth)},
+            {δ(backgroundHue), δ(backgroundSaturation), δ(backgroundBrightness), δ(entropy)},
+            {δ(rangeX), δ(rangeY), δ(rangeZ), δ(rotationSpeed)}
+        },
+        {
+            {δ(velocityX), δ(velocityY), δ(velocityZ), δ(boxSize)},
+            {δ(boxTransparency), δ(blendMode), δ(beatsPerMinute), nullptr},
+            {nullptr, nullptr, nullptr, nullptr},
+            {nullptr, nullptr, nullptr, nullptr}
+        },
+        {
+            {nullptr, nullptr, nullptr, nullptr},
+            {nullptr, nullptr, nullptr, nullptr},
+            {nullptr, nullptr, nullptr, nullptr},
+            {nullptr, nullptr, nullptr, nullptr},
+        },
+        {
+            {nullptr, nullptr, nullptr, nullptr},
+            {nullptr, nullptr, nullptr, nullptr},
+            {nullptr, nullptr, nullptr, nullptr},
+            {nullptr, nullptr, nullptr, nullptr},
+        }
+    };
     
-    registerProperty(hue);
-    registerProperty(saturation);
-    registerProperty(brightness);
-    registerProperty(strokeWidth);
-    
-    registerProperty(rangeX);
-    registerProperty(rangeY);
-    registerProperty(rangeZ);
-    registerProperty(rotationSpeed);
-
-    registerProperty(velocityX);
-    registerProperty(velocityY);
-    registerProperty(velocityZ);
-    registerProperty(entropy);
-    
-    registerProperty(boxSize);
-    registerProperty(boxTransparency);
-    registerProperty(blendMode);
+    for (int bankIndex = 0; bankIndex < MAX_BANKS; bankIndex++) {
+        for (int rowIndex = 0; rowIndex < MAX_ROWS_PER_BANK; rowIndex++) {
+            for (int colIndex = 0; colIndex < MAX_COLUMNS_PER_ROW; colIndex++) {
+                auto property = bank[bankIndex][rowIndex][colIndex];
+                if (property != nullptr) {
+                    properties.push_back(property);
+                }
+            }
+        }
+    }
 
     loadPropertiesFromXml(ofApp::SETTINGS_FILE);
     
-    bindEncoder(tracerCount);
-    bindEncoder(maxPoints);
-    bindEncoder(maxShift);
-    bindEncoder(multiplierCount);
-    
-    bindEncoder(hue);
-    bindEncoder(saturation);
-    bindEncoder(brightness);
-    bindEncoder(strokeWidth);
-
-    bindEncoder(rangeX);
-    bindEncoder(rangeY);
-    bindEncoder(rangeZ);
-    bindEncoder(rotationSpeed);
-
-    bindEncoder(velocityX);
-    bindEncoder(velocityY);
-    bindEncoder(velocityZ);
-    bindEncoder(entropy);
-
-    bindEncoder(boxSize);
-    bindEncoder(boxTransparency);
-    bindEncoder(blendMode);
+    int encoderIndex = 0;
+    for (int bankIndex = 0; bankIndex < MAX_BANKS; bankIndex++) {
+        for (int rowIndex = 0; rowIndex < MAX_ROWS_PER_BANK; rowIndex++) {
+            for (int colIndex = 0; colIndex < MAX_COLUMNS_PER_ROW; colIndex++) {
+                auto property = bank[bankIndex][rowIndex][colIndex];
+                if (property != nullptr) {
+                    encoders[encoderIndex++]->bind(property);
+                }
+            }
+        }
+    }
 }
 
 template <typename T>
@@ -145,33 +157,43 @@ void ofApp::setupRenderer() {
 }
 
 ofColor randomColor(ofVec2f redRange, ofVec2f blueRange, ofVec2f greenRange) {
-    return ofColor(ofRandom(redRange[0], redRange[1]),
-                   ofRandom(blueRange[0], blueRange[1]),
-                   ofRandom(greenRange[0], greenRange[1]));
+    return ofColor(ofRandom(redRange[0], redRange[1]), ofRandom(blueRange[0], blueRange[1]), ofRandom(greenRange[0], greenRange[1]));
+}
+
+ofVec3f ofApp::getRandomInStage(ofVec3f stageSize) {
+    float x = ofRandom(stageSize[0]);
+    float y = ofRandom(stageSize[1]);
+    float z = ofRandom(-stageSize[2], stageSize[2]);
+    return ofVec3f(x, y, z);
 }
 
 Tracer* ofApp::makeTracer() {
     ofPoint timeShift(ofRandom(stageSize[0]), ofRandom(stageSize[1]), ofRandom(stageSize[2]));
+    auto startingLocation = getRandomInStage(stageSize);
+    auto tracer = new Tracer(startingLocation, stageSize);
     
-    auto tracer = new Tracer(stageCenter, stageSize);
+    // Update behaviors
     tracer->addUpdateBehavior(new SetHeadToZeroEveryUpdate());
     tracer->addUpdateBehavior(new PerlinMovement(velocity, timeShift, rangeX, rangeY, rangeZ));
     tracer->addUpdateBehavior(new ProjectOntoBox(&box));
     tracer->addUpdateBehavior(new MaximumLength(maxPoints));
     tracer->addUpdateBehavior(new HeadGrowth);
     tracer->addUpdateBehavior(new CurvedPath);
-    StrokeColor* randomStroke = makeRandomStrokeColorBehavior();
-    tracer->addDrawBehavior(new Hue(randomStroke, hue));
-    tracer->addDrawBehavior(new Saturation(randomStroke, saturation));
-    tracer->addDrawBehavior(new Brightness(randomStroke, brightness));
-    tracer->addDrawBehavior(new InvertHue(randomStroke));
-    tracer->addDrawBehavior(randomStroke);
+    
+    // Draw behaviors
+    StrokeColor* stroke = new StrokeColor(ofColor::black);
+    tracer->addDrawBehavior(new Hue(stroke, hue));
+    tracer->addDrawBehavior(new Saturation(stroke, saturation));
+    tracer->addDrawBehavior(new Brightness(stroke, brightness));
+//    tracer->addDrawBehavior(new InvertHue(stroke));
+    tracer->addDrawBehavior(stroke);
     tracer->addDrawBehavior(new StrokeWidth(strokeWidth));
-//    tracer->addDrawBehavior(new SphereHead(strokeWidth));
-//    tracer->addDrawBehavior(new EllipseTail(strokeWidth));
     tracer->addDrawBehavior(new DrawPath);
     tracer->addDrawBehavior(new VibratingMultiplier(new Multiplier(multiplierCount, maxShift), entropy));
     tracer->addDrawBehavior(new FilledPath(false, ofColor::black));
+//    tracer->addDrawBehavior(new SphereHead(strokeWidth));
+//    tracer->addDrawBehavior(new EllipseTail(strokeWidth));
+    
     return tracer;
 }
 
@@ -221,36 +243,46 @@ void ofApp::setupMidiFighterTwister() {
 }
 
 void ofApp::onEncoderUpdate(ofxMidiFighterTwister::EncoderEventArgs& a){
-    std::cout << "Encoder '" << a.ID << "' Event! val: " << a.value << std::endl;
-    encoders[a.ID]->setValue(a.value);
+    if (a.ID < properties.size()) {
+        std::cout << "onEncoderUpdate(" << a.ID << "): Setting " << properties[a.ID]->getName() << " to MIDI " << a.value << std::endl;
+        encoders[a.ID]->setValue(a.value);
+    }
 }
 
 void ofApp::onPushSwitchUpdate(ofxMidiFighterTwister::PushSwitchEventArgs& a){
     std::cout << "PushSwitch '" << a.ID << "' Event! val: " << a.value << std::endl;
-    if (0 <= a.ID && a.ID <= 3) {
-        if (a.value == ofxMidiFighterTwister::MIDI_MAX) {
-            std::cout << "Switching to bank " << (a.ID + 1) << std::endl;
-        }
-    } else {
+    if (a.value == 0)
         tweenEncoderToCurrentValue(a.ID);
-    }
 }
 
-void ofApp::tweenEncoderToCurrentValue(int encoder) {
-    if (easings[encoder] != nullptr) {
+void ofApp::tweenEncoderToCurrentValue(int encoderIndex) {
+    if (easings[encoderIndex] != nullptr) {
+        delete easings[encoderIndex];
+        easings[encoderIndex] = nullptr;
         return;
-        delete easings[encoder];
-        easings[encoder] = nullptr;
     }
     
-    float startTime = ofGetElapsedTimeMillis();
-    float duration = 1000;
-    std::cout << "Tweening encoder " << encoder << " from 0 to " << encoders[encoder]->getValue() << " between t = [" << startTime << ", " << startTime + duration << "]" << std::endl;
-    easings[encoder] = new ease(startTime, duration, 0, encoders[encoder]->getValue(), ofxeasing::linear::easeIn);
+    jumpRope(encoderIndex);
+}
+
+void ofApp::jumpRope(int encoderIndex) {
+    auto encoder = encoders[encoderIndex];
+    auto property = properties[encoderIndex];
+    TimeDiff const microsPerSecond = 1e6;
+    float const startTime = ofGetElapsedTimeMicros();
+    float const jumpRopeDurationInBeats = 4.0;
+    float const beatsPerSecond = beatsPerMinute / 60.0;
+    float const jumpRopeDurationInSeconds = jumpRopeDurationInBeats / beatsPerSecond;
+    float const secondsPerBeat = 1.0f / beatsPerSecond;
+    TimeDiff forwardDuration = jumpRopeDurationInSeconds / 2.0 * microsPerSecond;
+    TimeDiff backwardDuration = forwardDuration;
+    float initialValue = encoder->getScale();
+    std::cout << "Tweening property " << property->getName() << " from " << initialValue << " to 0 between t = [" << startTime << ", " << startTime + forwardDuration << "]" << " and back to " << initialValue << " between t = [" << startTime + forwardDuration << ", " << startTime + forwardDuration + backwardDuration << "]" << std::endl;
+    easings[encoderIndex] = new ease(forwardDuration, backwardDuration, initialValue, 0, ofxeasing::linear::easeIn);
 }
 
 void ofApp::onSideButtonPressed(ofxMidiFighterTwister::SideButtonEventArgs & a){
-    std::cout << "Side Button Pressed" << std::endl;
+    std::cout << "Side button " << a.buttonID << " pressed" << std::endl;
 }
 
 void ofApp::updateVelocity() {
@@ -265,15 +297,19 @@ void ofApp::update() {
     for (auto& global : properties) {
         global->clean();
     }
+    stageSize.clean();
 
+    TimeDiff currentTimeMicros = ofGetElapsedTimeMicros();
     for (int i = 0; i < ofxMidiFighterTwister::NUM_ENCODERS; i++) {
-        ease* easing = easings[i];
+        auto easing = easings[i];
         if (easing != nullptr) {
-            float v = easing->update(currentTime);
-            encoders[i]->setValue(v);
-            if (easing->isDone()) {
+            float v = easing->update(currentTimeMicros);
+            properties[i]->setScale(v);
+            encoders[i]->setScale(v);
+            if (easing->isDone(currentTimeMicros)) {
                 delete easing;
                 easings[i] = nullptr;
+                jumpRope(i);
             }
         }
     }
@@ -299,11 +335,13 @@ void ofApp::update() {
     }
     
     time = currentTime;
+    drawFPS();
 }
 
 void ofApp::draw() {
     float currentTime = ofGetElapsedTimeMillis();
-    
+    auto stageCenter = getStageCenter(stageSize);
+
     {
         ofPushMatrix();
         ofTranslate(stageCenter.x, stageCenter.y, stageCenter.z);
@@ -317,7 +355,7 @@ void ofApp::draw() {
         ofRotate(45, 1, 0, 0);
         
         ofColor background;
-        background.setHsb(hue, saturation, brightness);
+        background.setHsb(backgroundHue, backgroundSaturation, backgroundBrightness);
         ofBackground(background);
 
         for (auto& t : tracers) {
@@ -325,16 +363,17 @@ void ofApp::draw() {
         }
         
         ofPushStyle();
-        ofSetColor(255 - hue, saturation, brightness, boxTransparency);
+        ofColor boxColor = ofColor::fromHsb(255 - hue, saturation, brightness);
+        ofSetColor(boxColor, boxTransparency);
         box.setPosition(0, 0, 0);
         box.set(boxSize);
         box.draw();
-        ofPopStyle();
-        
+        ofNoFill();
         ofPopMatrix();
+        ofPopStyle();
     }
 
-    drawFPS();
+    mainOutputSyphonServer.publishScreen();
 }
 
 ofVec2f ofApp::getBoxSideRange(int dimension, ofMesh boxSideMesh) {
@@ -378,6 +417,7 @@ void ofApp::keyPressed(int key) { }
 void ofApp::keyReleased(int key) {
     if (key == 'f') {
         ofToggleFullscreen();
+        stageSize = getStageSize();
     } else if (key == 'x') {
         screenGrabber.grabScreen(0, 0 , ofGetWidth(), ofGetHeight());
         screenGrabber.save("screenshot.png");
@@ -398,8 +438,6 @@ void ofApp::keyReleased(int key) {
         property_base* p = properties[armedPropertyIndex];
         float newScale = p->getScale() - 0.01;
         p->setScale(newScale);
-    } else {
-        std::cout << key << std::endl;
     }
 }
 
